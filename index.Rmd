@@ -36,4 +36,6 @@ This workshop will familiarize participants with the [R](http://cran.r-project.o
 
 [Creating Reproducible Research: R Markdown](R_Reproducible_Research.html)
 
+<br>
+
 ###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***
