@@ -1,28 +1,44 @@
 ---
-title: "R Workshop Schedule"
-date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
-output: pdf_document
+title: "R Workshop Schedule (2021)"
+output: 
+  html_document:
+    df_print: paged
+    theme: cosmo
+    highlight: haddock
 ---
 
-***Part I***  
-**9:00-9:45** --- **R, The Basics & RStudio**
+<style>
+body {
+text-align: justify}
+</style>
 
-**9:45-10:45** --- **Working with Data**  
+<br>
+<br>
 
-**10:45-11:00** --- *Short Break*  
+### Part One  
 
-**11:00-12:00** --- **Programming: Functions, Loops, If/Else Statements**  
+#### 9:00-10:30 --- [**R, The Basics & RStudio**](R_Basics.html)
 
-**12:00-1:00** --- *Long Break*  
-  
-  
-  
+#### 10:30-10:45 --- *Short Break*  
 
-***Part II***  
-**1:00-1:30** --- **Data Visualization: R Graphics**  
+#### 10:45-11:15 --- [**Working with Data**](R_Working_with_Data.html)  
 
-**1:30-1:45** --- **Example: Importing, Analyzing, and Plotting Data**  
+#### 11:15-12:00 --- [**Programming: Functions, Loops, If/Else Statements**](R_Programming.html)  
 
-**1:45-2:15** --- **Creating Reproducible Research: RMarkdown**  
+#### 12:00-12:45 --- *Long Break*  
 
-**2:15-3:00** --- **Open Session for Q&A**  
+<br>
+
+### Part Two  
+
+#### 1:00-1:30 --- [**Data Visualization: R Graphics**](R_Data_Visualization.html)  
+
+#### 1:30-1:45 --- [**Example: Importing, Analyzing, and Plotting Data**](R_Data_Example.html)  
+
+#### 1:45-2:00 --- *Short Break*  
+
+#### 2:00-2:15 --- [**Creating Reproducible Research: RMarkdown**](R_Reproducible_Research.html)  
+
+#### 2:15-3:00 --- **Open Session for Q&A**  
+
+<br>
