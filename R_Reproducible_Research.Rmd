@@ -55,7 +55,7 @@ Take a look at the [RWorkshop gitub page](https://github.com/jacobtnyoung/RWorks
 
 You will see a `.Rmd` file for all of the sections we covered today. Let's look through a few.  
 
-Now, let's take a look at a [description](https://jacobtnyoung.github.io/RWorkshop/WO-PINS_S1_Network_Descriptives.html) of the [WOPINS](https://external.ojp.usdoj.gov/selector/awardDetail?awardNumber=2016-MU-MU-0011&fiscalYear=2016&applicationNumber=2016-91136-PA-IJ&programOffice=NIJ&po=All) Site 1 data, part of a study funded by the [National Institute of Justice](https://nij.ojp.gov/).  
+Now, let's take a look at a [description](WO-PINS_S1_Network_Descriptives.html) of the [WOPINS](https://nij.ojp.gov/funding/awards/2016-mu-mu-0011) Site 1 data, part of a study funded by the [National Institute of Justice](https://nij.ojp.gov/).  
 
 <br>
 
