@@ -22,9 +22,9 @@ This workshop will familiarize participants with the [R](http://cran.r-project.o
 
 ## Materials  
 
-[Schedule](R_Schedule2020.pdf)
+[Schedule](R_Schedule2021.pdf)
 
-[R, The Basics & RStudio](https://github.com/jacobtnyoung/RWorkshop2/blob/main/R_Basics.html)
+[R, The Basics & RStudio](R_Basics.html)
 
 [Working with Data](R_Working_with_Data.html)
 

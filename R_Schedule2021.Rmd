@@ -1,0 +1,28 @@
+---
+title: "R Workshop Schedule"
+date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+***Part I***  
+**9:00-9:45** --- **R, The Basics & RStudio**
+
+**9:45-10:45** --- **Working with Data**  
+
+**10:45-11:00** --- *Short Break*  
+
+**11:00-12:00** --- **Programming: Functions, Loops, If/Else Statements**  
+
+**12:00-1:00** --- *Long Break*  
+  
+  
+  
+
+***Part II***  
+**1:00-1:30** --- **Data Visualization: R Graphics**  
+
+**1:30-1:45** --- **Example: Importing, Analyzing, and Plotting Data**  
+
+**1:45-2:15** --- **Creating Reproducible Research: RMarkdown**  
+
+**2:15-3:00** --- **Open Session for Q&A**  

@@ -1,6 +1,6 @@
 ---
 title: "R, The Basics"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document:
     df_print: paged

@@ -1,0 +1,152 @@
+---
+title: "Example: Importing, Analyzing, and Plotting Data"
+date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
+
+output: 
+  html_document:
+    df_print: paged
+    theme: cosmo
+    highlight: haddock
+    toc: yes
+    toc_float: yes
+    code_fold: show
+
+---
+
+# **Introduction**  
+Here is an example of importing a data set, performing a regression analysis, and creating a plot of the coefficients.  
+<br>
+
+## **Importing the data**  
+Let's work with the "r_workshop_data.csv" file. Recall that the file contains 52 individuals and 4 variables. The variables are: respondents id ("id"), a binary variable indicating whether the respondent is male or female ("male" where "1" is male), a measure of the respondent’s age ("age"), and a measure of risky behaviors engaged in by the respondent ("risky").  
+
+Let’s go ahead and import it into R:  
+```{r,echo=TRUE,eval=FALSE}
+setwd("/…") #first, set the directory where the file is.
+```
+
+```{r,echo=TRUE,eval=TRUE}
+data <- read.csv(
+  "https://github.com/jacobtnyoung/RWorkshop/raw/master/r_workshop_data.csv", #the url.
+  header=TRUE, as.is=TRUE, na.strings="." #all the other arguments remain the same.
+  )
+data[1:20,] #look at the first 20 cases of the data.
+```  
+
+```{r, results='asis', echo=FALSE}
+cat("\\newpage")
+```
+<br>
+
+## **Analyzing the data**  
+Suppose we are interesting if whether there is a linear relationship between a respondent's age and his/her risky behaviors. Let’s plot the relationship between the variables to visually inspect them:  
+```{r,echo=TRUE,eval=TRUE}
+plot(
+ data$age,                       # make age the x-axis.
+ data$risky,                     # make risky behavior the y-axis.
+ main = "Risky Behavior by Age", # set the title.
+ xlab = "Age",                   # label the x-axis.
+ ylab = "Risky Behavior"         # label the y-axis.
+ )
+```
+
+Let's examine the correlation between the variables using the `cor()` function:  
+```{r,echo=TRUE,eval=TRUE}
+cor(data$age,data$risky) # this returns an error.
+```  
+
+*Why do we get an error?*  
+
+We can examine the missingness for each variable by using the `is.na()` function:  
+```{r,echo=TRUE,eval=TRUE}
+is.na(data$age)
+is.na(data$risky)
+```
+
+We can examine the missingness of a single variable by combining thre functions `is.na()`, `which()` and `length()`:  
+```{r,echo=TRUE,eval=TRUE}
+which(is.na(data$age)==TRUE) # which values are missing?
+length(which(is.na(data$age)==TRUE)) # how long is the vector of missing values from age?
+```
+
+We can examine the missingness of both variables jointly by combining two functions `is.na()` and `table()`:  
+```{r,echo=TRUE,eval=TRUE}
+table(is.na(data$age),is.na(data$risky))
+```
+
+Only take those cases that are complete by using the `use=` argument:  
+```{r,echo=TRUE,eval=TRUE}
+?cor
+cor(data$age,data$risky, use="complete") # this does not return an error.
+```
+
+We can estimate a linear regression model using the `lm()` function:  
+```{r,echo=TRUE,eval=TRUE}
+?lm
+summary(lm(data$risky ~ data$age))
+```
+
+```{r, results='asis', echo=FALSE}
+cat("\\newpage")
+```
+
+Let's make this model a bit more robust by adding male to the equation:  
+```{r,echo=TRUE,eval=TRUE}
+summary(lm(data$risky ~ data$age + data$male))
+```
+<br>
+
+## **Plotting the data**  
+Now we could create a plot of the estimate. Rather than manually entering the coefficients and standard errors, we can use the stored results. Since the estimates and standard errors are an object, we can just reference the particular values of the matrix we want in the plot. First, let's look at the results:  
+```{r,echo=TRUE,eval=TRUE}
+# make an object from the model.
+ results <- summary(lm(data$risky ~ data$age + data$male))
+ results
+
+ class(results) # we see that it is a summary of an lm.
+ names(results) # shows the names of the coefficents.
+ results$coefficients #gives just the 'coefficients' portion of the object 'results'.
+
+#We can create the objects we need by referencing the matrix.
+ is.matrix(results$coefficients)
+ 
+ point 	<- c(results$coefficients[2,1],results$coefficients[3,1])
+ se    	<- c(results$coefficients[2,2],results$coefficients[3,2])
+ upper.ci <- point+(1.96*se)
+ lower.ci <- point-(1.96*se)
+
+#Now, we can plot:
+ n.coef = 2 # number of coefficients.
+ names = c("age","male") #coef names.
+
+ x.ax = seq(1,n.coef,length.out=n.coef) #dims of the x axis.
+ y.ax = seq(min(lower.ci),max(upper.ci),length.out=n.coef) #y axis.
+
+ plot(
+  x.ax,
+	y.ax,
+	type="n",                     # do not plot anything yet.
+	ylab="coefficient w/ 95% CI", # label for y axis.
+	xlab="",                      # label for x axis .
+	xaxt="n"                      # toggle x axis labels (for now).
+ )
+
+ points(x.ax,point) # plot the point estimates.
+ segments(x.ax,upper.ci,x.ax,lower.ci) #now the intervals.
+ abline(h=0,lty=2)	# add a line at zero.
+ axis(side=1,at=x.ax,labels=names) # add coefficient labels.
+```
+
+We can do a better job with the `texreg` package:  
+```{r,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE}
+library("texreg")
+help(package="texreg")
+```
+
+For this package, we use the `plotreg()` function. It is fairly straightforward, in that we just pass our linear model into the plotting function.
+```{r,echo=TRUE,eval=TRUE, fig.width=4, fig.height=3.5, fig.align = "center",message=FALSE}
+plotreg(lm(data$risky ~ data$age + data$male))
+```
+<br>
+
+## **Questions?**  
