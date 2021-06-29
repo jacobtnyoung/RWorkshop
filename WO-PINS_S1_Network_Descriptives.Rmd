@@ -1,0 +1,330 @@
+---
+title: "WO-PINS Site 1 Network Descriptives (example)"
+output: 
+  html_document:
+    df_print: paged
+    theme: cosmo
+    highlight: haddock
+    toc: yes
+    toc_float: yes
+    code_fold: show
+---
+
+
+```{r, echo=FALSE, eval=TRUE, message=FALSE}
+rm(list = ls())
+# setwd("<YOUR DIRECTORY>") # SET YOUR DIRECTORY HERE TO LOAD THIS FILE.
+#setwd("/Users/davidschaefer/Google Drive 2/Projects/PINS/Data/WOPINS/Data/")
+setwd("/Users/jyoung20/PINS/WOPINS_data/WOPINS_S1_data")
+load("WOPINS_S1_NETWORKS_FOR_ANALYSIS.RData")
+library(network)
+library(sna)
+library(xtable)
+library(ape)
+library(RColorBrewer)
+library(plotrix)
+```
+
+The WO-PINS or *Womens Prison Inmate Networks Study* investigates the incarceration and re-entry experiences of female inmates. The study is cross-sectional, but includes two different sites. This document describes the first unit (Site 1) for which the survey instrument was adminstered. In this unit, there are 131 women, of which 105 (80% response rate) took the survey. However, 1 case failed the *UBACC* thereby not giving consent, so her survey data could not be used.  
+
+# All Networks  
+This section provides a glance at several features of all the networks. The list of networks (with their acronym) in the WO-PINS data file are:  
+
+* Get Along With (GA)
+* Get Along With Ranked (GAR)
+* Historical Romantic Relationship (HRR)
+* Current Romantic Relationship (CRR)
+* Prison Family (PF)
+* Power/Influence (PI)
+* Top 3 Power Influence (T3P)
+* Support During Dispute (SDD)   
+* Power/Influence Affect (PI.A)  
+* Power/Influence Affect-Signed (PI.A.S)  
+
+
+The *Historical Romantic Relationship (HRR)* network and the  *Current Romantic Relationship (CRR)* network are too sparse for any sort of analysis. The *Get Along With Ranked (GAR)* and *Top 3 Power Influence (T3P)* are not described in the analysis below. For the affect data compiled on the power/influence network, those data are described in a separate section below.  
+
+Table # below gives several descriptives for the *Get Along With (GA)*, *Prison Family (PF)*, *Power/Influence (PI)*, and *Support During Dispute (SDD)* networks:  
+
+```{r,echo=FALSE,eval=TRUE, message=FALSE, warning=FALSE}
+# Descriptive table for the networks.
+edges.GA      <- sum(as.matrix(GA.net))
+edges.PF      <- sum(as.matrix(PF.net))
+edges.PI      <- sum(as.matrix(PI.net))
+edges.SDD     <- sum(as.matrix(SDD.net))
+recip.GA      <- grecip(GA.net,  measure="edgewise")
+recip.PF      <- grecip(PF.net,  measure="edgewise")
+recip.PI      <- grecip(PI.net,  measure="edgewise")
+recip.SDD     <- grecip(SDD.net, measure="edgewise")
+trans.GA      <- gtrans(as.matrix(GA.net))
+trans.PF      <- gtrans(as.matrix(PF.net))
+trans.PI      <- gtrans(as.matrix(PI.net))
+trans.SDD     <- gtrans(as.matrix(SDD.net))
+mean.in.GA    <- mean(degree(GA.net, cmode="indegree"))
+mean.in.PF    <- mean(degree(PF.net, cmode="indegree"))
+mean.in.PI    <- mean(degree(PI.net, cmode="indegree"))
+mean.in.SDD   <- mean(degree(SDD.net, cmode="indegree"))
+sd.in.GA      <- sd(degree(GA.net, cmode="indegree"))
+sd.in.PF      <- sd(degree(PF.net, cmode="indegree"))
+sd.in.PI      <- sd(degree(PI.net, cmode="indegree"))
+sd.in.SDD     <- sd(degree(SDD.net, cmode="indegree"))
+mean.out.GA   <- mean(degree(GA.net, cmode="outdegree"))
+mean.out.PF   <- mean(degree(PF.net, cmode="outdegree"))
+mean.out.PI   <- mean(degree(PI.net, cmode="outdegree"))
+mean.out.SDD  <- mean(degree(SDD.net, cmode="outdegree"))
+sd.out.GA     <- sd(degree(GA.net, cmode="outdegree"))
+sd.out.PF     <- sd(degree(PF.net, cmode="outdegree"))
+sd.out.PI     <- sd(degree(PI.net, cmode="outdegree"))
+sd.out.SDD    <- sd(degree(SDD.net, cmode="outdegree"))
+ties          <- rbind(edges.GA,edges.PF,edges.PI,edges.SDD)
+recip         <- rbind(recip.GA,recip.PF,recip.PI,recip.SDD)
+trans         <- rbind(trans.GA,trans.PF,trans.PI,trans.SDD)
+mean.in       <- rbind(mean.in.GA,mean.in.PF,mean.in.PI,mean.in.SDD)
+sd.in         <- rbind(sd.in.GA,sd.in.PF,sd.in.PI,sd.in.SDD)
+mean.out      <- rbind(mean.out.GA,mean.out.PF,mean.out.PI,mean.out.SDD)
+sd.out        <- rbind(sd.out.GA,sd.out.PF,sd.out.PI,sd.out.SDD)
+mat           <- cbind(ties,recip,trans,mean.in,sd.in,mean.out,sd.out)
+colnames(mat) <- c("Edges","Reciprocity","Transitivity","Mean Indgree", "SD Indegree", "Mean Outdegree", "SD Outdegree")
+rownames(mat) <- c("Get Along With (GA)", "Prison Family (PF)", "Power/Influence (PI)", "Support During Dispute (SDD)")
+tab           <- xtable(mat, caption = "Table #: Descriptive Statistics for WO-PINS Networks", digits=c(0,0,2,2,2,2,2,2))
+```    
+
+
+```{r xtable1, results="asis", echo=FALSE}
+#Print the table.
+print.xtable(tab, type="html", caption.placement = "top")
+```  
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+###Examine Relationship between Race and Indegree.
+#Race (Note: White = 1, Black = 2, Hispanic = 3).
+race.ideg.means.GA <- c(
+  mean(degree(GA.net, cmode="indegree")[GA.net%v%"Race" == 1]), # White.
+  mean(degree(GA.net, cmode="indegree")[GA.net%v%"Race" == 2]), # Black.
+  mean(degree(GA.net, cmode="indegree")[GA.net%v%"Race" == 3]) # Hispanic.
+)
+race.ideg.means.PF <- c(
+  mean(degree(PF.net, cmode="indegree")[PF.net%v%"Race" == 1]), # White.
+  mean(degree(PF.net, cmode="indegree")[PF.net%v%"Race" == 2]), # Black.
+  mean(degree(PF.net, cmode="indegree")[PF.net%v%"Race" == 3]) # Hispanic.
+)
+race.ideg.means.PI <- c(
+  mean(degree(PI.net, cmode="indegree")[PI.net%v%"Race" == 1]), # White.
+  mean(degree(PI.net, cmode="indegree")[PI.net%v%"Race" == 2]), # Black.
+  mean(degree(PI.net, cmode="indegree")[PI.net%v%"Race" == 3]) # Hispanic.
+)
+race.ideg.means.SDD <- c(
+  mean(degree(SDD.net, cmode="indegree")[SDD.net%v%"Race" == 1]), # White.
+  mean(degree(SDD.net, cmode="indegree")[SDD.net%v%"Race" == 2]), # Black.
+  mean(degree(SDD.net, cmode="indegree")[SDD.net%v%"Race" == 3]) # Hispanic.
+)
+race.ideg.test.GA  <- oneway.test(degree(GA.net , cmode="indegree") ~ GA.net%v%"Race") 
+race.ideg.test.PF  <- oneway.test(degree(PF.net , cmode="indegree") ~ PF.net%v%"Race") 
+race.ideg.test.PI  <- oneway.test(degree(PI.net , cmode="indegree") ~ PI.net%v%"Race") 
+race.ideg.test.SDD <- oneway.test(degree(SDD.net, cmode="indegree") ~ SDD.net%v%"Race") 
+
+race.means <- rbind(race.ideg.means.GA,race.ideg.means.PF,race.ideg.means.PI,race.ideg.means.SDD)
+race.mat        <- cbind(
+                  race.means,
+                  c(race.ideg.test.GA$statistic,race.ideg.test.PF$statistic,race.ideg.test.PI$statistic,race.ideg.test.SDD$statistic),
+                  c(race.ideg.test.GA$p.value,race.ideg.test.PF$p.value,race.ideg.test.PI$p.value,race.ideg.test.SDD$p.value)
+                  )
+colnames(race.mat) <- c("White","Black","Hispanic","F-statistic","p-value")
+rownames(race.mat) <- c("Get Along With (GA)", "Prison Family (PF)", "Power/Influence (PI)", "Support During Dispute (SDD)")
+race.tab           <- xtable(race.mat, caption = "Table #: Race and Indegree for WO-PINS Networks")
+```  
+
+
+```{r xtable2, results="asis", echo=FALSE}
+print(race.tab, type="html", caption.placement = "top")
+```  
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+###HOMOPHILY.
+
+#Create a function to examine homophily for a categorical attribute.
+cat.homophily <- function(net,att){
+  obs.net  <- net # observed network.
+  null.net <- network(1-as.sociomatrix(net)) # null sociomatrix.
+              set.vertex.attribute(obs.net,"att", att)
+              set.vertex.attribute(null.net,"att", att)
+  oT       <- mixingmatrix(obs.net,"att") # observed ties for attribute.
+  nT       <- mixingmatrix(null.net,"att") # null ties for attribute.
+
+#Calculate the Odds Ratio with the confidence intervals.
+    (OR <- (sum(diag(oT$matrix)) * (sum(nT$matrix)-sum(diag(nT$matrix)))) / (sum(diag(nT$matrix)) * (sum(oT$matrix)-sum(diag(oT$matrix)))))
+    (SE <- ((1/sum(diag(oT$matrix))) + (1/(sum(nT$matrix)-sum(diag(nT$matrix))))) + (1/(sum(diag(nT$matrix))) + 1/((sum(oT$matrix)-sum(diag(oT$matrix)))))**.5)
+  (CI95 <- exp(c(log(OR)-1.96*SE, log(OR)+1.96*SE)))
+  (CI98 <- exp(c(log(OR)-2.33*SE, log(OR)+2.33*SE)))
+  (CI99 <- exp(c(log(OR)-2.58*SE, log(OR)+2.58*SE)))  
+
+#Compile the calculations into a list.
+  output <- list(OddsRatio = OR, StandardError = SE, CI95 = CI95, CI98 = CI98, CI99 = CI99)
+ return(output)
+}
+
+# Calculate odds ratios for race and religion.
+race.homophily.GA      <- cat.homophily(GA.net , GA.net%v%"Race")
+race.homophily.PF      <- cat.homophily(PF.net , PF.net%v%"Race")
+race.homophily.PI      <- cat.homophily(PI.net , PI.net%v%"Race")
+race.homophily.SDD     <- cat.homophily(SDD.net, SDD.net%v%"Race")
+religion.homophily.GA  <- cat.homophily(GA.net , GA.net%v%"Religion")
+religion.homophily.PF  <- cat.homophily(PF.net , PF.net%v%"Religion")
+religion.homophily.PI  <- cat.homophily(PI.net , PI.net%v%"Religion")
+religion.homophily.SDD <- cat.homophily(SDD.net, SDD.net%v%"Religion")
+
+race.OR        <- c(race.homophily.GA[[1]],race.homophily.PF[[1]],race.homophily.PI[[1]],race.homophily.SDD[[1]])
+race.lCI95     <- c(race.homophily.GA[[3]][1],race.homophily.PF[[3]][1],race.homophily.PI[[3]][1],race.homophily.SDD[[3]][1])
+race.uCI95     <- c(race.homophily.GA[[3]][2],race.homophily.PF[[3]][2],race.homophily.PI[[3]][2],race.homophily.SDD[[3]][2])
+religionOR     <- c(religion.homophily.GA[[1]],religion.homophily.PF[[1]],religion.homophily.PI[[1]],religion.homophily.SDD[[1]])
+religion.lCI95 <- c(religion.homophily.GA[[3]][1],religion.homophily.PF[[3]][1],religion.homophily.PI[[3]][1],religion.homophily.SDD[[3]][1])
+religion.uCI95 <- c(religion.homophily.GA[[3]][2],religion.homophily.PF[[3]][2],religion.homophily.PI[[3]][2],religion.homophily.SDD[[3]][2])
+
+race.relg.mat  <- cbind(race.OR, race.lCI95, race.uCI95, religionOR, religion.lCI95, religion.uCI95) 
+colnames(race.relg.mat) <- c("Race (OR)","Race (Lower 95%CI)", "Race (Upper 95%CI)","Religion (OR)","Religion (Lower 95%CI)", "Religion (Upper 95%CI)")
+rownames(race.relg.mat) <- c("Get Along With (GA)", "Prison Family (PF)", "Power/Influence (PI)", "Support During Dispute (SDD)")
+race.relg.tab           <- xtable(race.relg.mat, caption = "Table #: Homophily for Race and Religion for WO-PINS Networks (Odds Ratios with (95% CI)", digits=c(0,2,2,2,2,2,2))
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+###HOMOPHILY.
+
+# Moran I coefficients for continuous measures.
+age.homophily.GA     <- Moran.I(GA.net%v%"Age",as.sociomatrix(GA.net),scaled=T, na.rm=T)
+age.homophily.PF     <- Moran.I(PF.net%v%"Age",as.sociomatrix(PF.net),scaled=T, na.rm=T)
+age.homophily.PI     <- Moran.I(PI.net%v%"Age",as.sociomatrix(PI.net),scaled=T, na.rm=T)
+age.homophily.SDD    <- Moran.I(SDD.net%v%"Age",as.sociomatrix(SDD.net),scaled=T, na.rm=T)
+grade.homophily.GA   <- Moran.I(GA.net%v%"Grade",as.sociomatrix(GA.net),scaled=T, na.rm=T)
+grade.homophily.PF   <- Moran.I(PF.net%v%"Grade",as.sociomatrix(PF.net),scaled=T, na.rm=T)
+grade.homophily.PI   <- Moran.I(PI.net%v%"Grade",as.sociomatrix(PI.net),scaled=T, na.rm=T)
+grade.homophily.SDD  <- Moran.I(SDD.net%v%"Grade",as.sociomatrix(SDD.net),scaled=T, na.rm=T)
+ogs.homophily.GA     <- Moran.I(GA.net%v%"OGS",as.sociomatrix(GA.net),scaled=T, na.rm=T)
+ogs.homophily.PF     <- Moran.I(PF.net%v%"OGS",as.sociomatrix(PF.net),scaled=T, na.rm=T)
+ogs.homophily.PI     <- Moran.I(PI.net%v%"OGS",as.sociomatrix(PI.net),scaled=T, na.rm=T)
+ogs.homophily.SDD    <- Moran.I(SDD.net%v%"OGS",as.sociomatrix(SDD.net),scaled=T, na.rm=T)
+timein.homophily.GA  <- Moran.I(GA.net%v%"TimeIn",as.sociomatrix(GA.net),scaled=T, na.rm=T)
+timein.homophily.PF  <- Moran.I(PF.net%v%"TimeIn",as.sociomatrix(PF.net),scaled=T, na.rm=T)
+timein.homophily.PI  <- Moran.I(PI.net%v%"TimeIn",as.sociomatrix(PI.net),scaled=T, na.rm=T)
+timein.homophily.SDD <- Moran.I(SDD.net%v%"TimeIn",as.sociomatrix(SDD.net),scaled=T, na.rm=T)
+
+age.M.obs    <- c(age.homophily.GA[[1]],age.homophily.PF[[1]],age.homophily.PI[[1]],age.homophily.SDD[[1]])
+grade.M.obs  <- c(grade.homophily.GA[[1]],grade.homophily.PF[[1]],grade.homophily.PI[[1]],grade.homophily.SDD[[1]])
+ogs.M.obs    <- c(ogs.homophily.GA[[1]],ogs.homophily.PF[[1]],ogs.homophily.PI[[1]],ogs.homophily.SDD[[1]])
+timein.M.obs <- c(timein.homophily.GA[[1]],timein.homophily.PF[[1]],timein.homophily.PI[[1]],timein.homophily.SDD[[1]])
+age.M.p      <- c(age.homophily.GA[[4]],age.homophily.PF[[4]],age.homophily.PI[[4]],age.homophily.SDD[[4]])
+grade.M.p    <- c(grade.homophily.GA[[4]],grade.homophily.PF[[4]],grade.homophily.PI[[4]],grade.homophily.SDD[[4]])
+ogs.M.p      <- c(ogs.homophily.GA[[4]],ogs.homophily.PF[[4]],ogs.homophily.PI[[4]],ogs.homophily.SDD[[4]])
+timein.M.p   <- c(timein.homophily.GA[[4]],timein.homophily.PF[[4]],timein.homophily.PI[[4]],timein.homophily.SDD[[4]])
+
+moran.mat  <- cbind(age.M.obs, age.M.p, grade.M.obs, grade.M.p, ogs.M.obs, ogs.M.p, timein.M.obs, timein.M.p) 
+colnames(moran.mat) <- c("Age (Moran's I)", "Age (p-value)","Grade (Moran's I)", "Grade (p-value)","OGS (Moran's I)", "OGS (p-value)","Time-In (Moran's I)", "Time-In (p-value)")
+rownames(moran.mat) <- c("Get Along With (GA)", "Prison Family (PF)", "Power/Influence (PI)", "Support During Dispute (SDD)")
+moran.tab           <- xtable(moran.mat, 
+                              caption = "Table #: Homophily for Age, Grade, Offense Gravity Score (OGS), and Time-In Prison for WO-PINS Networks (Moran's I with p-values", 
+                              digits=c(0,rep(2,length.out=dim(moran.mat)[2]))
+                              )
+```
+
+
+```{r xtable3, results="asis", echo=FALSE}
+print(race.relg.tab, type="html", caption.placement = "top")
+```  
+
+
+```{r xtable4, results="asis", echo=FALSE}
+print(moran.tab, type="html", caption.placement = "top")
+```  
+
+
+***
+
+```{r,echo=FALSE,eval=TRUE}
+### Set up some of the parameters for the plots to use below.
+
+#Race (Note: White = 1, Black = 2, Hispanic = 3).
+race.colors <- GA.net%v%"Race"
+race.colors[race.colors == 3] <- "yellow"
+race.colors[race.colors == 2] <- "grey40"
+race.colors[race.colors == 1] <- "white"
+
+#Religion.
+rel.labs <-GA.net%v%"Religion"
+rel.labs[rel.labs == "Protestant"] <- "C" 
+rel.labs[rel.labs == "Catholic"]   <- "C" 
+rel.labs[rel.labs == "Jewish"]     <- "J"
+rel.labs[rel.labs == "Muslim"]     <- "M" 
+rel.labs[rel.labs == "Other"]      <- "O"
+rel.labs[rel.labs == "None"]       <- "N"
+
+```
+
+### **Get Along With (GA) Network**
+
+```{r,echo=FALSE,eval=TRUE}
+GA.ideg.size <- degree(GA.net, cmode="indegree")
+GA.ideg.size <- log(GA.ideg.size + 0.1)+0.5
+gplot(
+  GA.net,main = "Figure: Get Along w/ Network",displayisolates = FALSE, 
+  vertex.col = race.colors, edge.col = "grey60", 
+  label = rel.labs, label.pos = 5, label.cex = 0.5, 
+  arrowhead.cex = 0.5,
+  sub = "Nodes Colored by Race (White = White; Grey = Black, Yellow = Hispanic) \n Nodes Labeled by Religion (Christian = C, Muslim = M, None = N, Other = O)\n Nodes Shaped by Outdegree Restriction (Triangle = Took Survey) Isolates excluded from plot",
+  vertex.cex = GA.ideg.size, vertex.sides = GA.net%v%"Exclude.GA"+3
+)
+```
+
+***
+
+### **Prison Family (PF) Network**
+
+```{r,echo=FALSE,eval=TRUE}
+PF.ideg.size <- degree(PF.net, cmode="indegree")
+PF.ideg.size <- log(PF.ideg.size + 0.1)+0.5
+gplot(
+  PF.net,main = "Figure: Prison Family Network",displayisolates = FALSE, 
+  vertex.col = race.colors, edge.col = "grey60", 
+  label = rel.labs, label.pos = 5, label.cex = 0.5, 
+  arrowhead.cex = 0.5,
+  sub = "Nodes Colored by Race (White = White; Grey = Black, Yellow = Hispanic) \n Nodes Labeled by Religion (Christian = C, Muslim = M, None = N, Other = O)\n Nodes Shaped by Outdegree Restriction (Triangle = Took Survey) Isolates excluded from plot",
+  vertex.cex = PF.ideg.size, vertex.sides = PF.net%v%"Exclude.PF"+3
+)
+```
+
+***
+
+### **Power/Influence (PI) Network**
+
+```{r,echo=FALSE,eval=TRUE}
+PI.ideg.size <- degree(PI.net, cmode="indegree")
+PI.ideg.size <- log(PI.ideg.size + 0.1)+0.5
+gplot(
+  PI.net,main = "Figure: Power/Influence Network",displayisolates = FALSE, 
+  vertex.col = race.colors, edge.col = "grey60", 
+  label = rel.labs, label.pos = 5, label.cex = 0.5, 
+  arrowhead.cex = 0.5,
+  sub = "Nodes Colored by Race (White = White; Grey = Black, Yellow = Hispanic) \n Nodes Labeled by Religion (Christian = C, Muslim = M, None = N, Other = O)\n Nodes Shaped by Outdegree Restriction (Triangle = Took Survey) Isolates excluded from plot",
+  vertex.cex = PI.ideg.size, vertex.sides = PI.net%v%"Exclude.PI"+3
+)
+```
+
+***
+
+### **Support During Dispute (SDD) Network**
+
+```{r,echo=FALSE,eval=TRUE}
+SDD.ideg.size <- degree(SDD.net, cmode="indegree")
+SDD.ideg.size <- log(SDD.ideg.size + 0.1)+0.5
+gplot(
+  SDD.net,main = "Figure: Support During Dispute Network",displayisolates = FALSE, 
+  vertex.col = race.colors, edge.col = "grey60", 
+  label = rel.labs, label.pos = 5, label.cex = 0.5, 
+  arrowhead.cex = 0.5,
+  sub = "Nodes Colored by Race (White = White; Grey = Black, Yellow = Hispanic) \n Nodes Labeled by Religion (Christian = C, Muslim = M, None = N, Other = O)\n Nodes Shaped by Outdegree Restriction (Triangle = Took Survey) Isolates excluded from plot",
+  vertex.cex = SDD.ideg.size, vertex.sides = SDD.net%v%"Exclude.SDD"+3
+)
+```
+
+***
