@@ -452,11 +452,11 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Programming: Functions, Loops, If/Else Statements</h1>
-<h4 class="date">R Workshop 29 June, 2021</h4>
 
 </div>
 
 
+<p><br></p>
 <div id="functions" class="section level2">
 <h2><strong>Functions</strong></h2>
 <p>An <em>AWESOME</em> feature of R, and perhaps a main reason for using it, is that it allows you to program your own functions. In fact, all the commands that you use in R <em>are</em> functions.</p>
@@ -469,27 +469,27 @@ actions or stuff you want the function to be doing<br />
 <code>}</code></p>
 <p>Basically, we are passing in an object or objects, doing something to it, and then returning an output.</p>
 <p>For example, let’s create a function that calculates the mean of a variable:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>function.mean &lt;-<span class="st"> </span><span class="cf">function</span>(input){</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  our.mean &lt;-<span class="st"> </span><span class="kw">sum</span>(input)<span class="op">/</span><span class="kw">length</span>(input) </span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="kw">return</span>(our.mean) </span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>function.mean &lt;-<span class="st"> </span><span class="cf">function</span>( input ){</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  our.mean &lt;-<span class="st"> </span><span class="kw">sum</span>( input )<span class="op">/</span><span class="kw">length</span>( input ) </span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="kw">return</span>( our.mean ) </span>
 <span id="cb2-4"><a href="#cb2-4"></a>}</span></code></pre></div>
 <p>This function takes an object <code>input</code> and divides the sum of input by the length of input and returns this ratio as an object called <code>our.mean</code>. Note that the names we use for the objects are arbitrary.</p>
 <p>The function reads as: create a function called <code>function.mean</code>, this function takes one argument called <code>input</code>, the function will create an object called <code>our.mean</code> by summing input and dividing it by the length of input, the function then returns the object <code>our.mean</code>.</p>
 <p>Remember that we can see our function by just typing the name <code>function.mean</code>.</p>
 <p>Now, let’s create an object called <code>x</code> and calculate the mean using our function:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">function.mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> )</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">function.mean</span>( x )</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>Note here that <code>x</code> is the input in the function.</p>
 <p>We can also create a object that is returned by the function.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x.mean &lt;-<span class="st"> </span><span class="kw">function.mean</span>(x)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x.mean &lt;-<span class="st"> </span><span class="kw">function.mean</span>( x )</span>
 <span id="cb5-2"><a href="#cb5-2"></a>x.mean</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>The command: <code>function.mean(x)</code> just returns the mean, but the command: <code>x.mean &lt;- function.mean(x)</code> creates the object <code>x.mean</code> that is the mean of the object <code>x</code>.</p>
 <p>Commenting inside the function is helpful for keeping track of what is going on, as well as for others who might want to use a function you have created. In R, any line with a <code>#</code> sign in front is commented out of the code in the function and it will pass over it. For example:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>function.mean &lt;-<span class="st"> </span><span class="cf">function</span>(input){</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  our.mean &lt;-<span class="st"> </span><span class="kw">sum</span>(input)<span class="op">/</span><span class="kw">length</span>(input) <span class="co">#the equation for the mean.</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="kw">return</span>(our.mean) <span class="co">#the object &#39;our.mean&#39; is what is created.</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>function.mean &lt;-<span class="st"> </span><span class="cf">function</span>( input ){</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  our.mean &lt;-<span class="st"> </span><span class="kw">sum</span>( input )<span class="op">/</span><span class="kw">length</span>( input ) <span class="co">#the equation for the mean.</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="kw">return</span>( our.mean ) <span class="co">#the object &#39;our.mean&#39; is what is created.</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a>}</span></code></pre></div>
 <p>It is important to note that R will overwrite the names of existing functions. For example, the function <code>rowMeans()</code> can be overwritten by the command <code>rowMeans &lt;- function(input){</code>…<code>}</code>. So be careful with your naming of functions. To be safe, just type the name of what you want to call your function to see if it exists in the loaded libraries.<br />
 <br></p>
@@ -497,42 +497,42 @@ actions or stuff you want the function to be doing<br />
 <div id="more-about-the-function-of-the-function-function" class="section level2">
 <h2><strong>More about the function of the <code>function()</code> Function</strong></h2>
 <p>The <code>return()</code> command within the <code>function()</code> function is helpful when our function creates multiple objects, but we only want particular objects returned by the function. For example, let’s create a function that takes the mean of two different inputs, then creates a new object that has both of these means as a single object:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>function.two.means &lt;-<span class="st"> </span><span class="cf">function</span>(input1,input2){ <span class="co">#this function takes two arguments.</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>    mean<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">sum</span>(input1)<span class="op">/</span><span class="kw">length</span>(input1) <span class="co"># take the mean of the first object.</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>    mean<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">sum</span>(input2)<span class="op">/</span><span class="kw">length</span>(input2) <span class="co"># take the mean of the second object.</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>    both.means &lt;-<span class="st"> </span><span class="kw">c</span>(mean<span class="fl">.1</span>,mean<span class="fl">.2</span>) <span class="co">#combine the means into a object.</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>    <span class="kw">return</span>(both.means) <span class="co">#return the object that is both means.</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>function.two.means &lt;-<span class="st"> </span><span class="cf">function</span>( input1,input2 ){ <span class="co">#this function takes two arguments.</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>    mean<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">sum</span>( input1 )<span class="op">/</span><span class="kw">length</span>( input1 ) <span class="co"># take the mean of the first object.</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    mean<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">sum</span>( input2 )<span class="op">/</span><span class="kw">length</span>( input2 ) <span class="co"># take the mean of the second object.</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>    both.means &lt;-<span class="st"> </span><span class="kw">c</span>( mean<span class="fl">.1</span>,mean<span class="fl">.2</span> ) <span class="co">#combine the means into a object.</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="kw">return</span>( both.means ) <span class="co">#return the object that is both means.</span></span>
 <span id="cb8-6"><a href="#cb8-6"></a>    }</span></code></pre></div>
 <p>Let’s give it a try:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> )</span>
+<span id="cb9-2"><a href="#cb9-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span> )</span></code></pre></div>
 <p>Create the mean of <code>x</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">function.mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">function.mean</span>( x )</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>Create the mean of <code>y</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">function.mean</span>(y)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">function.mean</span>( y )</span></code></pre></div>
 <pre><code>## [1] 8</code></pre>
 <p>Now, create the mean of the means. <em>Note</em> that we have to put in two arguments here:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">function.two.means</span>(x,y) </span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">function.two.means</span>( x,y ) </span></code></pre></div>
 <pre><code>## [1] 3 8</code></pre>
 <p>Note that this function creates an object with two means. That is to say, a <em>vector</em> with dimensions <em>1 x 2</em>. That is different then a function which takes the mean of the means. For example:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>function.mean.of.means &lt;-<span class="st"> </span><span class="cf">function</span>(input1,input2){ <span class="co">#this function takes two arguments.</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>    mean<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">sum</span>(input1)<span class="op">/</span><span class="kw">length</span>(input1) <span class="co"># take the mean of the first object.</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>    mean<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">sum</span>(input2)<span class="op">/</span><span class="kw">length</span>(input2) <span class="co"># take the mean of the second object.</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a>    mean.of.means &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">c</span>(mean<span class="fl">.1</span>,mean<span class="fl">.2</span>)) <span class="co">#take the mean of the means.</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a>    <span class="kw">return</span>(mean.of.means) <span class="co">#return the object that is the mean of both means.</span></span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>function.mean.of.means &lt;-<span class="st"> </span><span class="cf">function</span>( input1,input2 ){ <span class="co">#this function takes two arguments.</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>    mean<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">sum</span>( input1 )<span class="op">/</span><span class="kw">length</span>( input1 ) <span class="co"># take the mean of the first object.</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>    mean<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">sum</span>( input2 )<span class="op">/</span><span class="kw">length</span>( input2 ) <span class="co"># take the mean of the second object.</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>    mean.of.means &lt;-<span class="st"> </span><span class="kw">mean</span>( <span class="kw">c</span>( mean<span class="fl">.1</span>,mean<span class="fl">.2</span> ) ) <span class="co">#take the mean of the means.</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>    <span class="kw">return</span>( mean.of.means ) <span class="co">#return the object that is the mean of both means.</span></span>
 <span id="cb16-6"><a href="#cb16-6"></a>    }</span></code></pre></div>
 <p>Let’s give it a try:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
-<span id="cb17-2"><a href="#cb17-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>)</span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">function.mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> )</span>
+<span id="cb17-2"><a href="#cb17-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span> )</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">function.mean</span>( x )</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">function.mean</span>(y)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">function.mean</span>( y )</span></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">function.mean.of.means</span>(x,y)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">function.mean.of.means</span>( x,y )</span></code></pre></div>
 <pre><code>## [1] 5.5</code></pre>
 <p>Now, compare that to:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">function.two.means</span>(x,y)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">function.two.means</span>( x,y )</span></code></pre></div>
 <pre><code>## [1] 3 8</code></pre>
 <p><em>Question</em>: What is the difference between the statement <code>both.means &lt;- c(mean.1,mean.2)</code> in the first function and the statement <code>mean.of.means &lt;- mean(c(mean.1,mean.2))</code> in the second function?<br />
 <br></p>
@@ -542,21 +542,21 @@ actions or stuff you want the function to be doing<br />
 <p>Rather than writing line-by-line, it is easier to create functions in a text editor and then copy and paste them into R. Many text editors will auto-generate brackets, parentheses, etc., making the programming much easier.</p>
 <p>Within R, you can create script files (which have the .R extension) than can be called using the <code>source()</code> function. Rather than copy and pasting all of the text in a script, you can use the <code>source()</code> function to run an entire script.</p>
 <p>For example, execute the following script to plot a Christmas tree:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">source</span>(<span class="st">&quot;https://www.jacobtnyoung.com/uploads/2/3/4/5/23459640/tree_source.r&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">source</span>( <span class="st">&quot;https://www.jacobtnyoung.com/uploads/2/3/4/5/23459640/tree_source.r&quot;</span> )</span></code></pre></div>
 <p>Now, let’s take a look at the file (<a href="https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/master/tree_source.R">click here</a>) and see what the script is doing.<br />
 <br></p>
 </div>
 <div id="loops" class="section level2">
 <h2><strong>Loops</strong></h2>
 <p>Often we need to repeat an action several times and would like a procedure that does this for us. In R, the <code>for()</code> function accomplishes this task and takes the following form:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){  </span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n ){  </span>
 <span id="cb26-2"><a href="#cb26-2"></a>  <span class="co">#do some stuff here  </span></span>
 <span id="cb26-3"><a href="#cb26-3"></a>  }  </span></code></pre></div>
 <p>In this syntax, <code>for</code> indicates that we are going to loop from a start index to an end index, <code>i</code> is the index we are looping over, <code>1</code> is our start index, <code>n</code> is the end index, <code>{</code> opens the loop and <code>}</code> closes the loop. With loops, actions that take place in the loop involve objects, and these objects must be created before we initiate the loop.</p>
 <p>Let’s create a look that takes each value of an object and squares it. For example:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>  x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1</span>)           <span class="co">#create an object called x that is 1,2,3,4,5.</span></span>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>  x &lt;-<span class="st"> </span><span class="kw">seq</span>( <span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1</span> )         <span class="co">#create an object called x that is 1,2,3,4,5.</span></span>
 <span id="cb27-2"><a href="#cb27-2"></a>  x.squared &lt;-<span class="st"> </span><span class="ot">NULL</span>       <span class="co">#create an object that is empty which we will use in the loop.</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){         <span class="co">#for each element for 1 through 5.</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>    <span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ){           <span class="co">#for each element for 1 through 5.</span></span>
 <span id="cb27-4"><a href="#cb27-4"></a>      x.squared[i] &lt;-<span class="st"> </span>x[i]<span class="op">^</span><span class="dv">2</span> <span class="co">#each element of x.squared will be x[i] squared.</span></span>
 <span id="cb27-5"><a href="#cb27-5"></a>    }</span>
 <span id="cb27-6"><a href="#cb27-6"></a>x.squared <span class="co"># print the object to see the value.</span></span></code></pre></div>
@@ -620,25 +620,25 @@ actions or stuff you want the function to be doing<br />
 </table>
 <p>If we read these data in as a matrix, then the mean for each variable is just the column means:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">#Create the data matrix using the matrix function.</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>data &lt;-<span class="st"> </span><span class="kw">matrix</span>(</span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>), <span class="co"># a vector of the values.</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>dat &lt;-<span class="st"> </span><span class="kw">matrix</span>(</span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> ), <span class="co"># a vector of the values.</span></span>
 <span id="cb30-4"><a href="#cb30-4"></a>  <span class="dt">nrow=</span><span class="dv">5</span>, <span class="co"># the number of rows in the matrix.</span></span>
 <span id="cb30-5"><a href="#cb30-5"></a>  <span class="dt">ncol=</span><span class="dv">3</span>, <span class="co"># the number of columns in the matrix.</span></span>
 <span id="cb30-6"><a href="#cb30-6"></a>  <span class="dt">byrow=</span><span class="ot">TRUE</span> <span class="co">#instructions to read by row (vs. by column).</span></span>
 <span id="cb30-7"><a href="#cb30-7"></a>  )</span></code></pre></div>
 <p>Note, we could write:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">mean</span>(data[,<span class="dv">1</span>])  </span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">mean</span>(data[,<span class="dv">2</span>])  </span>
-<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">mean</span>(data[,<span class="dv">3</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">mean</span>( dat[,<span class="dv">1</span>] )  </span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">mean</span>( dat[,<span class="dv">2</span>] )  </span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">mean</span>( dat[,<span class="dv">3</span>] )</span></code></pre></div>
 <p>Or, we could just use the <code>apply()</code> function:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">apply</span>(data,<span class="dv">2</span>,mean)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">apply</span>( dat,<span class="dv">2</span>,mean )</span></code></pre></div>
 <pre><code>## [1] 2.6 3.0 3.4</code></pre>
 <p><br></p>
 </div>
 <div id="ifelse-statements" class="section level2">
 <h2><strong>If/Else Statements</strong></h2>
 <p>R has a useful function called <code>which()</code> that returns T/F statements about objects. The function returns the position of the values meeting some condition. For example:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> )</span>
 <span id="cb34-2"><a href="#cb34-2"></a><span class="kw">which</span>( x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span> ) <span class="co">#which elements of x are greater than 3?</span></span></code></pre></div>
 <pre><code>## [1]  4  5  6  7 14 15</code></pre>
 <p>Shows that elements in the 4th, 5th, 6th, 7th, 14th, and 15th positions are &gt; 3.</p>
@@ -647,19 +647,19 @@ actions or stuff you want the function to be doing<br />
 action to take<br />
 <code>}</code></p>
 <p>For example, say we want to recode some value if it meets some condition. Specifically, lets recode all values in <code>x</code> to be 0 of they are greater than 3. To do this, we need to put our if statement in a <code>for()</code> loop.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> )</span>
 <span id="cb36-2"><a href="#cb36-2"></a></span>
-<span id="cb36-3"><a href="#cb36-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>){</span>
-<span id="cb36-4"><a href="#cb36-4"></a>    <span class="cf">if</span>(x[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>){ <span class="co">#define the condition.</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span> ){</span>
+<span id="cb36-4"><a href="#cb36-4"></a>    <span class="cf">if</span>( x[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span> ){ <span class="co">#define the condition.</span></span>
 <span id="cb36-5"><a href="#cb36-5"></a>      x[i] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co">#assign the value if condition is met.</span></span>
 <span id="cb36-6"><a href="#cb36-6"></a>    }</span>
 <span id="cb36-7"><a href="#cb36-7"></a>  }</span>
 <span id="cb36-8"><a href="#cb36-8"></a>x</span></code></pre></div>
 <pre><code>##  [1] 1 2 3 0 0 0 0 3 2 1 1 2 3 0 0</code></pre>
 <p>There is also the <code>else</code> command that lets us perform actions if some condition is not met. For example, recode all values to be 1 if they are not greater than 3 (i.e. going to be changed to 0).</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>){</span>
-<span id="cb38-3"><a href="#cb38-3"></a>  <span class="cf">if</span>(x[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>){</span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> )</span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span> ){</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="cf">if</span>( x[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span> ){</span>
 <span id="cb38-4"><a href="#cb38-4"></a>    x[i] &lt;-<span class="st"> </span><span class="dv">0</span></span>
 <span id="cb38-5"><a href="#cb38-5"></a>    }</span>
 <span id="cb38-6"><a href="#cb38-6"></a>  <span class="cf">else</span> x[i] &lt;-<span class="st"> </span><span class="dv">1</span></span>
@@ -667,13 +667,13 @@ action to take<br />
 <span id="cb38-8"><a href="#cb38-8"></a>x</span></code></pre></div>
 <pre><code>##  [1] 1 1 1 0 0 0 0 1 1 1 1 1 1 0 0</code></pre>
 <p>Finally, there is also the <code>else if()</code> function that lets you combine several possible actions. For example:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> )</span>
 <span id="cb40-2"><a href="#cb40-2"></a></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>){</span>
-<span id="cb40-4"><a href="#cb40-4"></a>  <span class="cf">if</span>(x[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>){ <span class="co">#recode 4 and 5 to 0.</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span> ){</span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="cf">if</span>( x[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span> ){ <span class="co">#recode 4 and 5 to 0.</span></span>
 <span id="cb40-5"><a href="#cb40-5"></a>    x[i] &lt;-<span class="st"> </span><span class="dv">0</span></span>
 <span id="cb40-6"><a href="#cb40-6"></a>    }</span>
-<span id="cb40-7"><a href="#cb40-7"></a>  <span class="cf">else</span> <span class="cf">if</span>(x[i] <span class="op">==</span><span class="st"> </span><span class="dv">3</span>){ <span class="co">#recode 3 to 2.</span></span>
+<span id="cb40-7"><a href="#cb40-7"></a>  <span class="cf">else</span> <span class="cf">if</span>( x[i] <span class="op">==</span><span class="st"> </span><span class="dv">3</span> ){ <span class="co">#recode 3 to 2.</span></span>
 <span id="cb40-8"><a href="#cb40-8"></a>    x[i] &lt;-<span class="st"> </span><span class="dv">2</span></span>
 <span id="cb40-9"><a href="#cb40-9"></a>    }</span>
 <span id="cb40-10"><a href="#cb40-10"></a>  <span class="cf">else</span> x[i] &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># recode 1 and 2 to 1.</span></span>

@@ -1,6 +1,5 @@
 ---
 title: "Programming: Functions, Loops, If/Else Statements"
-date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document:
     df_print: paged
@@ -10,6 +9,8 @@ output:
     toc_float: yes
     code_fold: show
 ---
+
+<br>
 
 ## **Functions**  
 
@@ -30,9 +31,9 @@ Basically, we are passing in an object or objects, doing something to it, and th
 
 For example, let’s create a function that calculates the mean of a variable:  
 ```{r,echo=TRUE,eval=TRUE}
-function.mean <- function(input){
-  our.mean <- sum(input)/length(input) 
-  return(our.mean) 
+function.mean <- function( input ){
+  our.mean <- sum( input )/length( input ) 
+  return( our.mean ) 
 }
 ```
 
@@ -44,24 +45,24 @@ Remember that we can see our function by just typing the name `function.mean`.
 
 Now, let’s create an object called `x` and calculate the mean using our function:  
 ```{r,echo=TRUE,eval=TRUE}
-x <- c(1,2,3,4,5)
-function.mean(x)
+x <- c( 1,2,3,4,5 )
+function.mean( x )
 ```  
 
 Note here that `x` is the input in the function.   
 
 We can also create a object that is returned by the function.  
 ```{r,echo=TRUE,eval=TRUE}
-x.mean <- function.mean(x)
+x.mean <- function.mean( x )
 x.mean
 ```
 The command: `function.mean(x)` just returns the mean, but the command: `x.mean <- function.mean(x)` creates the object `x.mean` that is the mean of the object `x`.  
 
 Commenting inside the function is helpful for keeping track of what is going on, as well as for others who might want to use a function you have created. In R, any line with a `#` sign in front is commented out of the code in the function and it will pass over it. For example:  
 ```{r,echo=TRUE,eval=TRUE}
-function.mean <- function(input){
-  our.mean <- sum(input)/length(input) #the equation for the mean.
-  return(our.mean) #the object 'our.mean' is what is created.
+function.mean <- function( input ){
+  our.mean <- sum( input )/length( input ) #the equation for the mean.
+  return( our.mean ) #the object 'our.mean' is what is created.
 }
 ```
 It is important to note that R will overwrite the names of existing functions. For example, the function `rowMeans()` can be overwritten by the command `rowMeans <- function(input){`...`}`. So be careful with your naming of functions. To be safe, just type the name of what you want to call your function to see if it exists in the loaded libraries.  
@@ -70,55 +71,55 @@ It is important to note that R will overwrite the names of existing functions. F
 ## **More about the function of the `function()` Function**  
 The `return()` command within the `function()` function is helpful when our function creates multiple objects, but we only want particular objects returned by the function. For example, let’s create a function that takes the mean of two different inputs, then creates a new object that has both of these means as a single object:  
 ```{r,echo=TRUE,eval=TRUE}
-function.two.means <- function(input1,input2){ #this function takes two arguments.
-    mean.1 <- sum(input1)/length(input1) # take the mean of the first object.
-    mean.2 <- sum(input2)/length(input2) # take the mean of the second object.
-    both.means <- c(mean.1,mean.2) #combine the means into a object.
-    return(both.means) #return the object that is both means.
+function.two.means <- function( input1,input2 ){ #this function takes two arguments.
+    mean.1 <- sum( input1 )/length( input1 ) # take the mean of the first object.
+    mean.2 <- sum( input2 )/length( input2 ) # take the mean of the second object.
+    both.means <- c( mean.1,mean.2 ) #combine the means into a object.
+    return( both.means ) #return the object that is both means.
 	}
 ```
 Let’s give it a try:  
 ```{r,echo=TRUE,eval=TRUE}
-x <- c(1,2,3,4,5)
-y <- c(6,7,8,9,10)
+x <- c( 1,2,3,4,5 )
+y <- c( 6,7,8,9,10 )
 ```  
 
 Create the mean of `x`:  
 ```{r,echo=TRUE,eval=TRUE}
-function.mean(x)
+function.mean( x )
 ```
 
 Create the mean of `y`:  
 ```{r,echo=TRUE,eval=TRUE}
-function.mean(y)
+function.mean( y )
 ```  
 
 Now, create the mean of the means. *Note* that we have to put in two arguments here:  
 ```{r,echo=TRUE,eval=TRUE}
-function.two.means(x,y) 
+function.two.means( x,y ) 
 ```
 
 Note that this function creates an object with two means. That is to say, a *vector* with dimensions *1 x 2*. That is different then a function which takes the mean of the means. For example:  
 ```{r,echo=TRUE,eval=TRUE}
-function.mean.of.means <- function(input1,input2){ #this function takes two arguments.
-    mean.1 <- sum(input1)/length(input1) # take the mean of the first object.
-    mean.2 <- sum(input2)/length(input2) # take the mean of the second object.
-    mean.of.means <- mean(c(mean.1,mean.2)) #take the mean of the means.
-    return(mean.of.means) #return the object that is the mean of both means.
+function.mean.of.means <- function( input1,input2 ){ #this function takes two arguments.
+    mean.1 <- sum( input1 )/length( input1 ) # take the mean of the first object.
+    mean.2 <- sum( input2 )/length( input2 ) # take the mean of the second object.
+    mean.of.means <- mean( c( mean.1,mean.2 ) ) #take the mean of the means.
+    return( mean.of.means ) #return the object that is the mean of both means.
 	}
 ```
 Let’s give it a try:  
 ```{r,echo=TRUE,eval=TRUE}
-x <- c(1,2,3,4,5)
-y <- c(6,7,8,9,10)
-function.mean(x)
-function.mean(y)
-function.mean.of.means(x,y)
+x <- c( 1,2,3,4,5 )
+y <- c( 6,7,8,9,10 )
+function.mean( x )
+function.mean( y )
+function.mean.of.means( x,y )
 ```
 
 Now, compare that to:
 ```{r,echo=TRUE,eval=TRUE}
-function.two.means(x,y)
+function.two.means( x,y )
 ```
 
 *Question*: What is the difference between the statement `both.means <- c(mean.1,mean.2)` in the first function and the statement `mean.of.means <- mean(c(mean.1,mean.2))` in the second function?  
@@ -131,7 +132,7 @@ Within R, you can create script files (which have the .R extension) than can be 
 
 For example, execute the following script to plot a Christmas tree:
 ```{r,echo=TRUE,eval=FALSE}
-source("https://www.jacobtnyoung.com/uploads/2/3/4/5/23459640/tree_source.r")
+source( "https://www.jacobtnyoung.com/uploads/2/3/4/5/23459640/tree_source.r" )
 ```
 
 Now, let's take a look at the file ([click here](https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/master/tree_source.R)) and see what the script is doing.  
@@ -140,7 +141,7 @@ Now, let's take a look at the file ([click here](https://raw.githubusercontent.c
 ## **Loops**  
 Often we need to repeat an action several times and would like a procedure that does this for us. In R, the `for()` function accomplishes this task and takes the following form:  
 ```{r,echo=TRUE,eval=FALSE}
-for(i in 1:n){  
+for( i in 1:n ){  
   #do some stuff here  
   }  
 ```
@@ -149,9 +150,9 @@ In this syntax, `for` indicates that we are going to loop from a start index to 
 
 Let’s create a look that takes each value of an object and squares it. For example:  
 ```{r,echo=TRUE,eval=TRUE}
-  x <- seq(1,5,1)	        #create an object called x that is 1,2,3,4,5.
+  x <- seq( 1,5,1 )	        #create an object called x that is 1,2,3,4,5.
   x.squared <- NULL       #create an object that is empty which we will use in the loop.
-    for(i in 1:5){	       #for each element for 1 through 5.
+    for( i in 1:5 ){	       #for each element for 1 through 5.
       x.squared[i] <- x[i]^2 #each element of x.squared will be x[i] squared.
 	}
 x.squared # print the object to see the value.
@@ -177,8 +178,8 @@ Mean   | ?    | ?    | ?
 If we read these data in as a matrix, then the mean for each variable is just the column means:  
 ```{r,echo=TRUE,eval=TRUE}
 #Create the data matrix using the matrix function.
-data <- matrix(
-  c(1,2,3,4,5,5,4,3,2,1,1,2,3,4,5), # a vector of the values.
+dat <- matrix(
+  c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 ), # a vector of the values.
   nrow=5, # the number of rows in the matrix.
   ncol=3, # the number of columns in the matrix.
   byrow=TRUE #instructions to read by row (vs. by column).
@@ -187,21 +188,21 @@ data <- matrix(
 
 Note, we could write:  
 ```{r,echo=TRUE,eval=FALSE}
-mean(data[,1])  
-mean(data[,2])  
-mean(data[,3])
+mean( dat[,1] )  
+mean( dat[,2] )  
+mean( dat[,3] )
 ```
 
 Or, we could just use the `apply()` function:  
 ```{r,echo=TRUE,eval=TRUE}
-apply(data,2,mean)
+apply( dat,2,mean )
 ```
 <br>
 
 ## **If/Else Statements**  
 R has a useful function called `which()` that returns T/F statements about objects. The function returns the position of the values meeting some condition. For example:  
 ```{r,echo=TRUE,eval=TRUE}
-x <- c(1,2,3,4,5,5,4,3,2,1,1,2,3,4,5)
+x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
 which( x > 3 ) #which elements of x are greater than 3?
 ```
 Shows that elements in the 4th, 5th, 6th, 7th, 14th, and 15th positions are > 3.
@@ -213,10 +214,10 @@ Using the same idea, the `if()` function can be used if we want to perform a cer
 
 For example, say we want to recode some value if it meets some condition. Specifically, lets recode all values in `x` to be 0 of they are greater than 3. To do this, we need to put our if statement in a `for()` loop.  
 ```{r,echo=TRUE,eval=TRUE}
-x <- c(1,2,3,4,5,5,4,3,2,1,1,2,3,4,5)
+x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
 
-for(i in 1:15){
-    if(x[i] > 3){ #define the condition.
+for( i in 1:15 ){
+    if( x[i] > 3 ){ #define the condition.
       x[i] <- 0 #assign the value if condition is met.
     }
   }
@@ -225,9 +226,9 @@ x
 
 There is also the `else` command that lets us perform actions if some condition is not met. For example, recode all values to be 1 if they are not greater than 3 (i.e. going to be changed to 0).  
 ```{r,echo=TRUE,eval=TRUE}
-x <- c(1,2,3,4,5,5,4,3,2,1,1,2,3,4,5)
-for(i in 1:15){
-  if(x[i] > 3){
+x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
+for( i in 1:15 ){
+  if( x[i] > 3 ){
     x[i] <- 0
     }
   else x[i] <- 1
@@ -237,13 +238,13 @@ x
 
 Finally, there is also the `else if()` function that lets you combine several possible actions. For example:  
 ```{r,echo=TRUE,eval=TRUE}
-x <- c(1,2,3,4,5,5,4,3,2,1,1,2,3,4,5)
+x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
 
-for(i in 1:15){
-  if(x[i] > 3){ #recode 4 and 5 to 0.
+for( i in 1:15 ){
+  if( x[i] > 3 ){ #recode 4 and 5 to 0.
     x[i] <- 0
     }
-  else if(x[i] == 3){ #recode 3 to 2.
+  else if( x[i] == 3 ){ #recode 3 to 2.
     x[i] <- 2
     }
   else x[i] <- 1 # recode 1 and 2 to 1.
