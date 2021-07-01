@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Working with Data</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/navigation-1.1/codefolding.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <!-- NOTE: add "navbar-inverse" class for an alternate navbar background -->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R Workshop</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Working with Data</h1>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1><strong>Introduction</strong></h1>
+<p>Data are read into R using several functions written for this purpose. In my experience .csv format is the most well behaved.</p>
+<p>The <code>read.csv()</code> function is used to assign a data file to an object:<br />
+<code>data &lt;- read.csv("</code>the path and file.csv<code>",</code>other arguments here<code>)</code></p>
+<p>Let’s take a look at the help: <code>?read.csv</code>.</p>
+<p>There is a more general function, <code>read.table</code>, that can read different types of files. But, it requires more programming. In addition, there is a package called <code>foreign</code> that has functions for reading files from other programs (e.g. <code>read.spss</code> reads SPSS files; <code>read.dta</code> reads Stata files, etc.). However, in my experience, if you are sending something from Stata to R, for example, it is better to just have Stata write a .csv file using: the <code>outsheet</code> function in Stata (type <code>help outsheet</code> in Stata for information).<br />
+<br></p>
+<div id="example-data-file" class="section level2">
+<h2><strong>Example Data File</strong></h2>
+<p>Let’s work through an example. Start by downloading the “R_Workshop_data.csv” file from this <a href="r_workshop_data.csv">link</a> on the <a href="https://jacobtnyoung.github.io/RWorkshop/">RWorkshop website</a>.</p>
+<p>The file contains 52 individuals and 4 variables. The variables are: respondents id (“id”), a binary variable indicating whether the respondent is male or female (“male” where “1” is male), a measure of the respondent’s age (“age”), and a measure of risky behaviors engaged in by the respondent (“risky”).</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["male"],"name":[2],"type":["int"],"align":["right"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]},{"label":["risky"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"13","4":"1"},{"1":"2","2":"1","3":"NA","4":"0"},{"1":"3","2":"1","3":"13","4":"1"},{"1":"4","2":"NA","3":"12","4":"NA"},{"1":"5","2":"0","3":"13","4":"1"},{"1":"6","2":"1","3":"13","4":"NA"},{"1":"7","2":"1","3":"12","4":"1"},{"1":"8","2":"1","3":"12","4":"1"},{"1":"9","2":"0","3":"12","4":"1"},{"1":"10","2":"0","3":"13","4":"3"},{"1":"11","2":"0","3":"13","4":"NA"},{"1":"12","2":"1","3":"14","4":"1"},{"1":"13","2":"0","3":"13","4":"1"},{"1":"14","2":"0","3":"14","4":"0"},{"1":"15","2":"NA","3":"12","4":"1"},{"1":"16","2":"1","3":"13","4":"0"},{"1":"17","2":"0","3":"13","4":"1"},{"1":"18","2":"1","3":"14","4":"0"},{"1":"19","2":"0","3":"14","4":"NA"},{"1":"20","2":"1","3":"13","4":"1"},{"1":"21","2":"1","3":"13","4":"1"},{"1":"22","2":"NA","3":"13","4":"0"},{"1":"23","2":"1","3":"13","4":"1"},{"1":"24","2":"1","3":"13","4":"1"},{"1":"25","2":"1","3":"13","4":"1"},{"1":"26","2":"1","3":"14","4":"0"},{"1":"27","2":"0","3":"13","4":"1"},{"1":"28","2":"0","3":"NA","4":"0"},{"1":"29","2":"0","3":"14","4":"1"},{"1":"30","2":"1","3":"14","4":"0"},{"1":"31","2":"0","3":"13","4":"NA"},{"1":"32","2":"1","3":"13","4":"0"},{"1":"33","2":"0","3":"14","4":"2"},{"1":"34","2":"1","3":"12","4":"0"},{"1":"35","2":"1","3":"12","4":"2"},{"1":"36","2":"1","3":"13","4":"0"},{"1":"37","2":"0","3":"13","4":"1"},{"1":"38","2":"NA","3":"NA","4":"0"},{"1":"39","2":"1","3":"13","4":"0"},{"1":"40","2":"0","3":"13","4":"2"},{"1":"41","2":"1","3":"13","4":"NA"},{"1":"42","2":"0","3":"13","4":"2"},{"1":"43","2":"0","3":"12","4":"1"},{"1":"44","2":"1","3":"12","4":"0"},{"1":"45","2":"1","3":"13","4":"1"},{"1":"46","2":"0","3":"12","4":"0"},{"1":"47","2":"0","3":"12","4":"1"},{"1":"48","2":"1","3":"13","4":"1"},{"1":"49","2":"0","3":"13","4":"2"},{"1":"50","2":"0","3":"13","4":"1"},{"1":"51","2":"0","3":"NA","4":"1"},{"1":"52","2":"0","3":"12","4":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><br></p>
+</div>
+<div id="loading-data-files" class="section level2">
+<h2><strong>Loading Data Files</strong></h2>
+<p>Let’s go ahead and import it into R:</p>
+<p>First, set the directory where the file is by using the <code>setwd("/…")</code> function.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#read in the data file.</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>dat &lt;-<span class="st"> </span><span class="kw">read.csv</span>(</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="st">&quot;r_workshop_data.csv&quot;</span>, <span class="co">#the data file.</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="co"># tell R to read the first row as variable names.</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">as.is =</span> <span class="ot">TRUE</span>, <span class="co"># tell R to not make any conversions.</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="dt">na.strings =</span> <span class="st">&quot;.&quot;</span> <span class="co">#tell R that missing values are periods.</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    )</span>
+<span id="cb1-8"><a href="#cb1-8"></a>dat <span class="co">#look at the object.</span></span></code></pre></div>
+<p>If you had a REALLY big data set, you could use the head() function or the tail() function to look at the first few (or last few) cases.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">head</span>( dat )</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">tail</span>( dat )</span></code></pre></div>
+<p>If you use the <code>View()</code> function, you can open the spreadsheet to see how R views the file and why we give it particular instructions.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">View</span>( dat )</span></code></pre></div>
+<p>Note that we could <em>skip</em> the step of storing the .csv file locally and simply call file from the website url.<br />
+For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>dat &lt;-<span class="st"> </span><span class="kw">read.csv</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="st">&quot;https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r_workshop_data.csv&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">as.is=</span><span class="ot">TRUE</span>, <span class="dt">na.strings=</span><span class="st">&quot;.&quot;</span> <span class="co">#all the other arguments remain the same.</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    )</span>
+<span id="cb4-5"><a href="#cb4-5"></a>dat <span class="co">#look at the object.</span></span></code></pre></div>
+<p><br></p>
+</div>
+<div id="working-with-objects" class="section level2">
+<h2><strong>Working with Objects</strong></h2>
+<p>Now, we can work with the <code>data</code> object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">dim</span>( dat ) <span class="co"># what are the dimensions of the object?</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>dat[,<span class="dv">1</span>] <span class="co">#first column or first variable.</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>dat[<span class="dv">1</span>,] <span class="co">#first row or first case.</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>dat[,<span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span> )] <span class="co">#first two columns.</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>dat,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] <span class="co">#same thing as data[,c(1,2)].</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>dat[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,] <span class="co">#just the first 25 cases.</span></span></code></pre></div>
+<p>We can also refer to the variables (i.e. columns) by their names enclosed in <code>""</code> or by using the <code>$</code> key.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dat[,<span class="st">&quot;id&quot;</span>] <span class="co">#returns the entire column named &quot;id&quot;.</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>dat<span class="op">$</span>id <span class="co">#returns the column called &quot;id&quot; within the object &quot;data&quot;.</span></span></code></pre></div>
+<p>Referencing parts of an object in this way makes it easy to execute functions. For example, the function <code>summary()</code> provides the range, mean, median, and info about missing values:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">summary</span>( dat ) <span class="co">#summarize all the variables.</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">summary</span>( dat<span class="op">$</span>age ) <span class="co">#just summarize age.</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">summary</span>( dat[,<span class="st">&quot;age&quot;</span>] ) <span class="co">#same thing, different syntax.</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="kw">summary</span>( dat[,<span class="kw">c</span>( <span class="st">&quot;age&quot;</span>,<span class="st">&quot;male&quot;</span> )] ) <span class="co">#just age and male.</span></span></code></pre></div>
+<p>Let’s read into the data, but exclude the header to see how to assign names:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#toggle the header argument by setting it to FALSE.</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>dat &lt;-<span class="st"> </span><span class="kw">read.csv</span>( <span class="st">&quot;r_workshop_data.csv&quot;</span> , <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">as.is =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>dat     <span class="co"># look at the object, note the first row.</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>dat[<span class="dv">1</span>,] <span class="co"># R has created the variable names for us.</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#we can see this from the colnames() function.</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="kw">colnames</span>( dat )</span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#change the names.</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>names &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="st">&quot;id&quot;</span>,<span class="st">&quot;male&quot;</span>,<span class="st">&quot;age&quot;</span>,<span class="st">&quot;risky&quot;</span> ) <span class="co"># create an object of names.</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="kw">colnames</span>( dat ) &lt;-<span class="st"> </span>names <span class="co">#tell R what the column names are.</span></span></code></pre></div>
+<p>Obviously, if we had the names we would read them in with <code>header=TRUE</code> in the <code>read.csv</code> line.<br />
+<br></p>
+</div>
+<div id="merging-data-files" class="section level2">
+<h2><strong>Merging Data Files</strong></h2>
+<p>We can merge two objects (or datasets) with the <code>merge()</code> function. For example, let’s create two datasets where the cases do not match exactly (i.e. some cases are missing data on a merged variable) by using the <code>data.frame()</code> function:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Create the datasets (note the difference between them).</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>dat.a &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">id =</span> <span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> ), <span class="dt">age =</span> <span class="kw">c</span>( <span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">11</span> ) )</span>
+<span id="cb9-3"><a href="#cb9-3"></a>dat.b &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">id =</span> <span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span> )  , <span class="dt">sex =</span> <span class="kw">c</span>( <span class="st">&quot;m&quot;</span>,<span class="st">&quot;m&quot;</span>,<span class="st">&quot;f&quot;</span>,<span class="st">&quot;m&quot;</span> ) )</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw">class</span>( dat.a ) <span class="co"># object &quot;data.a&quot; is of class data.frame.</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a>?merge <span class="co"># note the different merging options.</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co"># We can now merge these two datasets to get a single object.</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>dat.c &lt;-<span class="st"> </span><span class="kw">merge</span>( data.a,data.b,<span class="dt">by.x =</span> <span class="st">&quot;id&quot;</span> )</span>
+<span id="cb9-11"><a href="#cb9-11"></a>dat.d &lt;-<span class="st"> </span><span class="kw">merge</span>( data.a,data.b,<span class="dt">by.x =</span> <span class="st">&quot;id&quot;</span>,<span class="dt">all.x=</span><span class="ot">TRUE</span> ) <span class="co">#note difference.</span></span></code></pre></div>
+<p><br></p>
+</div>
+<div id="exporting-data-files" class="section level2">
+<h2><strong>Exporting Data Files</strong></h2>
+<p>We can also write data files out for analysis in another program. For example, say we have created a variable in our data set that we could only create in R and we want to export the file to another program. For .csv files, we can just use the <code>write.csv</code> function. As with reading files, there is a more general function, <code>write.table</code>, that can write different types of files (see <code>?write.table</code>). For <code>write.csv</code> we just tell it what object we want to write out to a file and the file name:</p>
+<p>First, set the directory where the file will go by using <code>setwd("/…")</code>. Then:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">write.csv</span>( dat,<span class="st">&quot;New_R_Workshop_data.csv&quot;</span> ) <span class="co">#file path can be added also.</span></span></code></pre></div>
+<p><br></p>
+</div>
+<div id="saving-data-files" class="section level2">
+<h2><strong>Saving Data Files</strong></h2>
+<p>Recall that to save the workspace use the <code>save.image()</code> function. This function requires a file path, a file name, and the extension “.RData” which is the format for an R workspace file. Since our imported data is an object (i.e. <code>data</code>), it will be saved to the workspace:</p>
+<p>First, set the directory where the file will go by using <code>setwd("/…")</code>. Then:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">save.image</span>( <span class="st">&quot;dat.RData&quot;</span> ) <span class="co">#file path can be added also.</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">rm</span>( <span class="dt">list=</span><span class="kw">ls</span>() ) <span class="co"># clear the workspace.</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="kw">ls</span>() <span class="co"># check the contents of the workspace.</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw">load</span>( <span class="st">&quot;dat.RData&quot;</span> ) <span class="co">#load the workspace that was previously saved.</span></span></code></pre></div>
+<p><br></p>
+</div>
+<div id="questions" class="section level2">
+<h2><strong>Questions?</strong></h2>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
