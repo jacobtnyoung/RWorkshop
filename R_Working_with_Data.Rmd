@@ -50,7 +50,7 @@ dat <- read.csv(
 dat #look at the object.
 ```  
 
-If you had a REALLY big data set, you could use the head() function or the tail() function to look at the first few (or last few) cases.  
+If you had a REALLY big data set, you could use the `head()` function or the `tail()` function to look at the first few (or last few) cases.  
 ```{r,echo=TRUE,eval=FALSE}
 head( dat )
 tail( dat )
