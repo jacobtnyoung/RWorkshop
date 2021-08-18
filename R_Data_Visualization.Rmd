@@ -364,7 +364,7 @@ R allows you to export your graphic to a .pdf file. This is nice if you write a 
 
 The structure of the function is:  
 ```{r,echo=TRUE,eval=FALSE}
-pdf ("name.pdf") #where you name the file and add the file path if necessary.  
+pdf("name.pdf") #where you name the file and add the file path if necessary.  
 plot() #the syntax to make the plots.
 dev.off() #turn off the plotting device.
 ```  
