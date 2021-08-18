@@ -73,20 +73,21 @@ dat #look at the object.
 <br>
 
 ## **Working with Objects**  
-Now, we can work with the `data` object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:  
+Now, we can work with the `dat` object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:  
 ```{r,echo=TRUE,eval=FALSE}
 dim( dat ) # what are the dimensions of the object?
-dat[,1] #first column or first variable.
-dat[1,] #first row or first case.
-dat[,c( 1,2 )] #first two columns.
-dat,1:2] #same thing as data[,c(1,2)].
-dat[1:25,] #just the first 25 cases.
+dat[,1] # first column or first variable.
+dat[1,] # first row or first case.
+dat[,c( 1,2 )] # first two columns.
+dat[,1:2] # same thing as dat[,c(1,2)].
+dat[1:25,] # just the first 25 cases.
+dat[,-c(1)] # remove the first column.
 ```
 
 We can also refer to the variables (i.e. columns) by their names enclosed in `""` or by using the `$` key.  
 ```{r,echo=TRUE,eval=FALSE}
-dat[,"id"] #returns the entire column named "id".
-dat$id #returns the column called "id" within the object "data".
+dat[,"id"] # returns the entire column named "id".
+dat$id # returns the column called "id" within the object "data".
 ```
 
 Referencing parts of an object in this way makes it easy to execute functions. For example, the function `summary()` provides the range, mean, median, and info about missing values:  
@@ -127,8 +128,8 @@ class( dat.a ) # object "data.a" is of class data.frame.
 ?merge # note the different merging options.
 
 # We can now merge these two datasets to get a single object.
-dat.c <- merge( data.a,data.b,by.x = "id" )
-dat.d <- merge( data.a,data.b,by.x = "id",all.x=TRUE ) #note difference.
+dat.c <- merge( dat.a,dat.b,by.x = "id" )
+dat.d <- merge( dat.a,dat.b,by.x = "id",all.x=TRUE ) #note difference.
 ```
 <br>
 

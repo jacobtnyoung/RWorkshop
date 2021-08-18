@@ -132,7 +132,7 @@ Within R, you can create script files (which have the .R extension) than can be 
 
 For example, execute the following script to plot a Christmas tree:
 ```{r,echo=TRUE,eval=FALSE}
-source( "https://www.jacobtnyoung.com/uploads/2/3/4/5/23459640/tree_source.r" )
+source( "https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/tree_source.R" )
 ```
 
 Now, let's take a look at the file ([click here](https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/master/tree_source.R)) and see what the script is doing.  
@@ -148,7 +148,7 @@ for( i in 1:n ){
 
 In this syntax, `for` indicates that we are going to loop from a start index to an end index, `i` is the index we are looping over, `1` is our start index, `n` is the end index, `{` opens the loop and `}` closes the loop. With loops, actions that take place in the loop involve objects, and these objects must be created before we initiate the loop.  
 
-Let’s create a look that takes each value of an object and squares it. For example:  
+Let’s create a loop that takes each value of an object and squares it. For example:  
 ```{r,echo=TRUE,eval=TRUE}
   x <- seq( 1,5,1 )	        #create an object called x that is 1,2,3,4,5.
   x.squared <- NULL       #create an object that is empty which we will use in the loop.

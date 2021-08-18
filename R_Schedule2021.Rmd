@@ -17,7 +17,9 @@ text-align: justify}
 
 ### Part One  
 
-#### 9:00-10:30 --- [**R, The Basics & RStudio**](R_Basics.html)
+#### 9:00-9:15 --- Introductions
+
+#### 9:15-10:30 --- [**R, The Basics & RStudio**](R_Basics.html)
 
 #### 10:30-10:45 --- *Short Break*  
 

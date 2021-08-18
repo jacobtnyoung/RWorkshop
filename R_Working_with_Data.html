@@ -475,16 +475,17 @@ dat <span class="co">#look at the object.</span></code></pre></div>
 </div>
 <div id="working-with-objects" class="section level2">
 <h2><strong>Working with Objects</strong></h2>
-<p>Now, we can work with the <code>data</code> object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:</p>
+<p>Now, we can work with the <code>dat</code> object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>( dat ) <span class="co"># what are the dimensions of the object?</span>
-dat[,<span class="dv">1</span>] <span class="co">#first column or first variable.</span>
-dat[<span class="dv">1</span>,] <span class="co">#first row or first case.</span>
-dat[,<span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span> )] <span class="co">#first two columns.</span>
-dat,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] <span class="co">#same thing as data[,c(1,2)].</span>
-dat[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,] <span class="co">#just the first 25 cases.</span></code></pre></div>
+dat[,<span class="dv">1</span>] <span class="co"># first column or first variable.</span>
+dat[<span class="dv">1</span>,] <span class="co"># first row or first case.</span>
+dat[,<span class="kw">c</span>( <span class="dv">1</span>,<span class="dv">2</span> )] <span class="co"># first two columns.</span>
+dat[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] <span class="co"># same thing as dat[,c(1,2)].</span>
+dat[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,] <span class="co"># just the first 25 cases.</span>
+dat[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>)] <span class="co"># remove the first column.</span></code></pre></div>
 <p>We can also refer to the variables (i.e. columns) by their names enclosed in <code>&quot;&quot;</code> or by using the <code>$</code> key.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat[,<span class="st">&quot;id&quot;</span>] <span class="co">#returns the entire column named &quot;id&quot;.</span>
-dat<span class="op">$</span>id <span class="co">#returns the column called &quot;id&quot; within the object &quot;data&quot;.</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat[,<span class="st">&quot;id&quot;</span>] <span class="co"># returns the entire column named &quot;id&quot;.</span>
+dat<span class="op">$</span>id <span class="co"># returns the column called &quot;id&quot; within the object &quot;data&quot;.</span></code></pre></div>
 <p>Referencing parts of an object in this way makes it easy to execute functions. For example, the function <code>summary()</code> provides the range, mean, median, and info about missing values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>( dat ) <span class="co">#summarize all the variables.</span>
 <span class="kw">summary</span>( dat<span class="op">$</span>age ) <span class="co">#just summarize age.</span>
@@ -517,8 +518,8 @@ dat.b &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span cl
 ?merge <span class="co"># note the different merging options.</span>
 
 <span class="co"># We can now merge these two datasets to get a single object.</span>
-dat.c &lt;-<span class="st"> </span><span class="kw">merge</span>( data.a,data.b,<span class="dt">by.x =</span> <span class="st">&quot;id&quot;</span> )
-dat.d &lt;-<span class="st"> </span><span class="kw">merge</span>( data.a,data.b,<span class="dt">by.x =</span> <span class="st">&quot;id&quot;</span>,<span class="dt">all.x=</span><span class="ot">TRUE</span> ) <span class="co">#note difference.</span></code></pre></div>
+dat.c &lt;-<span class="st"> </span><span class="kw">merge</span>( dat.a,dat.b,<span class="dt">by.x =</span> <span class="st">&quot;id&quot;</span> )
+dat.d &lt;-<span class="st"> </span><span class="kw">merge</span>( dat.a,dat.b,<span class="dt">by.x =</span> <span class="st">&quot;id&quot;</span>,<span class="dt">all.x=</span><span class="ot">TRUE</span> ) <span class="co">#note difference.</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="exporting-data-files" class="section level2">
