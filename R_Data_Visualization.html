@@ -465,7 +465,7 @@ y&lt;-<span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10<
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y    &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">15</span>,<span class="dv">30</span>,<span class="dt">length=</span><span class="dv">1000</span>)
 hx.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y,<span class="dv">0</span>,<span class="dv">1</span>) <span class="co">#get the densities to plot.</span>
 hx.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y,<span class="dv">0</span>,<span class="dv">2</span>)
-hx.<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y,<span class="dv">0</span>,<span class="dv">7</span>)
+hx.<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y,<span class="dv">0</span>,<span class="dv">3</span>)
 
 <span class="kw">plot</span>(y,hx.<span class="dv">1</span>,
   <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>, <span class="co"># blank out the labels for x and y.</span>
@@ -475,7 +475,7 @@ hx.<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">dnor
   <span class="dt">lwd=</span><span class="dv">2</span> <span class="co"># change the width of the line.</span>
 )
 
-<span class="co"># Now add the two othe lines.</span>
+<span class="co"># Now add the two other lines.</span>
   <span class="kw">lines</span>(y,hx.<span class="dv">2</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">lwd=</span><span class="dv">2</span>)
   <span class="kw">lines</span>(y,hx.<span class="dv">3</span>,<span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">lwd=</span><span class="dv">2</span>)
 

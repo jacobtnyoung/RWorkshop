@@ -49,7 +49,7 @@ What you type on the right is assigned to what you type on the left. For example
 
 After assigning a value to an object, type the name of the object and hit return/enter to see what the value is.  
 
-Objects can start with a letter or or a period. *But*, you cannot name a object starting with a number (or other symbols used by R).      
+Objects can start with a letter or a period. *But*, you cannot name a object starting with a number (or other symbols used by R).      
 Some examples:  
 `the.number.two <- 2`  
 `2 <- the.number.two`  

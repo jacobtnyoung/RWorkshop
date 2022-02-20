@@ -67,7 +67,7 @@ Here is an example I use in my data analysis course to illustrate the properties
 y    <- seq(-15,30,length=1000)
 hx.1 <- dnorm(y,0,1) #get the densities to plot.
 hx.2 <- dnorm(y,0,2)
-hx.3 <- dnorm(y,0,7)
+hx.3 <- dnorm(y,0,3)
 
 plot(y,hx.1,
   xlab="",ylab="", # blank out the labels for x and y.
@@ -77,7 +77,7 @@ plot(y,hx.1,
   lwd=2 # change the width of the line.
 )
 
-# Now add the two othe lines.
+# Now add the two other lines.
   lines(y,hx.2,col="red",type="l",lwd=2)
   lines(y,hx.3,col="darkgreen",type="l",lwd=2)
 
