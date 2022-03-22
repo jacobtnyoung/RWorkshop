@@ -38,7 +38,7 @@ dat
 
 Let’s go ahead and import it into R:
 
-First, set the directory where the file is by using the `setwd("/…")` function. If you're a windows user, replace every "\" in the file path with "\\".
+First, set the directory where the file is by using the `setwd("/…")` function. If you're a windows user, replace every `"\"` in the file path with `"\\"`.
 ```{r,echo=TRUE,eval=FALSE}
 #read in the data file.
 dat <- read.csv(
