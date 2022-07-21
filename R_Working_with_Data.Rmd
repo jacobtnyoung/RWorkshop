@@ -7,38 +7,45 @@ output:
     highlight: haddock
     toc: yes
     toc_float: yes
-    code_fold: show
+    self_contained: false
 ---
 
-# **Introduction**  
-Data are read into R using several functions written for this purpose. In my experience .csv format is the most well behaved.  
+<style>
+body {
+text-align: justify}
+</style>
 
-The `read.csv()` function is used to assign a data file to an object:  
-  `data <- read.csv("`the path and file.csv`",`other arguments here`)`  
+# **Introduction**
 
-Let’s take a look at the help: `?read.csv`.  
+Data are read into R using several functions written for this purpose. In my experience .csv format is the most well behaved.
 
-There is a more general function, `read.table`, that can read different types of files. But, it requires more programming. In addition, there is a package called `foreign` that has functions for reading files from other programs (e.g. `read.spss` reads SPSS files; `read.dta` reads Stata files, etc.). However, in my experience, if you are sending something from Stata to R, for example, it is better to just have Stata write a .csv file using: the `outsheet` function in Stata (type `help outsheet` in Stata for information).  
+The `read.csv()` function is used to assign a data file to an object:\
+`data <- read.csv("`the path and file.csv`",`other arguments here`)`
+
+Let's take a look at the help: `?read.csv`.
+
+There is a more general function, `read.table`, that can read different types of files. But, it requires more programming. In addition, there is a package called `foreign` that has functions for reading files from other programs (e.g. `read.spss` reads SPSS files; `read.dta` reads Stata files, etc.). However, in my experience, if you are sending something from Stata to R, for example, it is better to just have Stata write a .csv file using: the `outsheet` function in Stata (type `help outsheet` in Stata for information).\
 <br>
 
-## **Example Data File**  
-Let's work through an example. Start by downloading the "R_Workshop_data.csv" file from this [link](r_workshop_data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).  
+## **Example Data File**
 
-The file contains 52 individuals and 4 variables. The variables are: respondents id ("id"), a binary variable indicating whether the respondent is male or female ("male" where "1" is male), a measure of the respondent’s age ("age"), and a measure of risky behaviors engaged in by the respondent ("risky").  
+Let's work through an example. Start by downloading the "R_Workshop_data.csv" file from this [link](r_workshop_data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).
+
+The file contains 52 individuals and 4 variables. The variables are: respondents id ("id"), a binary variable indicating whether the respondent is male or female ("male" where "1" is male), a measure of the respondent's age ("age"), and a measure of risky behaviors engaged in by the respondent ("risky").
 
 ```{r,echo=FALSE,eval=TRUE}
 dat <- read.csv( "r_workshop_data.csv", header = TRUE, as.is = TRUE, na.strings = "." )
 dat
-```  
-
+```
 
 <br>
 
-## **Loading Data Files**  
+## **Loading Data Files**
 
-Let’s go ahead and import it into R:
+Let's go ahead and import it into R:
 
 First, set the directory where the file is by using the `setwd("/…")` function. If you're a windows user, replace every `"\"` in the file path with `"\\"`.
+
 ```{r,echo=TRUE,eval=FALSE}
 #read in the data file.
 dat <- read.csv(
@@ -48,32 +55,38 @@ dat <- read.csv(
     na.strings = "." #tell R that missing values are periods.
     )
 dat #look at the object.
-```  
+```
 
-If you had a REALLY big data set, you could use the `head()` function or the `tail()` function to look at the first few (or last few) cases.  
+If you had a REALLY big data set, you could use the `head()` function or the `tail()` function to look at the first few (or last few) cases.
+
 ```{r,echo=TRUE,eval=FALSE}
 head( dat )
 tail( dat )
 ```
 
-If you use the `View()` function, you can open the spreadsheet to see how R views the file and why we give it particular instructions.  
+If you use the `View()` function, you can open the spreadsheet to see how R views the file and why we give it particular instructions.
+
 ```{r,echo=TRUE,eval=FALSE}
 View( dat )
 ```
 
-Note that we could *skip* the step of storing the .csv file locally and simply call file from the website url.   
+Note that we could *skip* the step of storing the .csv file locally and simply call file from the website url.\
 For example:
+
 ```{r,echo=TRUE,eval=FALSE}
 dat <- read.csv(
     "https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r_workshop_data.csv",
     header=TRUE, as.is=TRUE, na.strings="." #all the other arguments remain the same.
     )
 dat #look at the object.
-```  
+```
+
 <br>
 
-## **Working with Objects**  
-Now, we can work with the `dat` object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:  
+## **Working with Objects**
+
+Now, we can work with the `dat` object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:
+
 ```{r,echo=TRUE,eval=FALSE}
 dim( dat ) # what are the dimensions of the object?
 dat[,1] # first column or first variable.
@@ -84,13 +97,15 @@ dat[1:25,] # just the first 25 cases.
 dat[,-c(1)] # remove the first column.
 ```
 
-We can also refer to the variables (i.e. columns) by their names enclosed in `""` or by using the `$` key.  
+We can also refer to the variables (i.e. columns) by their names enclosed in `""` or by using the `$` key.
+
 ```{r,echo=TRUE,eval=FALSE}
 dat[,"id"] # returns the entire column named "id".
 dat$id # returns the column called "id" within the object "data".
 ```
 
-Referencing parts of an object in this way makes it easy to execute functions. For example, the function `summary()` provides the range, mean, median, and info about missing values:  
+Referencing parts of an object in this way makes it easy to execute functions. For example, the function `summary()` provides the range, mean, median, and info about missing values:
+
 ```{r,echo=TRUE,eval=FALSE}
 summary( dat ) #summarize all the variables.
 summary( dat$age ) #just summarize age.
@@ -98,7 +113,8 @@ summary( dat[,"age"] ) #same thing, different syntax.
 summary( dat[,c( "age","male" )] ) #just age and male.
 ```
 
-Let’s read into the data, but exclude the header to see how to assign names:  
+Let's read into the data, but exclude the header to see how to assign names:
+
 ```{r,echo=TRUE,eval=FALSE}
 #toggle the header argument by setting it to FALSE.
 dat <- read.csv( "r_workshop_data.csv" , header = FALSE, as.is = TRUE)
@@ -113,11 +129,13 @@ names <- c( "id","male","age","risky" ) # create an object of names.
 colnames( dat ) <- names #tell R what the column names are.
 ```
 
-Obviously, if we had the names we would read them in with `header=TRUE` in the `read.csv` line.  
+Obviously, if we had the names we would read them in with `header=TRUE` in the `read.csv` line.\
 <br>
 
-## **Merging Data Files**  
-We can merge two objects (or datasets) with the `merge()` function. For example, let’s create two datasets where the cases do not match exactly (i.e. some cases are missing data on a merged variable) by using the `data.frame()` function:  
+## **Merging Data Files**
+
+We can merge two objects (or datasets) with the `merge()` function. For example, let's create two datasets where the cases do not match exactly (i.e. some cases are missing data on a merged variable) by using the `data.frame()` function:
+
 ```{r,echo=TRUE,eval=FALSE}
 # Create the datasets (note the difference between them).
 dat.a <- data.frame( id = c( 1,2,3,4,5 ), age = c( 10,12,14,15,11 ) )
@@ -131,27 +149,34 @@ class( dat.a ) # object "data.a" is of class data.frame.
 dat.c <- merge( dat.a,dat.b,by.x = "id" )
 dat.d <- merge( dat.a,dat.b,by.x = "id",all.x=TRUE ) #note difference.
 ```
+
 <br>
 
-## **Exporting Data Files**  
-We can also write data files out for analysis in another program. For example, say we have created a variable in our data set that we could only create in R and we want to export the file to another program. For .csv files, we can just use the `write.csv` function. As with reading files, there is a more general function, `write.table`, that can write different types of files (see `?write.table`). For `write.csv` we just tell it what object we want to write out to a file and the file name:  
+## **Exporting Data Files**
 
-First, set the directory where the file will go by using `setwd("/…")`. Then:  
+We can also write data files out for analysis in another program. For example, say we have created a variable in our data set that we could only create in R and we want to export the file to another program. For .csv files, we can just use the `write.csv` function. As with reading files, there is a more general function, `write.table`, that can write different types of files (see `?write.table`). For `write.csv` we just tell it what object we want to write out to a file and the file name:
+
+First, set the directory where the file will go by using `setwd("/…")`. Then:
+
 ```{r,echo=TRUE,eval=FALSE}
 write.csv( dat,"New_R_Workshop_data.csv" ) #file path can be added also.
 ```
+
 <br>
 
-## **Saving Data Files**  
-Recall that to save the workspace use the `save.image()` function. This function requires a file path, a file name, and the extension ".RData" which is the format for an R workspace file. Since our imported data is an object (i.e. `data`), it will be saved to the workspace:  
+## **Saving Data Files**
 
-First, set the directory where the file will go by using `setwd("/…")`. Then:  
+Recall that to save the workspace use the `save.image()` function. This function requires a file path, a file name, and the extension ".RData" which is the format for an R workspace file. Since our imported data is an object (i.e. `data`), it will be saved to the workspace:
+
+First, set the directory where the file will go by using `setwd("/…")`. Then:
+
 ```{r,echo=TRUE,eval=FALSE}
 save.image( "dat.RData" ) #file path can be added also.
 rm( list=ls() ) # clear the workspace.
 ls() # check the contents of the workspace.
 load( "dat.RData" ) #load the workspace that was previously saved.
 ```
+
 <br>
 
-## **Questions?**  
+## **Questions?**

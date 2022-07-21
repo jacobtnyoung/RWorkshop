@@ -1,5 +1,5 @@
 ---
-title: "Creating Reproducible Research: R Markdown"
+title: "Data-Driven Documents: R Markdown"
 date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document:
@@ -9,29 +9,33 @@ output:
     toc: yes
     toc_float: yes
     code_fold: show
+    self-countained: false
 ---
 
+<br>
+
 # **Introduction**  
-A great feature of RStudio is that you can create "reproducible" documents using [R Markdown](https://rmarkdown.rstudio.com/). In other words, it allows you to write all of the text, syntax for the analysis, etc. and keep it in a document. This way you are not bouncing between programs and everything is reproducible. This is ideal if you are using a publicly available data set.
+A great feature of RStudio is that you can create data-driven documents. That is, documents that use combine text and analysis into a "reproducible" documents. This is done using [R Markdown](https://rmarkdown.rstudio.com/). In other words, it allows you to write all of the text, syntax for the analysis, etc. and keep it in a document. This way you are not bouncing between programs and everything is reproducible. This is ideal if you are using a publicly available data set.
+
 <br>
 
 ## **Getting Started**  
 First, you need to install the `rmarkdown` package using:  
 
 ```{r, echo = TRUE, eval = FALSE}
-install.packages("rmarkdown")
+install.packages( "rmarkdown" )
 ```
 
 Now, let's take a look at how it works. Open a new R Markdown file using the drop-down menu as shown below:  
 
-![file call image](images/markdown_file_pic.png)  
+![file call image](_images/markdown_file_pic.png)  
 <br>
 
 Then, use the options to pick the type of file you want to create.
 
 Afterwards, click on the knit function in the .Rmd pane:  
 
-![file call image](images/knit_pic.png) 
+![file call image](_images/knit_pic.png) 
 <br>
 
 You did it!  
@@ -55,7 +59,7 @@ Take a look at the [RWorkshop gitub page](https://github.com/jacobtnyoung/RWorks
 
 You will see a `.Rmd` file for all of the sections we covered today. Let's look through a few.  
 
-Now, let's take a look at a [description](WO-PINS_S1_Network_Descriptives.html) of the [WOPINS](https://nij.ojp.gov/funding/awards/2016-mu-mu-0011) Site 1 data, part of a study funded by the [National Institute of Justice](https://nij.ojp.gov/).  
+Here is another example. Take a look through the [R2PhX](https://jacobtnyoung.github.io/R2PhX/) pages. In particular, take a look at this page examining [crime in Phoenix](https://jacobtnyoung.github.io/R2PhX/projects/PHXcrime_trends.html). This page is a .html file that is created using an RMarkdown file. That file can be found [here](https://github.com/jacobtnyoung/R2PhX/blob/master/projects/PHXcrime_trends.Rmd).
 
 <br>
 

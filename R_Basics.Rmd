@@ -16,6 +16,9 @@ body {
 text-align: justify}
 </style>
 
+```{r, include=FALSE}
+tutorial::go_interactive( greedy = FALSE )
+```
 
 <br>
 
@@ -23,8 +26,16 @@ text-align: justify}
 
 <br>
 
+## **0. Why R?**
+
+Good question. Let's watch a [video](https://player.vimeo.com/video/180644880) for an answer.
+
+
+<br>
+
 ## **1. History of R**
-R is a dialect of the *S* language that was written by John Chambers and others at Bell Labs in the 70s. In the 90s, R was developed and made available to the public with the GNU general public license. Importantly, R is *free*, meaning that you don’t have to pay for it (duh), but that you have freedom to use and modify it.  
+R is a dialect of the *S* language that was written by John Chambers and others at Bell Labs in the 70s. In the 90s, R was developed and made available to the public with the GNU general public license. Importantly, R is *free*, meaning that you don’t have to pay for it (duh), but it is also **open source**, meaning that you have freedom to use and modify it.  
+
 
 <br>
 
@@ -38,7 +49,11 @@ This prompt is the fundamental entry point for communicating with R. We type exp
 <br>
 
 ## **3. Objects in R**  
-R is "object-oriented" meaning that we can create objects that persist within an R session and they can be manipulated.
+R is a programming language. That means, it allows us to give instructions to our computer to do stuff. We will see that there is a lot of "stuff" we can do. But, the basic orientation to R is understanding **objects**.   
+
+What is an *object*? Without getting to philosophical, an *object* is something we create in the R environment. Think of an R session as a box. We are creating objects and putting them into the box. This is quite different from data analysis programs like SPSS or Stata.  
+
+<br>
 
 We create objects by using the assignment operator: `<-`
 
@@ -63,6 +78,9 @@ These two examples are treated the same in R:
    
 To have R ignore text, use the `#` sign to make comments.  
 For example: `x <- 2 # this assigns the value 2 to object x.`  
+
+In R there are no carriage returns (e.g. Stata uses `///` in code). Sorry :(  
+
 
 <br>
 
@@ -107,8 +125,17 @@ Using brackets to identify particular elements, called *indexing*, is VERY usefu
 
 <br>
 
-**You try it!**
-```{r,echo=TRUE,eval=FALSE}
+### **You try it!**
+
+```{r ex="try_it", type="pre-exercise-code", tut=TRUE}
+y <- c( 1,2,3,4,5,6,7,8,9,10 )
+y[4]
+y[4:7]
+y[c( 2,9 )]
+y[5:8] <- 0
+```
+
+```{r ex="try_it", type="sample-code", tut=TRUE}
 # Create a vector called y, with the elements 1 through 10.
 
 # what is the fourth element in y?
@@ -121,34 +148,68 @@ Using brackets to identify particular elements, called *indexing*, is VERY usefu
 
 ```
 
-<br>
+```{r ex="try_it", type="solution", tut=TRUE}
+# Create a vector called y, with the elements 1 through 10.
+y <- c( 1,2,3,4,5,6,7,8,9,10 )
 
-## **6. Characters and Types of objects in R**  
-R can also work with characters in vectors. A "character vector" is a vector of text strings:  
-```{r,echo=TRUE,eval=FALSE}
-c( "Hugo","Desmond","Largo" ) # a vector with three elements.
+# what is the fourth element in y?
+y[4]
+# what are the first through seventh elements in y?
+y[4:7]
+# what are the second and ninth elements in y?
+y[c( 2,9 )]
+# change the fifth through eighth elements in y to 0.
+y[5:8] <- 0
 ```
 
-We can ask R to tell us what "type" of vector a particular object is:  
+<br>
+
+## **6. Types of objects ("classes") in R**  
+Objects in R can be of different types or **classes**. There are four:  
+
+  + numeric, a number (e.g. `1, 2`)
+  + character, a letter or word (e.g. `"Shelley", "Trevor"`)
+  + factor, a category (e.g. `female, male`)
+  + logical, True or False values (e.g. `TRUE, FALSE`)
+
+
+Each type of vector serves different purposes:  
+
+  + *numeric*: keep track of quantitative measures, counts, or orders of things  
+  + *character*: store non-numeric data, typically unstructured text  
+  + *factor*: represent distinct and mutually-exclusive categories  
+  + *logical*: designate cases that meet some criteria, usually group inclusion  
+
+<br>
+
+For example, let's build a few objects:  
+```{r,echo=TRUE,eval=FALSE}
+nums <- c( 1, 2, 3 )
+names <- c( "Shelley", "Trevor" )
+sex <- factor( c( "female", "male" ) )
+is.female <- sex == "female"
+```
+
+Note that numbers **do not** require `" "` around them but characters **do** require  `" "` around them. Also, that the object `is.female` is created by stating a condition.  
+  
+  
+Each object has a class, which defines the "type" of vector a particular object is:  
 ```{r,echo=TRUE,eval=FALSE}
 name.list <- c( "Hugo","Desmond","Largo" ) # assign the characters to an object.
 is.character( name.list ) # is the object a character vector?
 is.numeric( name.list ) #is the object a numeric vector?  
+is.factor( name.list ) # is the object a factor vector?
+is.logical( name.list ) # is the object a logical vector?
 ```
 
-R has several built in character objects that can be useful:  
-```{r,echo=TRUE,eval=FALSE}
-LETTERS 	#all upper-case letters.  
-letters 	#all lower-case letters.  
-month.name	#all months by full name.  
-month.abb	#all months by abbreviated name.  
-```  
 
 Missing values are dealt with in R by NA.
 ```{r,echo=TRUE,eval=FALSE}
 y <- c( 3,NA,10 ) # create a vector with a missing value.
 2*y # multiple the vector by 2.  
 is.na( y ) # which positions in y have missing values?  
+y[ is.na( y )] #subset meeting condition.
+y[ !is.na( y )] # subset meeting a different condition.
 ```
 
 <br>
@@ -209,15 +270,15 @@ seq( from=, to=, length= ) # Starts at from, ends at to, steps defined by length
 ```
 
 For example:  
-if we want to create an object of 5 values that starts with 1 and ends with 5, we type: `seq(from=1,to=5,by=1)`.  
-if we want to create an object of 5 values that starts with 1 and ends with 9, we type: `seq(from=1,to=9,by=2)`.  
-We could also have used the `length=` argument: `seq(from=1,to=10,length=5)`.  
+if we want to create an object of 5 values that starts with 1 and ends with 5, we type: `seq( from=1, to=5, by=1 )`.  
+if we want to create an object of 5 values that starts with 1 and ends with 9, we type: `seq( from=1, to=9, by=2 )`.  
+We could also have used the `length=` argument: `seq( from=1, to=10, length=5 )`.  
 
-Since R knows that `from=` or `to=` or `by=` or `length=` are arguments, we do not have to type them in the syntax: `seq(1,9,2)` is identical to `seq(from=1,to=9,by=2)` (as far as R is concerned).  
+Since R knows that `from=` or `to=` or `by=` or `length=` are arguments, we do not have to type them in the syntax: `seq( 1, 9, 2 )` is identical to `seq( from=1, to=9, by=2 )` (as far as R is concerned).  
 
 For the help function to work, you need to know the exact name of the function. If you don’t know this, but have a fuzzy idea of what it might be are what you want the function to do, you can use the `help.search("`fuzzy notion`")` function (or just put `??` in front of the word).  
 
-For example, say you want to calculate the standard deviation for an object, but do not know the function name. Try: `help.search("standarddeviation")` or `??standarddeviation` (note the absence of a space). This returns the list of help topics that contain the phrase. We see that the standard deviation function is called `sd()`.
+For example, say you want to calculate the standard deviation for an object, but do not know the function name. Try: `help.search( "standarddeviation" )` or `??standarddeviation` (note the absence of a space). This returns the list of help topics that contain the phrase. We see that the standard deviation function is called `sd()`.
 
 <br>
 
@@ -226,20 +287,24 @@ R has MANY preprogrammed functions that are automatically loaded when you open t
 
 We can see the packages available from CRAN at [http://cran.r-project.org/](http://cran.r-project.org). Just click on the "packages" link or go to [https://cran.r-project.org/web/packages/index.html](https://cran.r-project.org/web/packages/index.html). As of writing this there are nearly 13,000 packages. There is a WIDE variety of packages available, this is another reason why R is awesome. If you can think it, someone has probably written a package for it in R (and if not, *you* can write one and contribute [isn't it great!]).  
 
-*Take a few moments and look through the packages.*  
+**Take a few moments and look through the packages**  
 
 If there is a particular package you want to add, you simply use the `install.packages()` function like this: `install.packages("`package name`")`.  
 
 After the package is installed on your machine, you do not need to reinstall it each time you open a new session. Rather, you just need to load the package using the `library()` function like this: `library("`package name`")`.  
 
-For example, let’s look at the sudoku package (yep, someone wrote a program to create sudoku puzzles in R). To get it we type: `install.packages("sudoku")` and then we select a "mirror". This installs the package in your local library of packages. To load the package we use the `library()` function: `library("sudoku")`. Let’s take a look at what the package has: `help(package="sudoku")`.  
+For example, let’s look at the sudoku package (yep, someone wrote a program to create sudoku puzzles in R). To get it we type: `install.packages( "sudoku" )` and then we select a "mirror". This installs the package in your local library of packages. To load the package we use the `library()` function: `library( "sudoku" )`. Let’s take a look at what the package has: `help( package="sudoku" )`.  
 
 Note that some packages require other packages for them to work. If there is an error, you need to install the additional packages.  
 
-For example, let’s install the ergm package, a set of tools for estimating exponential random graph models. To get it we type: `install.packages("ergm")` and look at the additional packages that are installed. Then type: `library("ergm")`.  
+For example, let’s install the ergm package, a set of tools for estimating exponential random graph models. To get it we type: `install.packages( "ergm" )` and look at the additional packages that are installed. Then type: `library( "ergm" )`.  
 
-Note that each time you open R you have to load any packages that you manually loaded using the `install.packages()` function. In other words, if we closed R and then reopened it, we would need to type `library("ergm")` to load the functions in `ergm`. Note that we *do not* have to reinstall the package using `install.packages()`, we just have to load the library.
-If you have installed the package, but have not loaded it, R will return an error saying that a particular function is not found. For example, the function `ergmm()` in the package `latentnet` is used to fit latent space and latent space cluster random network models. Type `?ergmm` and you get an error stating that there is no documentation available. This is because the `latetnet` library has not been loaded (even if you have installed `latentnet`). Typing `install.packages("latentnet")` and `library(latentnet)` prior to `?ergmm()` will solve this problem.  
+Note that each time you open R you have to load any packages that you manually loaded using the `install.packages()` function. In other words, if we closed R and then reopened it, we would need to type `library( "ergm" )` to load the functions in `ergm`.   
+
+Note that we *do not* have to reinstall the package using `install.packages()`, we just have to load the library.  
+
+If you have installed the package, but have not loaded it, R will return an error saying that a particular function is not found.  
+For example, the function `ergmm()` in the package `latentnet` is used to fit latent space and latent space cluster random network models. Type `?ergmm` and you get an error stating that there is no documentation available. This is because the `latetnet` library has not been loaded (even if you have installed `latentnet`). Typing `install.packages( "latentnet" )` and `library( latentnet )` prior to `?ergmm()` will solve this problem.  
 
 A final point on loading packages. Since anyone can write and contributes packages to R, it is not surprising that some packages occasionally use the same names for functions. When you have loaded libraries for packages that have conflicting functions, R will output a message indicating there is an issue.
 
@@ -263,29 +328,29 @@ To see what exists in the workspace, type: `ls()`.
 
 We can remove specific variables with the `rm()` function. This helps clear up space (i.e. conserve memory). For example:  
 ```{r,echo=TRUE,eval=FALSE}
-x<-seq( 1,5,1 ) # create the object.
+x <- seq( 1,5,1 ) # create the object.
 ls()	      # see the objects.
 rm( x )         # remove the object x.
 ls()          # no more x.
 ```
-To remove everything from the workspace use: `rm(list=ls())`. This is helpful for starting a session to make sure everything is cleaned out.  
+To remove everything from the workspace use: `rm( list=ls() )`. This is helpful for starting a session to make sure everything is cleaned out.  
 
 When you start R, it nominates one of the directories on your hard drive as a working directory, which is where it looks for user-written programs and data files.  
 
 To determine the current directory, type: `getwd()`.  
 You can set the working directory also by typing: `setwd("`your desired directory here`")`.  
 
-For example, if you are using Windows OS and want to set your directory to be the "C" drive, type: `setwd("C:/")`. *NOTE*: when you copy and paste filepaths in Windows, the folders are denoted with `\`, while R uses `/`.    
+For example, if you are using Windows OS and want to set your directory to be the "C" drive, type: `setwd( "C:/" )`. *NOTE*: when you copy and paste filepaths in Windows, the folders are denoted with `\`, while R uses `/`.    
 
-Or, if you are using Mac OS and want to set your directory to be a folder called "Users", type: `setwd("/Users")`.  
+Or, if you are using Mac OS and want to set your directory to be a folder called "Users", type: `setwd( "/Users" )`.  
 
 On the Windows OS you can set R to automatically start up in your preferred working directory by right clicking on the program shortcut, choosing properties, and completing the ‘Start in’ field. On the Mac OS you can set the initial working directory using the Preferences menu.  
 
 To save the workspace use the `save.image()` function. This function requires a file path, a file name, and the extension ".RData" which is the format for an R workspace file.  
 
-For example, to save a workspace called "RWorkshop" to the current directory, simply type: `save.image("RWorkshop.Rdata")`. This file will have all the objects we created in this session saved in that file. You can also write in the directory of you want to save it somewhere else. You can also do this by the pull-down menu with the File/Save option.  
+For example, to save a workspace called "RWorkshop" to the current directory, simply type: `save.image( "RWorkshop.Rdata" )`. This file will have all the objects we created in this session saved in that file. You can also write in the directory of you want to save it somewhere else. You can also do this by the pull-down menu with the File/Save option.  
 
-To load a previously saved workspace, you can either click on the file outside of R or use the `load()` function (e.g. `load("RWorkshop.Rdata")`). If you get an error, make sure you are referring the correct directory. You can also choose Load Workspace from the pull-down menu.  
+To load a previously saved workspace, you can either click on the file outside of R or use the `load()` function (e.g. `load( "RWorkshop.Rdata" )`). If you get an error, make sure you are referring the correct directory. You can also choose Load Workspace from the pull-down menu.  
 
 Note that only the objects in the workspace are saved, not the text of what you have written.  
 
@@ -296,4 +361,8 @@ You may be surprised to discover how little functionality is implemented in the 
 
 This was just the nature of working with R until some awesome human beings created RStudio. RStudio is one of several projects to build an easier-to-use GUI for R. It is a free, open-source IDE (i.e. integrated development environment) for working with R. Unlike the standard R GUI, RStudio tiles windows on the screen and puts different windows in different tabs. RStudio can be downloaded from: [http://www.rstudio.com](http://www.rstudio.com).  
 
-Go ahead and open R Studio and let's take a look.
+For a brief, but informative, introduction to RStudio, check out this [video](https://www.youtube.com/embed/xgPwDlAtuNI).
+
+Go ahead and open RStudio and let's take a look!
+
+<br>

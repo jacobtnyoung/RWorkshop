@@ -33,7 +33,6 @@
 <link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="libs/navigation-1.1/tabsets.js"></script>
-<script src="libs/navigation-1.1/codefolding.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -115,15 +114,6 @@ code span.va { } /* Variable */
 code span.vs { color: #008080; } /* VerbatimString */
 code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -308,9 +298,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -418,14 +405,6 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Working with Data</h1>
@@ -433,18 +412,41 @@ div.tocify {
 </div>
 
 
+<style>
+body {
+text-align: justify}
+</style>
 <div id="introduction" class="section level1">
 <h1><strong>Introduction</strong></h1>
-<p>Data are read into R using several functions written for this purpose. In my experience .csv format is the most well behaved.</p>
-<p>The <code>read.csv()</code> function is used to assign a data file to an object:<br />
-<code>data &lt;- read.csv("</code>the path and file.csv<code>",</code>other arguments here<code>)</code></p>
+<p>Data are read into R using several functions written for this
+purpose. In my experience .csv format is the most well behaved.</p>
+<p>The <code>read.csv()</code> function is used to assign a data file to
+an object:<br />
+<code>data &lt;- read.csv("</code>the path and
+file.csv<code>",</code>other arguments here<code>)</code></p>
 <p>Let’s take a look at the help: <code>?read.csv</code>.</p>
-<p>There is a more general function, <code>read.table</code>, that can read different types of files. But, it requires more programming. In addition, there is a package called <code>foreign</code> that has functions for reading files from other programs (e.g. <code>read.spss</code> reads SPSS files; <code>read.dta</code> reads Stata files, etc.). However, in my experience, if you are sending something from Stata to R, for example, it is better to just have Stata write a .csv file using: the <code>outsheet</code> function in Stata (type <code>help outsheet</code> in Stata for information).<br />
+<p>There is a more general function, <code>read.table</code>, that can
+read different types of files. But, it requires more programming. In
+addition, there is a package called <code>foreign</code> that has
+functions for reading files from other programs
+(e.g. <code>read.spss</code> reads SPSS files; <code>read.dta</code>
+reads Stata files, etc.). However, in my experience, if you are sending
+something from Stata to R, for example, it is better to just have Stata
+write a .csv file using: the <code>outsheet</code> function in Stata
+(type <code>help outsheet</code> in Stata for information).<br />
 <br></p>
 <div id="example-data-file" class="section level2">
 <h2><strong>Example Data File</strong></h2>
-<p>Let’s work through an example. Start by downloading the “R_Workshop_data.csv” file from this <a href="r_workshop_data.csv">link</a> on the <a href="https://jacobtnyoung.github.io/RWorkshop/">RWorkshop website</a>.</p>
-<p>The file contains 52 individuals and 4 variables. The variables are: respondents id (“id”), a binary variable indicating whether the respondent is male or female (“male” where “1” is male), a measure of the respondent’s age (“age”), and a measure of risky behaviors engaged in by the respondent (“risky”).</p>
+<p>Let’s work through an example. Start by downloading the
+“R_Workshop_data.csv” file from this <a
+href="r_workshop_data.csv">link</a> on the <a
+href="https://jacobtnyoung.github.io/RWorkshop/">RWorkshop
+website</a>.</p>
+<p>The file contains 52 individuals and 4 variables. The variables are:
+respondents id (“id”), a binary variable indicating whether the
+respondent is male or female (“male” where “1” is male), a measure of
+the respondent’s age (“age”), and a measure of risky behaviors engaged
+in by the respondent (“risky”).</p>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["male"],"name":[2],"type":["int"],"align":["right"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]},{"label":["risky"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"13","4":"1"},{"1":"2","2":"1","3":"NA","4":"0"},{"1":"3","2":"1","3":"13","4":"1"},{"1":"4","2":"NA","3":"12","4":"NA"},{"1":"5","2":"0","3":"13","4":"1"},{"1":"6","2":"1","3":"13","4":"NA"},{"1":"7","2":"1","3":"12","4":"1"},{"1":"8","2":"1","3":"12","4":"1"},{"1":"9","2":"0","3":"12","4":"1"},{"1":"10","2":"0","3":"13","4":"3"},{"1":"11","2":"0","3":"13","4":"NA"},{"1":"12","2":"1","3":"14","4":"1"},{"1":"13","2":"0","3":"13","4":"1"},{"1":"14","2":"0","3":"14","4":"0"},{"1":"15","2":"NA","3":"12","4":"1"},{"1":"16","2":"1","3":"13","4":"0"},{"1":"17","2":"0","3":"13","4":"1"},{"1":"18","2":"1","3":"14","4":"0"},{"1":"19","2":"0","3":"14","4":"NA"},{"1":"20","2":"1","3":"13","4":"1"},{"1":"21","2":"1","3":"13","4":"1"},{"1":"22","2":"NA","3":"13","4":"0"},{"1":"23","2":"1","3":"13","4":"1"},{"1":"24","2":"1","3":"13","4":"1"},{"1":"25","2":"1","3":"13","4":"1"},{"1":"26","2":"1","3":"14","4":"0"},{"1":"27","2":"0","3":"13","4":"1"},{"1":"28","2":"0","3":"NA","4":"0"},{"1":"29","2":"0","3":"14","4":"1"},{"1":"30","2":"1","3":"14","4":"0"},{"1":"31","2":"0","3":"13","4":"NA"},{"1":"32","2":"1","3":"13","4":"0"},{"1":"33","2":"0","3":"14","4":"2"},{"1":"34","2":"1","3":"12","4":"0"},{"1":"35","2":"1","3":"12","4":"2"},{"1":"36","2":"1","3":"13","4":"0"},{"1":"37","2":"0","3":"13","4":"1"},{"1":"38","2":"NA","3":"NA","4":"0"},{"1":"39","2":"1","3":"13","4":"0"},{"1":"40","2":"0","3":"13","4":"2"},{"1":"41","2":"1","3":"13","4":"NA"},{"1":"42","2":"0","3":"13","4":"2"},{"1":"43","2":"0","3":"12","4":"1"},{"1":"44","2":"1","3":"12","4":"0"},{"1":"45","2":"1","3":"13","4":"1"},{"1":"46","2":"0","3":"12","4":"0"},{"1":"47","2":"0","3":"12","4":"1"},{"1":"48","2":"1","3":"13","4":"1"},{"1":"49","2":"0","3":"13","4":"2"},{"1":"50","2":"0","3":"13","4":"1"},{"1":"51","2":"0","3":"NA","4":"1"},{"1":"52","2":"0","3":"12","4":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -455,7 +457,9 @@ div.tocify {
 <div id="loading-data-files" class="section level2">
 <h2><strong>Loading Data Files</strong></h2>
 <p>Let’s go ahead and import it into R:</p>
-<p>First, set the directory where the file is by using the <code>setwd("/…")</code> function. If you’re a windows user, replace every <code>"\"</code> in the file path with <code>"\\"</code>.</p>
+<p>First, set the directory where the file is by using the
+<code>setwd("/…")</code> function. If you’re a windows user, replace
+every <code>"\"</code> in the file path with <code>"\\"</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#read in the data file.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;r_workshop_data.csv&quot;</span>, <span class="co">#the data file.</span></span>
@@ -464,12 +468,17 @@ div.tocify {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.strings =</span> <span class="st">&quot;.&quot;</span> <span class="co">#tell R that missing values are periods.</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dat <span class="co">#look at the object.</span></span></code></pre></div>
-<p>If you had a REALLY big data set, you could use the <code>head()</code> function or the <code>tail()</code> function to look at the first few (or last few) cases.</p>
+<p>If you had a REALLY big data set, you could use the
+<code>head()</code> function or the <code>tail()</code> function to look
+at the first few (or last few) cases.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dat )</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>( dat )</span></code></pre></div>
-<p>If you use the <code>View()</code> function, you can open the spreadsheet to see how R views the file and why we give it particular instructions.</p>
+<p>If you use the <code>View()</code> function, you can open the
+spreadsheet to see how R views the file and why we give it particular
+instructions.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>( dat )</span></code></pre></div>
-<p>Note that we could <em>skip</em> the step of storing the .csv file locally and simply call file from the website url.<br />
+<p>Note that we could <em>skip</em> the step of storing the .csv file
+locally and simply call file from the website url.<br />
 For example:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r_workshop_data.csv&quot;</span>,</span>
@@ -480,7 +489,9 @@ For example:</p>
 </div>
 <div id="working-with-objects" class="section level2">
 <h2><strong>Working with Objects</strong></h2>
-<p>Now, we can work with the <code>dat</code> object. As we saw before with matrices, we can index parts of the object by referring to the dimensions:</p>
+<p>Now, we can work with the <code>dat</code> object. As we saw before
+with matrices, we can index parts of the object by referring to the
+dimensions:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>( dat ) <span class="co"># what are the dimensions of the object?</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dat[,<span class="dv">1</span>] <span class="co"># first column or first variable.</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span>,] <span class="co"># first row or first case.</span></span>
@@ -488,15 +499,19 @@ For example:</p>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="co"># same thing as dat[,c(1,2)].</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,] <span class="co"># just the first 25 cases.</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>dat[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)] <span class="co"># remove the first column.</span></span></code></pre></div>
-<p>We can also refer to the variables (i.e. columns) by their names enclosed in <code>""</code> or by using the <code>$</code> key.</p>
+<p>We can also refer to the variables (i.e. columns) by their names
+enclosed in <code>""</code> or by using the <code>$</code> key.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat[,<span class="st">&quot;id&quot;</span>] <span class="co"># returns the entire column named &quot;id&quot;.</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>id <span class="co"># returns the column called &quot;id&quot; within the object &quot;data&quot;.</span></span></code></pre></div>
-<p>Referencing parts of an object in this way makes it easy to execute functions. For example, the function <code>summary()</code> provides the range, mean, median, and info about missing values:</p>
+<p>Referencing parts of an object in this way makes it easy to execute
+functions. For example, the function <code>summary()</code> provides the
+range, mean, median, and info about missing values:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat ) <span class="co">#summarize all the variables.</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat<span class="sc">$</span>age ) <span class="co">#just summarize age.</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat[,<span class="st">&quot;age&quot;</span>] ) <span class="co">#same thing, different syntax.</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat[,<span class="fu">c</span>( <span class="st">&quot;age&quot;</span>,<span class="st">&quot;male&quot;</span> )] ) <span class="co">#just age and male.</span></span></code></pre></div>
-<p>Let’s read into the data, but exclude the header to see how to assign names:</p>
+<p>Let’s read into the data, but exclude the header to see how to assign
+names:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#toggle the header argument by setting it to FALSE.</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;r_workshop_data.csv&quot;</span> , <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">as.is =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>dat     <span class="co"># look at the object, note the first row.</span></span>
@@ -508,12 +523,16 @@ For example:</p>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#change the names.</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;id&quot;</span>,<span class="st">&quot;male&quot;</span>,<span class="st">&quot;age&quot;</span>,<span class="st">&quot;risky&quot;</span> ) <span class="co"># create an object of names.</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>( dat ) <span class="ot">&lt;-</span> names <span class="co">#tell R what the column names are.</span></span></code></pre></div>
-<p>Obviously, if we had the names we would read them in with <code>header=TRUE</code> in the <code>read.csv</code> line.<br />
+<p>Obviously, if we had the names we would read them in with
+<code>header=TRUE</code> in the <code>read.csv</code> line.<br />
 <br></p>
 </div>
 <div id="merging-data-files" class="section level2">
 <h2><strong>Merging Data Files</strong></h2>
-<p>We can merge two objects (or datasets) with the <code>merge()</code> function. For example, let’s create two datasets where the cases do not match exactly (i.e. some cases are missing data on a merged variable) by using the <code>data.frame()</code> function:</p>
+<p>We can merge two objects (or datasets) with the <code>merge()</code>
+function. For example, let’s create two datasets where the cases do not
+match exactly (i.e. some cases are missing data on a merged variable) by
+using the <code>data.frame()</code> function:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the datasets (note the difference between them).</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dat.a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> ), <span class="at">age =</span> <span class="fu">c</span>( <span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">11</span> ) )</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>dat.b <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span> )  , <span class="at">sex =</span> <span class="fu">c</span>( <span class="st">&quot;m&quot;</span>,<span class="st">&quot;m&quot;</span>,<span class="st">&quot;f&quot;</span>,<span class="st">&quot;m&quot;</span> ) )</span>
@@ -529,15 +548,28 @@ For example:</p>
 </div>
 <div id="exporting-data-files" class="section level2">
 <h2><strong>Exporting Data Files</strong></h2>
-<p>We can also write data files out for analysis in another program. For example, say we have created a variable in our data set that we could only create in R and we want to export the file to another program. For .csv files, we can just use the <code>write.csv</code> function. As with reading files, there is a more general function, <code>write.table</code>, that can write different types of files (see <code>?write.table</code>). For <code>write.csv</code> we just tell it what object we want to write out to a file and the file name:</p>
-<p>First, set the directory where the file will go by using <code>setwd("/…")</code>. Then:</p>
+<p>We can also write data files out for analysis in another program. For
+example, say we have created a variable in our data set that we could
+only create in R and we want to export the file to another program. For
+.csv files, we can just use the <code>write.csv</code> function. As with
+reading files, there is a more general function,
+<code>write.table</code>, that can write different types of files (see
+<code>?write.table</code>). For <code>write.csv</code> we just tell it
+what object we want to write out to a file and the file name:</p>
+<p>First, set the directory where the file will go by using
+<code>setwd("/…")</code>. Then:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( dat,<span class="st">&quot;New_R_Workshop_data.csv&quot;</span> ) <span class="co">#file path can be added also.</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div id="saving-data-files" class="section level2">
 <h2><strong>Saving Data Files</strong></h2>
-<p>Recall that to save the workspace use the <code>save.image()</code> function. This function requires a file path, a file name, and the extension “.RData” which is the format for an R workspace file. Since our imported data is an object (i.e. <code>data</code>), it will be saved to the workspace:</p>
-<p>First, set the directory where the file will go by using <code>setwd("/…")</code>. Then:</p>
+<p>Recall that to save the workspace use the <code>save.image()</code>
+function. This function requires a file path, a file name, and the
+extension “.RData” which is the format for an R workspace file. Since
+our imported data is an object (i.e. <code>data</code>), it will be
+saved to the workspace:</p>
+<p>First, set the directory where the file will go by using
+<code>setwd("/…")</code>. Then:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>( <span class="st">&quot;dat.RData&quot;</span> ) <span class="co">#file path can be added also.</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>( <span class="at">list=</span><span class="fu">ls</span>() ) <span class="co"># clear the workspace.</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>() <span class="co"># check the contents of the workspace.</span></span>
@@ -584,11 +616,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

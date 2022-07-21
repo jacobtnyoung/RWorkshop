@@ -1,5 +1,5 @@
 ---
-title: "R Workshop Schedule (2021)"
+title: "R Workshop Schedule (2022)"
 output: 
   html_document:
     df_print: paged
@@ -39,7 +39,7 @@ text-align: justify}
 
 #### 1:45-2:00 --- *Short Break*  
 
-#### 2:00-2:15 --- [**Creating Reproducible Research: RMarkdown**](R_Reproducible_Research.html)  
+#### 2:00-2:15 --- [**Data-Driven Documents: RMarkdown**](R_Markdown.html)  
 
 #### 2:15-3:00 --- **Open Session for Q&A**  
 
