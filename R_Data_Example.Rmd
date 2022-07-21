@@ -154,3 +154,9 @@ plotreg( lm( dat$risky ~ dat$age + dat$male ) )
 <br>
 
 ## **Questions?**  
+
+<br>
+<br>
+
+
+###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***

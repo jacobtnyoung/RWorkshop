@@ -366,3 +366,9 @@ For a brief, but informative, introduction to RStudio, check out this [video](ht
 Go ahead and open RStudio and let's take a look!
 
 <br>
+
+<br>
+<br>
+
+
+###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***
