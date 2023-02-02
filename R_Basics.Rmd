@@ -154,7 +154,7 @@ y <- c( 1,2,3,4,5,6,7,8,9,10 )
 
 # what is the fourth element in y?
 y[4]
-# what are the first through seventh elements in y?
+# what are the fourth through seventh elements in y?
 y[4:7]
 # what are the second and ninth elements in y?
 y[c( 2,9 )]

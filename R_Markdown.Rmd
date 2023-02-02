@@ -28,14 +28,14 @@ install.packages( "rmarkdown" )
 
 Now, let's take a look at how it works. Open a new R Markdown file using the drop-down menu as shown below:  
 
-![file call image](_images/markdown_file_pic.png)  
+![file call image](images/markdown_file_pic.png)  
 <br>
 
 Then, use the options to pick the type of file you want to create.
 
 Afterwards, click on the knit function in the .Rmd pane:  
 
-![file call image](_images/knit_pic.png) 
+![file call image](images/knit_pic.png) 
 <br>
 
 You did it!  
