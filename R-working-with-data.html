@@ -13,7 +13,7 @@
 
 <title>Working with Data</title>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="libs/navigation-1.1/tabsets.js"></script>
@@ -44,6 +44,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -122,13 +123,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -163,6 +171,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -220,11 +231,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -253,8 +268,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -262,16 +277,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -460,31 +468,31 @@ in by the respondent (“risky”).</p>
 <p>First, set the directory where the file is by using the
 <code>setwd("/…")</code> function. If you’re a windows user, replace
 every <code>"\"</code> in the file path with <code>"\\"</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#read in the data file.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;r_workshop_data.csv&quot;</span>, <span class="co">#the data file.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="co"># tell R to read the first row as variable names.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">as.is =</span> <span class="cn">TRUE</span>, <span class="co"># tell R to not make any conversions.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.strings =</span> <span class="st">&quot;.&quot;</span> <span class="co">#tell R that missing values are periods.</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dat <span class="co">#look at the object.</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#read in the data file.</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="st">&quot;r_workshop_data.csv&quot;</span>, <span class="co">#the data file.</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="co"># tell R to read the first row as variable names.</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="at">as.is =</span> <span class="cn">TRUE</span>, <span class="co"># tell R to not make any conversions.</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="at">na.strings =</span> <span class="st">&quot;.&quot;</span> <span class="co">#tell R that missing values are periods.</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    )</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>dat <span class="co">#look at the object.</span></span></code></pre></div>
 <p>If you had a REALLY big data set, you could use the
 <code>head()</code> function or the <code>tail()</code> function to look
 at the first few (or last few) cases.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( dat )</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>( dat )</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">head</span>( dat )</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">tail</span>( dat )</span></code></pre></div>
 <p>If you use the <code>View()</code> function, you can open the
 spreadsheet to see how R views the file and why we give it particular
 instructions.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>( dat )</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">View</span>( dat )</span></code></pre></div>
 <p>Note that we could <em>skip</em> the step of storing the .csv file
 locally and simply call file from the website url.<br />
 For example:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r_workshop_data.csv&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">as.is=</span><span class="cn">TRUE</span>, <span class="at">na.strings=</span><span class="st">&quot;.&quot;</span> <span class="co">#all the other arguments remain the same.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>dat <span class="co">#look at the object.</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="st">&quot;https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r_workshop_data.csv&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">as.is=</span><span class="cn">TRUE</span>, <span class="at">na.strings=</span><span class="st">&quot;.&quot;</span> <span class="co">#all the other arguments remain the same.</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    )</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>dat <span class="co">#look at the object.</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div id="working-with-objects" class="section level2">
@@ -492,37 +500,37 @@ For example:</p>
 <p>Now, we can work with the <code>dat</code> object. As we saw before
 with matrices, we can index parts of the object by referring to the
 dimensions:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>( dat ) <span class="co"># what are the dimensions of the object?</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dat[,<span class="dv">1</span>] <span class="co"># first column or first variable.</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span>,] <span class="co"># first row or first case.</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>dat[,<span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span> )] <span class="co"># first two columns.</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="co"># same thing as dat[,c(1,2)].</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,] <span class="co"># just the first 25 cases.</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>dat[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)] <span class="co"># remove the first column.</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">dim</span>( dat ) <span class="co"># what are the dimensions of the object?</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>dat[,<span class="dv">1</span>] <span class="co"># first column or first variable.</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>dat[<span class="dv">1</span>,] <span class="co"># first row or first case.</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>dat[,<span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span> )] <span class="co"># first two columns.</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>dat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="co"># same thing as dat[,c(1,2)].</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>dat[<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,] <span class="co"># just the first 25 cases.</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>dat[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)] <span class="co"># remove the first column.</span></span></code></pre></div>
 <p>We can also refer to the variables (i.e. columns) by their names
 enclosed in <code>""</code> or by using the <code>$</code> key.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat[,<span class="st">&quot;id&quot;</span>] <span class="co"># returns the entire column named &quot;id&quot;.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>id <span class="co"># returns the column called &quot;id&quot; within the object &quot;data&quot;.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>dat[,<span class="st">&quot;id&quot;</span>] <span class="co"># returns the entire column named &quot;id&quot;.</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>dat<span class="sc">$</span>id <span class="co"># returns the column called &quot;id&quot; within the object &quot;data&quot;.</span></span></code></pre></div>
 <p>Referencing parts of an object in this way makes it easy to execute
 functions. For example, the function <code>summary()</code> provides the
 range, mean, median, and info about missing values:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat ) <span class="co">#summarize all the variables.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat<span class="sc">$</span>age ) <span class="co">#just summarize age.</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat[,<span class="st">&quot;age&quot;</span>] ) <span class="co">#same thing, different syntax.</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( dat[,<span class="fu">c</span>( <span class="st">&quot;age&quot;</span>,<span class="st">&quot;male&quot;</span> )] ) <span class="co">#just age and male.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">summary</span>( dat ) <span class="co">#summarize all the variables.</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">summary</span>( dat<span class="sc">$</span>age ) <span class="co">#just summarize age.</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">summary</span>( dat[,<span class="st">&quot;age&quot;</span>] ) <span class="co">#same thing, different syntax.</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">summary</span>( dat[,<span class="fu">c</span>( <span class="st">&quot;age&quot;</span>,<span class="st">&quot;male&quot;</span> )] ) <span class="co">#just age and male.</span></span></code></pre></div>
 <p>Let’s read into the data, but exclude the header to see how to assign
 names:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#toggle the header argument by setting it to FALSE.</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;r_workshop_data.csv&quot;</span> , <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">as.is =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>dat     <span class="co"># look at the object, note the first row.</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span>,] <span class="co"># R has created the variable names for us.</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#we can see this from the colnames() function.</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>( dat )</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#change the names.</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;id&quot;</span>,<span class="st">&quot;male&quot;</span>,<span class="st">&quot;age&quot;</span>,<span class="st">&quot;risky&quot;</span> ) <span class="co"># create an object of names.</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>( dat ) <span class="ot">&lt;-</span> names <span class="co">#tell R what the column names are.</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#toggle the header argument by setting it to FALSE.</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;r_workshop_data.csv&quot;</span> , <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">as.is =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>dat     <span class="co"># look at the object, note the first row.</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>dat[<span class="dv">1</span>,] <span class="co"># R has created the variable names for us.</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#we can see this from the colnames() function.</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="fu">colnames</span>( dat )</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#change the names.</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;id&quot;</span>,<span class="st">&quot;male&quot;</span>,<span class="st">&quot;age&quot;</span>,<span class="st">&quot;risky&quot;</span> ) <span class="co"># create an object of names.</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="fu">colnames</span>( dat ) <span class="ot">&lt;-</span> names <span class="co">#tell R what the column names are.</span></span></code></pre></div>
 <p>Obviously, if we had the names we would read them in with
 <code>header=TRUE</code> in the <code>read.csv</code> line.<br />
 <br></p>
@@ -533,17 +541,17 @@ names:</p>
 function. For example, let’s create two datasets where the cases do not
 match exactly (i.e. some cases are missing data on a merged variable) by
 using the <code>data.frame()</code> function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the datasets (note the difference between them).</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dat.a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> ), <span class="at">age =</span> <span class="fu">c</span>( <span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">11</span> ) )</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>dat.b <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span> )  , <span class="at">sex =</span> <span class="fu">c</span>( <span class="st">&quot;m&quot;</span>,<span class="st">&quot;m&quot;</span>,<span class="st">&quot;f&quot;</span>,<span class="st">&quot;m&quot;</span> ) )</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>( dat.a ) <span class="co"># object &quot;data.a&quot; is of class data.frame.</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>?merge <span class="co"># note the different merging options.</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># We can now merge these two datasets to get a single object.</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>dat.c <span class="ot">&lt;-</span> <span class="fu">merge</span>( dat.a,dat.b,<span class="at">by.x =</span> <span class="st">&quot;id&quot;</span> )</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>dat.d <span class="ot">&lt;-</span> <span class="fu">merge</span>( dat.a,dat.b,<span class="at">by.x =</span> <span class="st">&quot;id&quot;</span>,<span class="at">all.x=</span><span class="cn">TRUE</span> ) <span class="co">#note difference.</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Create the datasets (note the difference between them).</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>dat.a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> ), <span class="at">age =</span> <span class="fu">c</span>( <span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">11</span> ) )</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>dat.b <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">id =</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span> )  , <span class="at">sex =</span> <span class="fu">c</span>( <span class="st">&quot;m&quot;</span>,<span class="st">&quot;m&quot;</span>,<span class="st">&quot;f&quot;</span>,<span class="st">&quot;m&quot;</span> ) )</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="fu">class</span>( dat.a ) <span class="co"># object &quot;data.a&quot; is of class data.frame.</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>?merge <span class="co"># note the different merging options.</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># We can now merge these two datasets to get a single object.</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>dat.c <span class="ot">&lt;-</span> <span class="fu">merge</span>( dat.a,dat.b,<span class="at">by.x =</span> <span class="st">&quot;id&quot;</span> )</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>dat.d <span class="ot">&lt;-</span> <span class="fu">merge</span>( dat.a,dat.b,<span class="at">by.x =</span> <span class="st">&quot;id&quot;</span>,<span class="at">all.x=</span><span class="cn">TRUE</span> ) <span class="co">#note difference.</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div id="exporting-data-files" class="section level2">
@@ -558,7 +566,7 @@ reading files, there is a more general function,
 what object we want to write out to a file and the file name:</p>
 <p>First, set the directory where the file will go by using
 <code>setwd("/…")</code>. Then:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( dat,<span class="st">&quot;New_R_Workshop_data.csv&quot;</span> ) <span class="co">#file path can be added also.</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">write.csv</span>( dat,<span class="st">&quot;New_R_Workshop_data.csv&quot;</span> ) <span class="co">#file path can be added also.</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div id="saving-data-files" class="section level2">
@@ -570,17 +578,17 @@ our imported data is an object (i.e. <code>data</code>), it will be
 saved to the workspace:</p>
 <p>First, set the directory where the file will go by using
 <code>setwd("/…")</code>. Then:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>( <span class="st">&quot;dat.RData&quot;</span> ) <span class="co">#file path can be added also.</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>( <span class="at">list=</span><span class="fu">ls</span>() ) <span class="co"># clear the workspace.</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>() <span class="co"># check the contents of the workspace.</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>( <span class="st">&quot;dat.RData&quot;</span> ) <span class="co">#load the workspace that was previously saved.</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">save.image</span>( <span class="st">&quot;dat.RData&quot;</span> ) <span class="co">#file path can be added also.</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">rm</span>( <span class="at">list=</span><span class="fu">ls</span>() ) <span class="co"># clear the workspace.</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">ls</span>() <span class="co"># check the contents of the workspace.</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">load</span>( <span class="st">&quot;dat.RData&quot;</span> ) <span class="co">#load the workspace that was previously saved.</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div id="questions" class="section level2">
 <h2><strong>Questions?</strong></h2>
 <p><br> <br></p>
-<div id="last-updated-21-july-2022" class="section level6">
-<h6><strong><em>Last updated 21 July, 2022</em></strong></h6>
+<div id="last-updated-31-july-2023" class="section level6">
+<h6><strong><em>Last updated 31 July, 2023</em></strong></h6>
 </div>
 </div>
 </div>

@@ -13,7 +13,7 @@
 
 <title>R, The Basics</title>
 
-<script src="libs/header-attrs-2.15/header-attrs.js"></script>
+<script src="libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="libs/navigation-1.1/tabsets.js"></script>
@@ -278,8 +278,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -287,16 +287,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -565,17 +558,17 @@ getting familiar with the names of functions.</p>
 <p>In R, specific elements in an object are referenced by using brackets
 (i.e. <code>[</code> or <code>]</code>).</p>
 <p>For example, let’s create a vector and work with it:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> ) <span class="co"># create the vector.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">5</span>] <span class="co"># what is the fifth element in x?  </span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># what are the second through fourth elements in x?  </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">4</span> )] <span class="co"># what are the first and fourth elements in x?  </span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span> ) <span class="co"># create the vector.</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>x</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>x[<span class="dv">5</span>] <span class="co"># what is the fifth element in x?  </span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>x[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># what are the second through fourth elements in x?  </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>x[<span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">4</span> )] <span class="co"># what are the first and fourth elements in x?  </span></span></code></pre></div>
 <p><em>Note</em> the difference in use between <code>[#:#]</code> and
 <code>[c(#,#)]</code>. The colon <code>:</code> means “through” and the
 comma <code>,</code> means “and”.</p>
 <p>We can also change values by indexing:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">5</span>]   <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># change the fifth element in x to 5.  </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># change the first through fifth elements in x to 0.  </span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>x[<span class="dv">5</span>]   <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># change the fifth element in x to 5.  </span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># change the first through fifth elements in x to 0.  </span></span></code></pre></div>
 <p><br></p>
 <p>Using brackets to identify particular elements, called
 <em>indexing</em>, is VERY useful. By using indexing, we can create
@@ -585,7 +578,7 @@ utility of this will be more obvious later.</p>
 <div id="you-try-it" class="section level3">
 <h3><strong>You try it!</strong></h3>
 <div data-datacamp-exercise="" data-height="300" data-encoded="true">
-eyJsYW5ndWFnZSI6InIiLCJwcmVfZXhlcmNpc2VfY29kZSI6InkgPC0gYyggMSwyLDMsNCw1LDYsNyw4LDksMTAgKVxueVs0XVxueVs0OjddXG55W2MoIDIsOSApXVxueVs1OjhdIDwtIDAiLCJzYW1wbGUiOiIjIENyZWF0ZSBhIHZlY3RvciBjYWxsZWQgeSwgd2l0aCB0aGUgZWxlbWVudHMgMSB0aHJvdWdoIDEwLlxuXG4jIHdoYXQgaXMgdGhlIGZvdXJ0aCBlbGVtZW50IGluIHk/XG5cbiMgd2hhdCBhcmUgdGhlIGZpcnN0IHRocm91Z2ggc2V2ZW50aCBlbGVtZW50cyBpbiB5P1xuXG4jIHdoYXQgYXJlIHRoZSBzZWNvbmQgYW5kIG5pbnRoIGVsZW1lbnRzIGluIHk/XG5cbiMgY2hhbmdlIHRoZSBmaWZ0aCB0aHJvdWdoIGVpZ2h0aCBlbGVtZW50cyBpbiB5IHRvIDAuIiwic29sdXRpb24iOiIjIENyZWF0ZSBhIHZlY3RvciBjYWxsZWQgeSwgd2l0aCB0aGUgZWxlbWVudHMgMSB0aHJvdWdoIDEwLlxueSA8LSBjKCAxLDIsMyw0LDUsNiw3LDgsOSwxMCApXG5cbiMgd2hhdCBpcyB0aGUgZm91cnRoIGVsZW1lbnQgaW4geT9cbnlbNF1cbiMgd2hhdCBhcmUgdGhlIGZpcnN0IHRocm91Z2ggc2V2ZW50aCBlbGVtZW50cyBpbiB5P1xueVs0OjddXG4jIHdoYXQgYXJlIHRoZSBzZWNvbmQgYW5kIG5pbnRoIGVsZW1lbnRzIGluIHk/XG55W2MoIDIsOSApXVxuIyBjaGFuZ2UgdGhlIGZpZnRoIHRocm91Z2ggZWlnaHRoIGVsZW1lbnRzIGluIHkgdG8gMC5cbnlbNTo4XSA8LSAwIn0=
+eyJsYW5ndWFnZSI6InIiLCJwcmVfZXhlcmNpc2VfY29kZSI6InkgPC0gYyggMSwyLDMsNCw1LDYsNyw4LDksMTAgKVxueVs0XVxueVs0OjddXG55W2MoIDIsOSApXVxueVs1OjhdIDwtIDAiLCJzYW1wbGUiOiIjIENyZWF0ZSBhIHZlY3RvciBjYWxsZWQgeSwgd2l0aCB0aGUgZWxlbWVudHMgMSB0aHJvdWdoIDEwLlxuXG4jIHdoYXQgaXMgdGhlIGZvdXJ0aCBlbGVtZW50IGluIHk/XG5cbiMgd2hhdCBhcmUgdGhlIGZpcnN0IHRocm91Z2ggc2V2ZW50aCBlbGVtZW50cyBpbiB5P1xuXG4jIHdoYXQgYXJlIHRoZSBzZWNvbmQgYW5kIG5pbnRoIGVsZW1lbnRzIGluIHk/XG5cbiMgY2hhbmdlIHRoZSBmaWZ0aCB0aHJvdWdoIGVpZ2h0aCBlbGVtZW50cyBpbiB5IHRvIDAuIiwic29sdXRpb24iOiIjIENyZWF0ZSBhIHZlY3RvciBjYWxsZWQgeSwgd2l0aCB0aGUgZWxlbWVudHMgMSB0aHJvdWdoIDEwLlxueSA8LSBjKCAxLDIsMyw0LDUsNiw3LDgsOSwxMCApXG5cbiMgd2hhdCBpcyB0aGUgZm91cnRoIGVsZW1lbnQgaW4geT9cbnlbNF1cbiMgd2hhdCBhcmUgdGhlIGZvdXJ0aCB0aHJvdWdoIHNldmVudGggZWxlbWVudHMgaW4geT9cbnlbNDo3XVxuIyB3aGF0IGFyZSB0aGUgc2Vjb25kIGFuZCBuaW50aCBlbGVtZW50cyBpbiB5P1xueVtjKCAyLDkgKV1cbiMgY2hhbmdlIHRoZSBmaWZ0aCB0aHJvdWdoIGVpZ2h0aCBlbGVtZW50cyBpbiB5IHRvIDAuXG55WzU6OF0gPC0gMCJ9
 </div>
 <p><br></p>
 </div>
@@ -617,27 +610,27 @@ group inclusion</li>
 </ul>
 <p><br></p>
 <p>For example, let’s build a few objects:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nums <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span> )</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;Shelley&quot;</span>, <span class="st">&quot;Trevor&quot;</span> )</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>( <span class="fu">c</span>( <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span> ) )</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>is.female <span class="ot">&lt;-</span> sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>nums <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span> )</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;Shelley&quot;</span>, <span class="st">&quot;Trevor&quot;</span> )</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>( <span class="fu">c</span>( <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span> ) )</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>is.female <span class="ot">&lt;-</span> sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span></span></code></pre></div>
 <p>Note that numbers <strong>do not</strong> require <code>" "</code>
 around them but characters <strong>do</strong> require <code>" "</code>
 around them. Also, that the object <code>is.female</code> is created by
 stating a condition.</p>
 <p>Each object has a class, which defines the “type” of vector a
 particular object is:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>name.list <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;Hugo&quot;</span>,<span class="st">&quot;Desmond&quot;</span>,<span class="st">&quot;Largo&quot;</span> ) <span class="co"># assign the characters to an object.</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>( name.list ) <span class="co"># is the object a character vector?</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">is.numeric</span>( name.list ) <span class="co">#is the object a numeric vector?  </span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>( name.list ) <span class="co"># is the object a factor vector?</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">is.logical</span>( name.list ) <span class="co"># is the object a logical vector?</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>name.list <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;Hugo&quot;</span>,<span class="st">&quot;Desmond&quot;</span>,<span class="st">&quot;Largo&quot;</span> ) <span class="co"># assign the characters to an object.</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">is.character</span>( name.list ) <span class="co"># is the object a character vector?</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">is.numeric</span>( name.list ) <span class="co">#is the object a numeric vector?  </span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">is.factor</span>( name.list ) <span class="co"># is the object a factor vector?</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">is.logical</span>( name.list ) <span class="co"># is the object a logical vector?</span></span></code></pre></div>
 <p>Missing values are dealt with in R by NA.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">3</span>,<span class="cn">NA</span>,<span class="dv">10</span> ) <span class="co"># create a vector with a missing value.</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>y <span class="co"># multiple the vector by 2.  </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>( y ) <span class="co"># which positions in y have missing values?  </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>y[ <span class="fu">is.na</span>( y )] <span class="co">#subset meeting condition.</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>y[ <span class="sc">!</span><span class="fu">is.na</span>( y )] <span class="co"># subset meeting a different condition.</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">3</span>,<span class="cn">NA</span>,<span class="dv">10</span> ) <span class="co"># create a vector with a missing value.</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>y <span class="co"># multiple the vector by 2.  </span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">is.na</span>( y ) <span class="co"># which positions in y have missing values?  </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>y[ <span class="fu">is.na</span>( y )] <span class="co">#subset meeting condition.</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>y[ <span class="sc">!</span><span class="fu">is.na</span>( y )] <span class="co"># subset meeting a different condition.</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div id="matrices-in-r" class="section level2">
@@ -654,28 +647,28 @@ vectors by rows. Think of it as stacking vectors on each other. The
 <code>cbind()</code> function means “column bind” and binds together
 vectors by rows. Think of it as placing them side by side. Let’s take a
 look:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span> )</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">1</span> )</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>( x,y ) <span class="co">#bind x and y by row to create a 2 X 5 matrix.</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="co">#just enter the name of the object to print it.</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>( x,y ) <span class="co">#bind x and y by column to create a 5 X 2 matrix.</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>m2 <span class="co">#just enter the name of the object to print it.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>x  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span> )</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>y  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">1</span> )</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>( x,y ) <span class="co">#bind x and y by row to create a 2 X 5 matrix.</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>m1 <span class="co">#just enter the name of the object to print it.</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>( x,y ) <span class="co">#bind x and y by column to create a 5 X 2 matrix.</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>m2 <span class="co">#just enter the name of the object to print it.</span></span></code></pre></div>
 <p>For both functions, the dimensions of the vectors must be the same
 (i.e. same number of rows and columns).<br />
 Let’s see some examples:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>l  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span> )</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">5</span> )</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>( l,n ) <span class="co"># returns an error because the dimensions differ.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>l  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span> )</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">5</span> )</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>( l,n ) <span class="co"># returns an error because the dimensions differ.</span></span></code></pre></div>
 <p>We can index the matrix <code>m1</code> or <code>m2</code> by using
 the brackets <code>[ ]</code> with a comma between the two dimensions.
 Since a matrix is 2-dimensions, we can reference a specific element, an
 entire row, or an entire column:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1[<span class="dv">2</span>,<span class="dv">2</span>] <span class="co">#what is the value of the element in the 2nd row, 2nd column?</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m1[,<span class="dv">2</span>]  <span class="co">#what are the values in the second column?</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>m1[<span class="dv">2</span>,]  <span class="co">#what are the values in the second row?</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m2[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#change the value to zero.</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>m2[<span class="dv">2</span>,]  <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#change the second row to zeros.</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>m2[,<span class="dv">2</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#change the second column to zeros.</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>m1[<span class="dv">2</span>,<span class="dv">2</span>] <span class="co">#what is the value of the element in the 2nd row, 2nd column?</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>m1[,<span class="dv">2</span>]  <span class="co">#what are the values in the second column?</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>m1[<span class="dv">2</span>,]  <span class="co">#what are the values in the second row?</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>m2[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#change the value to zero.</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>m2[<span class="dv">2</span>,]  <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#change the second row to zeros.</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>m2[,<span class="dv">2</span>]  <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#change the second column to zeros.</span></span></code></pre></div>
 <p>In the code chunk above, note the difference between
 <code>[,#]</code> and <code>[#,]</code>. A comma in front of the
 argument (i.e. <code>[,#]</code>) applies to the columns) and a common
@@ -685,8 +678,8 @@ after the argument (i.e. <code>[#,]</code>) applies to the rows.</p>
 object <code>m1</code> when we index it.</p>
 <p>Matrices can also be created from a list of numbers using the
 <code>matrix()</code> and <code>c()</code> functions.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span> ),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">3</span> )</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m3</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span> ),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">3</span> )</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>m3</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="one-of-the-most-important-functions-in-r-help"
@@ -708,8 +701,8 @@ details and examples are provided as well.</p>
 <p>Let’s take a look at another function that creates sequences of
 numbers, the <code>seq( )</code> function. There are several ways to use
 the <code>seq( )</code> function. The most common are:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>( <span class="at">from=</span>, <span class="at">to=</span>, <span class="at">by=</span> ) <span class="co"># Starts at from, ends at to, steps defined by by.</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>( <span class="at">from=</span>, <span class="at">to=</span>, <span class="at">length=</span> ) <span class="co"># Starts at from, ends at to, steps defined by length.  </span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">seq</span>( <span class="at">from=</span>, <span class="at">to=</span>, <span class="at">by=</span> ) <span class="co"># Starts at from, ends at to, steps defined by by.</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">seq</span>( <span class="at">from=</span>, <span class="at">to=</span>, <span class="at">length=</span> ) <span class="co"># Starts at from, ends at to, steps defined by length.  </span></span></code></pre></div>
 <p>For example:<br />
 if we want to create an object of 5 values that starts with 1 and ends
 with 5, we type: <code>seq( from=1, to=5, by=1 )</code>.<br />
@@ -804,10 +797,10 @@ after loading <code>sna</code> (or <em>visa versa</em>), R will give you
 a warning that an “object is being masked”. That means the functionality
 of <code>betweenness</code> in <code>sna</code> is no longer used. Let’s
 check it out:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>( <span class="st">&quot;sna&quot;</span> )</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( sna )</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>( <span class="st">&quot;tnet&quot;</span> )</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( tnet )</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">install.packages</span>( <span class="st">&quot;sna&quot;</span> )</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">library</span>( sna )</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">install.packages</span>( <span class="st">&quot;tnet&quot;</span> )</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="fu">library</span>( tnet )</span></code></pre></div>
 <p>This can be a bit frustrating. In such cases, you can unload the
 package using the <code>detach()</code> function. See:
 <code>?detach</code> for an example.</p>
@@ -821,10 +814,10 @@ created.</p>
 <p>To see what exists in the workspace, type: <code>ls()</code>.</p>
 <p>We can remove specific variables with the <code>rm()</code> function.
 This helps clear up space (i.e. conserve memory). For example:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>( <span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1</span> ) <span class="co"># create the object.</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()          <span class="co"># see the objects.</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>( x )         <span class="co"># remove the object x.</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()          <span class="co"># no more x.</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>( <span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1</span> ) <span class="co"># create the object.</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">ls</span>()          <span class="co"># see the objects.</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="fu">rm</span>( x )         <span class="co"># remove the object x.</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="fu">ls</span>()          <span class="co"># no more x.</span></span></code></pre></div>
 <p>To remove everything from the workspace use:
 <code>rm( list=ls() )</code>. This is helpful for starting a session to
 make sure everything is cleaned out.</p>
@@ -886,8 +879,8 @@ href="http://www.rstudio.com">http://www.rstudio.com</a>.</p>
 <p>Go ahead and open RStudio and let’s take a look!</p>
 <p><br></p>
 <p><br> <br></p>
-<div id="last-updated-26-october-2022" class="section level6">
-<h6><strong><em>Last updated 26 October, 2022</em></strong></h6>
+<div id="last-updated-31-july-2023" class="section level6">
+<h6><strong><em>Last updated 31 July, 2023</em></strong></h6>
 </div>
 </div>
 </div>

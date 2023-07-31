@@ -13,7 +13,7 @@
 
 <title>index.knit</title>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -60,6 +60,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -80,6 +81,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -137,11 +141,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -170,8 +178,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -179,16 +187,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -279,16 +280,17 @@ statistical packages.</p>
 <div id="materials" class="section level2">
 <h2>Materials</h2>
 <hr />
-<p><a href="R_Schedule.html">Schedule</a></p>
-<p><a href="R_Basics.html">R, The Basics &amp; RStudio</a></p>
-<p><a href="R_Working_with_Data.html">Working with Data</a></p>
-<p><a href="R_Programming.html">Programming: Functions, Loops, If/Else
+<p><a href="R-schedule.html">Schedule</a></p>
+<p><a href="R-basics.html">R, The Basics &amp; RStudio</a></p>
+<p><a href="R-working-with-data.html">Working with Data</a></p>
+<p><a href="R-programming.html">Programming: Functions, Loops, If/Else
 Statements</a></p>
-<p><a href="R_Data_Visualization.html">Data Visualization: R
+<p><a href="R-data-visualization.html">Data Visualization: R
 Graphics</a></p>
-<p><a href="R_Data_Example.html">Example: Importing, Analyzing, and
+<p><a href="R-data-example.html">Example: Importing, Analyzing, and
 Plotting Data</a></p>
-<p><a href="R_Markdown.html">Data-Driven Documents: R Markdown</a></p>
+<p><a href="R-markdown.html">Data-Driven Documents: RMarkdown</a></p>
+<p><a href="R-shiny.html">Dynamic Visualization: RShiny</a></p>
 <p><br></p>
 <hr />
 <p><br></p>
@@ -300,8 +302,8 @@ the <a
 href="https://github.com/jacobtnyoung/RWorkshop/issues">Issues</a> page.
 Thanks!</h4>
 <p><br> <br></p>
-<div id="last-updated-21-july-2022" class="section level6">
-<h6><strong><em>Last updated 21 July, 2022</em></strong></h6>
+<div id="last-updated-31-july-2023" class="section level6">
+<h6><strong><em>Last updated 31 July, 2023</em></strong></h6>
 </div>
 </div>
 </div>

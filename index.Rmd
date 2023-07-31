@@ -29,19 +29,21 @@ This workshop will familiarize participants with the [R](http://cran.r-project.o
 ## Materials  
 ____
 
-[Schedule](R_Schedule.html)
+[Schedule](R-schedule.html)
 
-[R, The Basics & RStudio](R_Basics.html)
+[R, The Basics & RStudio](R-basics.html)
 
-[Working with Data](R_Working_with_Data.html)
+[Working with Data](R-working-with-data.html)
 
-[Programming: Functions, Loops, If/Else Statements](R_Programming.html)
+[Programming: Functions, Loops, If/Else Statements](R-programming.html)
 
-[Data Visualization: R Graphics](R_Data_Visualization.html)
+[Data Visualization: R Graphics](R-data-visualization.html)
 
-[Example: Importing, Analyzing, and Plotting Data](R_Data_Example.html)
+[Example: Importing, Analyzing, and Plotting Data](R-data-example.html)
 
-[Data-Driven Documents: R Markdown](R_Markdown.html)
+[Data-Driven Documents: RMarkdown](R-markdown.html)
+
+[Dynamic Visualization: RShiny](R-shiny.html)
 
 <br>
 
