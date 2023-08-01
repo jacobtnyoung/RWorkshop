@@ -29,12 +29,14 @@ There is a more general function, `read.table`, that can read different types of
 
 ## **Example Data File**
 
-Let's work through an example. Start by downloading the "R_Workshop_data.csv" file from this [link](r_workshop_data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).
+Let's work through an example. Start by downloading the "R_Workshop_data.csv" file from this [link](r-workshop-data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).
 
 The file contains 52 individuals and 4 variables. The variables are: respondents id ("id"), a binary variable indicating whether the respondent is male or female ("male" where "1" is male), a measure of the respondent's age ("age"), and a measure of risky behaviors engaged in by the respondent ("risky").
 
 ```{r,echo=FALSE,eval=TRUE}
-dat <- read.csv( "r_workshop_data.csv", header = TRUE, as.is = TRUE, na.strings = "." )
+dat <- read.csv( 
+  "https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r-workshop-data.csv", header = TRUE, as.is = TRUE, na.strings = "." 
+  )
 dat
 ```
 
@@ -49,7 +51,7 @@ First, set the directory where the file is by using the `setwd("/…")` function
 ```{r,echo=TRUE,eval=FALSE}
 #read in the data file.
 dat <- read.csv(
-    "r_workshop_data.csv", #the data file.
+    "r-workshop-data.csv", #the data file.
     header = TRUE, # tell R to read the first row as variable names.
     as.is = TRUE, # tell R to not make any conversions.
     na.strings = "." #tell R that missing values are periods.
@@ -75,7 +77,7 @@ For example:
 
 ```{r,echo=TRUE,eval=FALSE}
 dat <- read.csv(
-    "https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r_workshop_data.csv",
+    "https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/r-workshop-data.csv",
     header=TRUE, as.is=TRUE, na.strings="." #all the other arguments remain the same.
     )
 dat #look at the object.
