@@ -477,13 +477,18 @@ There is MUCH more you can do with just the `plot()` function. See `help( par )`
 
 There are also many other options for plots in R. There are entire packages created for plotting. One in particular is the `ggplot2`. Check out [these](https://jacobtnyoung.github.io/R2PhX/projects/PHXcrime_homicide.html) visualizations for examples of working with `ggplot2`.
 
+
 <br>
 
 ## **Questions?**
+  
+____
 
 <br>
+  
+#### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+  
 <br>
-
-
+<br>
+  
 ###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***
-
