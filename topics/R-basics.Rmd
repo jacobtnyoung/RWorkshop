@@ -29,7 +29,7 @@ tutorial::go_interactive( greedy = FALSE )
 
 ## **0. Why R?**
 
-Good question. Let's watch a [video](https://player.vimeo.com/video/180644880) for an answer.  
+Good question. Watch this [video](https://player.vimeo.com/video/180644880) for a 1 minute answer.  
 
 <br>
 
@@ -41,7 +41,7 @@ R is an operating system for data science software. Just as Windows allows you t
 <br>
 
 ## **2. Installing and Starting**  
-Go to [http://cran.r-project.org](http://cran.r-project.org). Find the "Download R for..." link that is appropriate for your operating system.
+Go to [http://cran.r-project.org](http://cran.r-project.org). Find the "Download R for..." link that is appropriate for your operating system. *Mac users*: Do you have an Intel chip or an Apple chip? Be sure you download the version of R that corresponds to your chip manufacturer.
 
 When R starts it loads some basic info and provides you with a prompt: `>`
 
@@ -50,29 +50,31 @@ This prompt is the fundamental entry point for communicating with R. We type exp
 <br>
 
 ## **3. Objects in R**  
-R is a programming language. That means, it allows us to give instructions to our computer to do stuff. We will see that there is a lot of "stuff" we can do. But, the basic orientation to R is understanding **objects**.   
+R is a programming language. That means, it allows us to give instructions to our computer to do stuff. As we will see, there is a lot of "stuff" we can do. But, the basic orientation to R is understanding **objects**.   
 
-What is an *object*? Without getting to philosophical, an *object* is something we create in the R environment. Think of an R session as a box. We are creating objects and putting them into the box. This is quite different from data analysis programs like SPSS or Stata.  
+What is an *object*? Without getting too philosophical, an *object* is something we create in the R environment. Think of an R session as a box. We are creating objects and putting them into the box. We can then do things with those objects. This is quite different from data analysis programs like SPSS or Stata which is spreadsheet based.  
 
 <br>
+
+*Here are a few more points:*
 
 We create objects by using the assignment operator: `<-`
 
 What you type on the right is assigned to what you type on the left. For example:  
-`y <- 4` (we have assigned the value 4 to the object y)  
-`x <- 6` (we have assigned the value 6 to the object x)  
-`z <- y` (we have assigned the value of the object y to the object z, i.e. z = 4)  
+`y <- 4` (we have assigned the value `4` to the object `y`)  
+`x <- 6` (we have assigned the value `6` to the object `x`)  
+`z <- y` (we have assigned the value of the object `y` to the object `z`, i.e. z = 4)  
 
-After assigning a value to an object, type the name of the object and hit return/enter to see what the value is.  
+After assigning a value (or values) to an object, type the name of the object and hit return/enter to see what the value is.  
 
-Objects can start with a letter or a period. *But*, you cannot name a object starting with a number (or other symbols used by R).      
+Objects can start with a letter or a period. *BUT*, you cannot name a object starting with a number (or other symbols used by R, such as `*`).      
 Some examples:  
 `the.number.two <- 2`  
 `2 <- the.number.two`  
 `2.the.number <- 2`  
 `;.2 <- 2`
 
-R is case sensitive (i.e.  `A` is a different object than `a`). R is insensitive to white space though.  
+R is *case sensitive* (i.e.  `A` is a different object than `a`). R is insensitive to white space though.  
 These two examples are treated the same in R:  
 `x <- 2`  
 `x<-              2`  
@@ -92,9 +94,9 @@ For example, suppose we wanted to create a list of numbers, called a *vector*. W
   
 This reads: the object x is assigned the values 1, 2, 3, 4, and 5. The function is "`c`" and the argument is `1,2,3,4,5`.  
 
-The number of values (aka elements) a vector contains is referred to as the "length". We can use the `length()` function to return this information for us. For example: `length(x)` shows that the vector `x` has 5 values or elements.  
+The number of values (aka elements) a vector contains is referred to as the *length*. We can use the `length()` function to return this information for us. For example: `length(x)` shows that the vector `x` has 5 values or elements.  
 
-*Reminder*: R is a language, so part of the learning curve is getting familiar with the names of functions.  
+*Reminder*: R is a language, so part of the learning curve is remembering the names of functions and the grammatic structure.  
 
 <br>
 
@@ -110,6 +112,8 @@ x[5] # what is the fifth element in x?
 x[2:4] # what are the second through fourth elements in x?  
 x[c( 1,4 )] # what are the first and fourth elements in x?  
 ```  
+
+<br>
 
 *Note* the difference in use between `[#:#]` and `[c(#,#)]`. The colon `:` means "through" and the comma `,` means "and".    
 
@@ -191,18 +195,21 @@ sex <- factor( c( "female", "male" ) )
 is.female <- sex == "female"
 ```
 
+<br>
+
 Note that numbers **do not** require `" "` around them but characters **do** require  `" "` around them. Also, that the object `is.female` is created by stating a condition.  
   
   
-Each object has a class, which defines the "type" of vector a particular object is:  
+Each object has a class, which defines the "type" of an object. We can figure out the type of an object by using the `is.`type functions. :  
 ```{r,echo=TRUE,eval=FALSE}
-name.list <- c( "Hugo","Desmond","Largo" ) # assign the characters to an object.
-is.character( name.list ) # is the object a character vector?
-is.numeric( name.list ) #is the object a numeric vector?  
-is.factor( name.list ) # is the object a factor vector?
-is.logical( name.list ) # is the object a logical vector?
+name.list <- c( "Hugo","Desmond","Largo" )
+is.character( name.list )
+is.numeric( name.list )
+is.factor( name.list )
+is.logical( name.list )
 ```
 
+<br>
 
 Missing values are dealt with in R by NA.
 ```{r,echo=TRUE,eval=FALSE}
@@ -226,13 +233,16 @@ m2 <- cbind( x,y ) #bind x and y by column to create a 5 X 2 matrix.
 m2 #just enter the name of the object to print it.
 ```
 
-For both functions, the dimensions of the vectors must be the same (i.e. same number of rows and columns).  
-Let’s see some examples:  
+<br>
+
+For both functions, the dimensions of the vectors must be the same (i.e. same number of rows and columns). Let’s see some examples:  
 ```{r,echo=TRUE,eval=FALSE}
 l  <- c( 6,5,4,3,2 )
 n  <- c( 8,7,5 )
 m2 <- rbind( l,n ) # returns an error because the dimensions differ.
 ```
+
+<br>
 
 We can index the matrix `m1` or `m2` by using the brackets `[ ]` with a comma between the two dimensions. Since a matrix is 2-dimensions, we can reference a specific element, an entire row, or an entire column:
 ```{r,echo=TRUE,eval=FALSE}
@@ -245,6 +255,8 @@ m2[2,2] <- 0 #change the value to zero.
 m2[2,]  <- 0 #change the second row to zeros.
 m2[,2]  <- 0 #change the second column to zeros.
 ```
+
+<br>
 
 In the code chunk above, note the difference between `[,#]` and `[#,]`. A comma in front of the argument (i.e. `[,#]`) applies to the columns) and a common after the argument (i.e. `[#,]`) applies to the rows.  
 
@@ -283,29 +295,40 @@ For example, say you want to calculate the standard deviation for an object, but
 
 <br>
 
-## **9. Packages and the `install.packages()` and `library()` Functions**  
+## **9a. Packages: Using the `install.packages()` and `library()` Functions**  
 R has MANY preprogrammed functions that are automatically loaded when you open the program. Functions are stored in "packages". Although there are many preprogrammed functions, there are even MORE functions that you can install on your own. A package in R is a collection of functions, usually written for a specific purpose.  
 
-We can see the packages available from CRAN at [http://cran.r-project.org/](http://cran.r-project.org). Just click on the "packages" link or go to [https://cran.r-project.org/web/packages/index.html](https://cran.r-project.org/web/packages/index.html). As of writing this there are nearly 13,000 packages. There is a WIDE variety of packages available, this is another reason why R is awesome. If you can think it, someone has probably written a package for it in R (and if not, *you* can write one and contribute [isn't it great!]).  
+We can see the packages available from CRAN at [http://cran.r-project.org/](http://cran.r-project.org). Just click on the "packages" link or go to [https://cran.r-project.org/web/packages/index.html](https://cran.r-project.org/web/packages/index.html). As of writing this there are nearly 20 thousand packages! There is a WIDE variety of packages available, this is another reason why R is awesome. If you can think it, someone has probably written a package for it in R (and if not, *you* can write one and contribute [isn't it great!]).
 
 **Take a few moments and look through the packages**  
 
 If there is a particular package you want to add, you simply use the `install.packages()` function like this: `install.packages("`package name`")`.  
 
-After the package is installed on your machine, you do not need to reinstall it each time you open a new session. Rather, you just need to load the package using the `library()` function like this: `library("`package name`")`.  
+After the package is installed on your machine, you do not need to re-install it each time you open a new session. Rather, you just need to load the package using the `library()` function like this: `library(`package name`)`. Note that when you use the `install.packages()` function the package name needs to be in `""`, but not so for the `library()` function.  
 
-For example, let’s look at the sudoku package (yep, someone wrote a program to create sudoku puzzles in R). To get it we type: `install.packages( "sudoku" )` and then we select a "mirror". This installs the package in your local library of packages. To load the package we use the `library()` function: `library( "sudoku" )`. Let’s take a look at what the package has: `help( package="sudoku" )`.  
+For example, are you feeling a bit down? Need some praise? Then let’s check out the `praise` package!  
 
-Note that some packages require other packages for them to work. If there is an error, you need to install the additional packages.  
+  + To get it we type: `install.packages( "praise" )` and then we select a "mirror". This installs the package in your local library of packages. 
+  
+  + To load the package we use the `library()` function: `library( "praise" )`. 
+  
+  + Now, let's gets some praise by using the `praise()` function.
+  
+  + Finally, take a look at what the package has: `help( package="praise" )`.  
 
-For example, let’s install the ergm package, a set of tools for estimating exponential random graph models. To get it we type: `install.packages( "ergm" )` and look at the additional packages that are installed. Then type: `library( "ergm" )`.  
+<br>
 
-Note that each time you open R you have to load any packages that you manually loaded using the `install.packages()` function. In other words, if we closed R and then reopened it, we would need to type `library( "ergm" )` to load the functions in `ergm`.   
+Note that some packages require other packages for them to work. If there is an error, you need to install the additional packages. For example, let’s install the `ergm` package, a set of tools for estimating exponential random graph models (which are super dope FYI). To get it we type: `install.packages( "ergm" )` and look at the additional packages that are installed. Then type: `library( "ergm" )`.  
 
-Note that we *do not* have to reinstall the package using `install.packages()`, we just have to load the library.  
+Note that each time you open R you have to load any packages that you manually loaded using the `install.packages()` function. In other words, if we closed R and then reopened it, we would need to type `library( "ergm" )` to load the functions in `ergm`.
 
-If you have installed the package, but have not loaded it, R will return an error saying that a particular function is not found.  
-For example, the function `ergmm()` in the package `latentnet` is used to fit latent space and latent space cluster random network models. Type `?ergmm` and you get an error stating that there is no documentation available. This is because the `latetnet` library has not been loaded (even if you have installed `latentnet`). Typing `install.packages( "latentnet" )` and `library( latentnet )` prior to `?ergmm()` will solve this problem.  
+Note that we *do not* have to re-install the package using `install.packages()`, we just have to load the library. You will only need to re-install when there is a major update to R and you have to download the new version.
+
+<br>
+
+If you have installed the package, but have not loaded it, R will return an error saying that a particular function is not found. For example, the function `ergmm()` in the package `latentnet` is used to fit latent space and latent space cluster random network models. Type `?ergmm` and you get an error stating that there is no documentation available. This is because the `latetnet` library has not been loaded (even if you have installed `latentnet`). Typing `install.packages( "latentnet" )` and `library( latentnet )` prior to `?ergmm()` will solve this problem.  
+
+<br>
 
 A final point on loading packages. Since anyone can write and contributes packages to R, it is not surprising that some packages occasionally use the same names for functions. When you have loaded libraries for packages that have conflicting functions, R will output a message indicating there is an issue.
 
@@ -322,6 +345,30 @@ This can be a bit frustrating. In such cases, you can unload the package using t
 
 <br>
 
+## **9b. MORE Packages: Using the `devtools()` Package and the `install_github` Function**  
+
+But wait, there's more! CRAN is just one repository for R packages. There are also packages available on [Github](https://github.com/). In fact, many packages that are written for R are not available on CRAN. If you try to install a package that is not on CRAN, you will get an error saying it is not available. To load from Github, we need to use the `devtools` package which contains the `install_github()` function. This function calls the Github "repository" where a package exists. 
+
+For example, let's take a look at the `memer` package. The Github repository for the package is: https://github.com/sctyner/memer. Note: this package has some dependencies that are fairly large. 
+
+  + Try to load from CRAN using `install.packages( "member" )`. What happens?  
+
+<br>
+
+We need to load it from Github.
+  
+  + First, install the `devtools` package, `install.packages( "devtools" )`.   
+  + Second, load the library `library( devtools )` with the `install_github()` function.  
+  + Third, `install_github( "sctyner/memer" )` download the repository for the `memer` package. 
+  
+    + PRO TIP: you can use two colons, `::` to skip the `library( devtools )` step: `devtools::install_github("sctyner/memer")`.  
+
+  + Fourth, load the library `library( memer )`.  
+  + Fifth, create a meme:  
+    + `meme_get( "DistractedBf" ) %>% meme_text_distbf( "R & RStudio", "\nR Workshop\n Participant", "SPSS" )`.  
+    
+<br>
+
 ## **10. R Session Management**  
 All variables created in R are stored in the "workspace". Think of it as a work bench that has a bunch of stuff on it that you have created.  
 
@@ -334,6 +381,9 @@ ls()	      # see the objects.
 rm( x )         # remove the object x.
 ls()          # no more x.
 ```
+
+<br>
+
 To remove everything from the workspace use: `rm( list=ls() )`. This is helpful for starting a session to make sure everything is cleaned out.  
 
 When you start R, it nominates one of the directories on your hard drive as a working directory, which is where it looks for user-written programs and data files.  
@@ -368,8 +418,13 @@ Go ahead and open RStudio and let's take a look!
 
 <br>
 
-<br>
+____
+
 <br>
 
+#### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+
+<br>
+<br>
 
 ###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***

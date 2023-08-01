@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Workshop Overview
 
-This workshop will familiarize participants with the [R](http://cran.r-project.org/) environment for statistical computing. [R](http://cran.r-project.org/) is a freely available, multi-platform,  and a powerful program for analysis and graphics. It provides a programming language that can easily be extended by the user, allows the user to produce publication-quality graphics, and is ubiquitous in statistical/quantitative courses around the world. This workshop does not require knowledge of advanced statistics methods and will not cover them in any detail. We will cover the basics of organizing, managing, and manipulating data, demonstrate basic applications, introduce programming, and discuss links to other major statistical packages.  
+This workshop will familiarize participants with the [R](http://cran.r-project.org/) language and the [RStudio](https://posit.co/products/open-source/rstudio/) environment for statistical computing. Both are freely available, multi-platform, programs for data wrangling, analysis, graphics, and project management. [R](http://cran.r-project.org/) provides a programming language that can easily be extended by the user, allows the user to produce publication-quality graphics, and is ubiquitous in statistical/quantitative courses around the world. This workshop does not require knowledge of advanced statistics methods and will not cover them in any detail. We will cover the basics of organizing, managing, and manipulating data, demonstrate basic applications, introduce programming, and review more advanced features such as data-driven documents and dynamic visualization.  
 
 
 <br>
