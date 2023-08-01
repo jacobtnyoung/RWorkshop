@@ -1,5 +1,6 @@
 ---
 title: "R, The Basics"
+date: "R Workshop"
 output: 
   html_document:
     df_print: paged
@@ -8,7 +9,7 @@ output:
     toc: yes
     toc_float: yes
     code_fold: show
-    self_contained: false
+    self_contained: true
 ---
 
 <style>

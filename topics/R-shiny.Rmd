@@ -1,6 +1,6 @@
 ---
-title: "Data-Driven Documents: R Markdown"
-date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
+title: "Dynamic Visualization: R Shiny"
+date: "R Workshop"
 output: 
   html_document:
     df_print: paged
@@ -15,58 +15,72 @@ output:
 <br>
 
 # **Introduction**  
-A great feature of RStudio is that you can create data-driven documents. That is, documents that use combine text and analysis into a "reproducible" documents. This is done using [R Markdown](https://rmarkdown.rstudio.com/). In other words, it allows you to write all of the text, syntax for the analysis, etc. and keep it in a document. This way you are not bouncing between programs and everything is reproducible. This is ideal if you are using a publicly available data set.
+Another great feature of RStudio is that you can create dynamic visualizations using R Shiny. Dynamic graphics allow a user to select parameters that change the visualization in some way. Graphics will update in real-time within a web browser.
 
 <br>
 
-## **Getting Started**  
-First, you need to install the `rmarkdown` package using:  
+#### Example
 
-```{r, echo = TRUE, eval = FALSE}
-install.packages( "rmarkdown" )
+Recall earlier how we created the figure below using `plot()` function:
+
+<br> 
+
+```{r, echo=FALSE, eval=TRUE}
+
+y    <- seq( -15, 30, length=1000 ) # sequence from -15 to 30. 
+hx.1 <- dnorm( y, 0, 1 ) # densities for the plots.
+hx.2 <- dnorm( y, 0, 2 )
+hx.3 <- dnorm( y, 0, 3 )
+
+plot( y, hx.1,
+  xlab="", ylab="", # blank out the labels for x and y.
+  type="n", #do not plot anything.
+  main="Normal Distributions" # a title.
+)
+
+lines( y, hx.1, col="blue", type="l", lwd=2 )
+lines( y, hx.2, col="red", type="l", lwd=2 )
+lines( y, hx.3, col="darkgreen", type="l", lwd=2 )
+
+segments( 0, 0, 0, 0.5, col="black", lwd=2 )
+
+text( 11, 0.35, "Mean = 0, SD = 1", col="blue", cex=1.5 )
+text( 12, 0.15, "Mean = 0, SD = 2", col="red", cex=1.5 )
+text( 13, 0.06, "Mean = 0, SD = 3", col="darkgreen", cex=1.5 )
+
 ```
 
-Now, let's take a look at how it works. Open a new R Markdown file using the drop-down menu as shown below:  
+```{r, results='asis', echo=FALSE}
 
-![file call image](images/markdown_file_pic.png)  
+cat("\\newpage")
+
+```
+
 <br>
 
-Then, use the options to pick the type of file you want to create.
+This figure is great and all, but what it would be a better learning exercise if the individual could manipulate the values.
 
-Afterwards, click on the knit function in the .Rmd pane:  
+Like this:
 
-![file call image](images/knit_pic.png) 
+
+
+
+
+# **Render Functions**
+
+TEXT
+
 <br>
 
-You did it!  
-<br>
-
-## **Next Steps**  
-Easy enough right? Great! That was a simple example, there is a *lot* more you can do. If you are ready to charge forward, then here are some helpful links:  
-
-  * Get inspired by looking through the R Markdown [gallery](https://rmarkdown.rstudio.com/gallery.html).  
-
-  * Walk through the R Markdown [lessons](https://rmarkdown.rstudio.com/lesson-1.html) in the R Studio website.
-
-  * [The R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf?_ga=2.20453179.2030628553.1595556878-981053003.1531765846)  
+## **Questions?**
   
-  * [The R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf?_ga=2.89551512.2030628553.1595556878-981053003.1531765846)  
+____
 
 <br>
-
-## **Some Examples**  
-Take a look at the [RWorkshop gitub page](https://github.com/jacobtnyoung/RWorkshop).  
-
-You will see a `.Rmd` file for all of the sections we covered today. Let's look through a few.  
-
-Here is another example. Take a look through the [R2PhX](https://jacobtnyoung.github.io/R2PhX/) pages. In particular, take a look at this page examining [crime in Phoenix](https://jacobtnyoung.github.io/R2PhX/projects/PHXcrime_trends.html). This page is a .html file that is created using an RMarkdown file. That file can be found [here](https://github.com/jacobtnyoung/R2PhX/blob/master/projects/PHXcrime_trends.Rmd).
-
-<br>
-
-## **Questions?**  
-
+  
+#### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+  
 <br>
 <br>
-
-
+  
 ###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***

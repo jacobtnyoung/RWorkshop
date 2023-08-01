@@ -1,6 +1,6 @@
 ---
-title: "Data-Driven Documents: R Markdown"
-date: "R Workshop `r format(Sys.time(), '%d %B, %Y')`"
+title: "Data-Driven Documents: RMarkdown"
+date: "R Workshop"
 output: 
   html_document:
     df_print: paged
@@ -9,7 +9,7 @@ output:
     toc: yes
     toc_float: yes
     code_fold: show
-    self-countained: false
+    self-countained: true
 ---
 
 <br>
@@ -26,19 +26,29 @@ First, you need to install the `rmarkdown` package using:
 install.packages( "rmarkdown" )
 ```
 
+<br>
+
 Now, let's take a look at how it works. Open a new R Markdown file using the drop-down menu as shown below:  
 
-![file call image](images/markdown_file_pic.png)  
+<br>
+
+![](../images/markdown_file_pic.png)
+
 <br>
 
 Then, use the options to pick the type of file you want to create.
 
+<br>
+
 Afterwards, click on the knit function in the .Rmd pane:  
 
-![file call image](images/knit_pic.png) 
+<br>
+
+![](../images/knit_pic.png) 
 <br>
 
 You did it!  
+
 <br>
 
 ## **Next Steps**  
@@ -55,18 +65,25 @@ Easy enough right? Great! That was a simple example, there is a *lot* more you c
 <br>
 
 ## **Some Examples**  
-Take a look at the [RWorkshop gitub page](https://github.com/jacobtnyoung/RWorkshop).  
+Take a look at the [RWorkshop github page](https://github.com/jacobtnyoung/RWorkshop). Click on the [topics](https://github.com/jacobtnyoung/RWorkshop/tree/main/topics) folder.  
 
 You will see a `.Rmd` file for all of the sections we covered today. Let's look through a few.  
+
+<br>
 
 Here is another example. Take a look through the [R2PhX](https://jacobtnyoung.github.io/R2PhX/) pages. In particular, take a look at this page examining [crime in Phoenix](https://jacobtnyoung.github.io/R2PhX/projects/PHXcrime_trends.html). This page is a .html file that is created using an RMarkdown file. That file can be found [here](https://github.com/jacobtnyoung/R2PhX/blob/master/projects/PHXcrime_trends.Rmd).
 
 <br>
 
-## **Questions?**  
+## **Questions?**
+  
+____
 
 <br>
+  
+#### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+  
 <br>
-
-
+<br>
+  
 ###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***

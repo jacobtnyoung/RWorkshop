@@ -1,5 +1,6 @@
 ---
 title: "Working with Data"
+date: "R Workshop"
 output: 
   html_document:
     df_print: paged
@@ -7,7 +8,7 @@ output:
     highlight: haddock
     toc: yes
     toc_float: yes
-    self_contained: false
+    self_contained: true
 ---
 
 <style>

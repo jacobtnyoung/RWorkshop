@@ -1,5 +1,6 @@
 ---
 title: "Programming: Functions, Loops, If/Else Statements"
+date: "R Workshop"
 output: 
   html_document:
     df_print: paged
