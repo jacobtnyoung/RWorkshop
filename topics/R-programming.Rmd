@@ -16,6 +16,11 @@ body {
 text-align: left}
 </style>
 
+```{r, include=FALSE}
+#devtools::install_github("datacamp/tutorial")
+tutorial::go_interactive( greedy = FALSE )
+```
+
 <br>
 
 ## **Functions**  
@@ -23,9 +28,14 @@ text-align: left}
 An *AWESOME* feature of R, and perhaps a main reason for using it, is that it allows you to program your own functions. In fact, all the commands that you use in R *are* functions.  
 
 We can look at the basic structure of a function in R by typing the function name, but excluding the parentheses. For example, lets take a look at the function for taking the row mean of an object, `rowMeans()`. Just type:
+
 ```{r,echo=TRUE,eval=FALSE}
+
 rowMeans # There is a lot going on, but you see the structure.
+
 ```
+
+<br>
 
 The basic structure of a function is:  
 `function.name <- function(`arguments or things you need separated by commas`){`  
@@ -35,13 +45,72 @@ The basic structure of a function is:
 
 Basically, we are passing in an object or objects, doing something to it, and then returning an output.  
 
+<br>
+
+### Functions as *data recipes*
+
+You can think of a function as a "data recipe" because when we build a function, it is just like cooking: we have ingredients (inputs), instructions (steps), and some output.
+
+For example, say you want to make chocolate chip cookies: 
+
+  + Ingredients 
+  
+    * 1/3 cup butter   
+    * 1/2 cup sugar   
+    * 1/4 cup brown sugar   
+    * 2 teaspoons vanilla extract  
+    * 1 large egg  
+    * 2 cups all-purpose flour  
+    * 1/2 teaspoon baking soda  
+    * 1/2 teaspoon kosher salt  
+    * 1 cup chocolate chips  
+
+<br>
+
+  + Instructions 
+  
+    1. Preheat the oven to 375 degrees F. 
+    2. In a large bowl, mix butter with the sugars until well-combined. 
+    3. Stir in vanilla and egg until incorporated. 
+    4. Addflour, baking soda, and salt.  
+    5. Stir in chocolate chips. 
+    6. Bake for 10 minutes. 
+
+<br>
+
+In R, the recipe would look something like this:
+
+```
+function( butter=0.33, sugar=0.5, eggs=1, flour=2, temp=375 )
+{
+   dry.goods <- combine( flour, sugar )
+   batter <- mix( dry.goods, butter, eggs )
+   cookies <- bake( batter, temp, time=10 )
+   return( cookies )
+}
+```
+
+<br>
+
+Note that this function to make cookies relies on other functions for each step, combine(), mix(), and bake(). Each of these functions would have to be defined as well, or more likely someone else in the open source community has already written a package called "baking" that contains simple functions for cooking so that you can use them for more complicated recipes. 
+
+You will find that R allows you to conduct powerful analysis primarily because you can build on top of and extend a lot of existing functionality. 
+
+<br>
+
 For example, let’s create a function that calculates the mean of a variable:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.mean <- function( input ){
   our.mean <- sum( input )/length( input ) 
   return( our.mean ) 
 }
+
 ```
+
+<br>
+
 
 This function takes an object `input` and divides the sum of input by the length of input and returns this ratio as an object called `our.mean`. Note that the names we use for the objects are arbitrary.  
 
@@ -50,86 +119,202 @@ The function reads as: create a function called `function.mean`, this function t
 Remember that we can see our function by just typing the name `function.mean`.  
 
 Now, let’s create an object called `x` and calculate the mean using our function:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 x <- c( 1,2,3,4,5 )
+
 function.mean( x )
+
 ```  
+
+<br>
 
 Note here that `x` is the input in the function.   
 
 We can also create a object that is returned by the function.  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 x.mean <- function.mean( x )
+
 x.mean
+
 ```
+
+<br>
+
 The command: `function.mean(x)` just returns the mean, but the command: `x.mean <- function.mean(x)` creates the object `x.mean` that is the mean of the object `x`.  
 
 Commenting inside the function is helpful for keeping track of what is going on, as well as for others who might want to use a function you have created. In R, any line with a `#` sign in front is commented out of the code in the function and it will pass over it. For example:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.mean <- function( input ){
   our.mean <- sum( input )/length( input ) #the equation for the mean.
   return( our.mean ) #the object 'our.mean' is what is created.
 }
+
 ```
+
+<br>
+
 It is important to note that R will overwrite the names of existing functions. For example, the function `rowMeans()` can be overwritten by the command `rowMeans <- function(input){`...`}`. So be careful with your naming of functions. To be safe, just type the name of what you want to call your function to see if it exists in the loaded libraries.  
 <br>
 
 ## **More about the function of the `function()` Function**  
 The `return()` command within the `function()` function is helpful when our function creates multiple objects, but we only want particular objects returned by the function. For example, let’s create a function that takes the mean of two different inputs, then creates a new object that has both of these means as a single object:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.two.means <- function( input1,input2 ){ #this function takes two arguments.
     mean.1 <- sum( input1 )/length( input1 ) # take the mean of the first object.
     mean.2 <- sum( input2 )/length( input2 ) # take the mean of the second object.
     both.means <- c( mean.1,mean.2 ) #combine the means into a object.
     return( both.means ) #return the object that is both means.
 	}
+
 ```
+
+<br>
+
 Let’s give it a try:  
+
 ```{r,echo=TRUE,eval=TRUE}
 x <- c( 1,2,3,4,5 )
+
 y <- c( 6,7,8,9,10 )
+
 ```  
+
+<br>
 
 Create the mean of `x`:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.mean( x )
+
 ```
+
+<br>
 
 Create the mean of `y`:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.mean( y )
+
 ```  
 
+<br>
+
 Now, create the mean of the means. *Note* that we have to put in two arguments here:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.two.means( x,y ) 
+
 ```
 
+<br>
+
 Note that this function creates an object with two means. That is to say, a *vector* with dimensions *1 x 2*. That is different then a function which takes the mean of the means. For example:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.mean.of.means <- function( input1,input2 ){ #this function takes two arguments.
     mean.1 <- sum( input1 )/length( input1 ) # take the mean of the first object.
     mean.2 <- sum( input2 )/length( input2 ) # take the mean of the second object.
     mean.of.means <- mean( c( mean.1,mean.2 ) ) #take the mean of the means.
     return( mean.of.means ) #return the object that is the mean of both means.
 	}
+
 ```
+
+<br>
+
 Let’s give it a try:  
 ```{r,echo=TRUE,eval=TRUE}
+
 x <- c( 1,2,3,4,5 )
 y <- c( 6,7,8,9,10 )
 function.mean( x )
 function.mean( y )
 function.mean.of.means( x,y )
+
 ```
+
+<br>
 
 Now, compare that to:
+
 ```{r,echo=TRUE,eval=TRUE}
+
 function.two.means( x,y )
+
 ```
 
-*Question*: What is the difference between the statement `both.means <- c(mean.1,mean.2)` in the first function and the statement `mean.of.means <- mean(c(mean.1,mean.2))` in the second function?  
 <br>
+
+*Question*: What is the difference between the statement `both.means <- c(mean.1,mean.2)` in the first function and the statement `mean.of.means <- mean(c(mean.1,mean.2))` in the second function?  
+
+<br>
+
+#### **You try it!**
+
+Task: Create a function to square all the numbers 1: 10 in a vector called y.
+
+```{r ex="try-function", type="pre-exercise-code", tut=TRUE}
+y <- c( 1,2,3,4,5,6,7,8,9,10 )
+
+function.square <- function( input ){
+  output <- input^2
+}
+
+squares <- function.square ( y )
+
+print( squares )
+
+y^2
+
+```
+
+```{r ex="try-function", type="sample-code", tut=TRUE}
+# Create an object y that is a vector of the numbers 1:10.
+
+# Write the function
+
+# Create an object using the function
+
+# print out the object
+
+# check that it worked (i.e. use an equation)
+
+
+```
+
+```{r ex="try-function", type="solution", tut=TRUE}
+# Create an object y that is a vector of the numbers 1:10.
+y <- c( 1,2,3,4,5,6,7,8,9,10 )
+
+# Write the function
+function.square <- function( input ){
+  output <- input^2
+}
+
+# Create an object using the function
+squares <- function.square ( y )
+
+# print out the object
+print( squares )
+
+# check that it worked (i.e. use an equation)
+y^2
+
+```
+
+
 
 ## **Scripts and Source**  
 Rather than writing line-by-line, it is easier to create functions in a text editor and then copy and paste them into R. Many text editors will auto-generate brackets, parentheses, etc., making the programming much easier.  
@@ -137,37 +322,116 @@ Rather than writing line-by-line, it is easier to create functions in a text edi
 Within R, you can create script files (which have the .R extension) than can be called using the `source()` function. Rather than copy and pasting all of the text in a script, you can use the `source()` function to run an entire script.  
 
 For example, execute the following script to plot a Christmas tree:
+
 ```{r,echo=TRUE,eval=FALSE}
+
 source( "https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/main/tree_source.R" )
+
 ```
 
+<br>
+
 Now, let's take a look at the file ([click here](https://raw.githubusercontent.com/jacobtnyoung/RWorkshop/master/tree_source.R)) and see what the script is doing.  
+
 <br>
 
 ## **Loops**  
 Often we need to repeat an action several times and would like a procedure that does this for us. In R, the `for()` function accomplishes this task and takes the following form:  
+
 ```{r,echo=TRUE,eval=FALSE}
+
 for( i in 1:n ){  
   #do some stuff here  
-  }  
+}
+
 ```
+
+<br>
 
 In this syntax, `for` indicates that we are going to loop from a start index to an end index, `i` is the index we are looping over, `1` is our start index, `n` is the end index, `{` opens the loop and `}` closes the loop. With loops, actions that take place in the loop involve objects, and these objects must be created before we initiate the loop.  
 
 Let’s create a loop that takes each value of an object and squares it. For example:  
+
 ```{r,echo=TRUE,eval=TRUE}
-  x <- seq( 1,5,1 )	        #create an object called x that is 1,2,3,4,5.
-  x.squared <- NULL       #create an object that is empty which we will use in the loop.
+
+x <- seq( 1, 10, 1 ) # create a object of values 1 through 10.
+
+x.squared <- NULL       #create an object that is empty which we will use in the loop.
     for( i in 1:5 ){	       #for each element for 1 through 5.
       x.squared[i] <- x[i]^2 #each element of x.squared will be x[i] squared.
-	}
+    }
+  
 x.squared # print the object to see the value.
+
 ```  
 
-R also has some very helpful loops already programmed in the `apply()` function family. The `apply()` function allows us apply to a function to a two-dimensional object. The `apply()` function has three arguments: the object, whether to apply across rows or columns, the functions to use. Let's check out the help:  
-```{r,echo=TRUE,eval=TRUE}
-?apply
+<br>
+
+#### **You try it!**
+
+Task: 
+
+  + Create an object, y, that is the numbers 1 through 5.
+  
+  + Create an object, x, that is `NULL`.
+  
+  + Write a loop that takes the elements of y and a) squares it then b) adds that squared value to the original value. 
+    
+  + For example, if my value in y is $6$, then the output in x should be $42$ because $6^2 + 6 = 42$.
+
+```{r ex="try-loop", type="pre-exercise-code", tut=TRUE}
+y <- seq( 1, 5, 1 )
+
+x <- NULL
+
+for( i in 1:5 ){
+  x[i] <- y[i]^2 + y[i]
+}
+
+print( x )
+
 ```
+
+```{r ex="try-loop", type="sample-code", tut=TRUE}
+# Create y
+
+# Create the empty object x
+
+# Write and execute loop
+
+# print the result
+
+```
+
+```{r ex="try-loop", type="solution", tut=TRUE}
+# Create y
+y <- seq( 1, 5, 1 )
+
+# Create the empty object x
+x <- NULL
+
+# Write and execute loop
+for( i in 1:5 ){
+  x[i] <- y[i]^2 + y[i]
+}
+
+# print the result
+print( x )
+
+```
+
+
+<br>
+
+R also has some very helpful loops already programmed in the `apply()` function family. The `apply()` function allows us apply to a function to a two-dimensional object. The `apply()` function has three arguments: the object, whether to apply across rows or columns, the functions to use. Let's check out the help:  
+
+```{r,echo=TRUE,eval=TRUE}
+
+?apply
+
+```
+
+<br>
 
 For example, say we have a data set with 5 individuals and 3 variables and we want the mean for each of the variables:
 
@@ -182,7 +446,9 @@ Dezy   | 3    | 4    | 5
 Mean   | ?    | ?    | ?    
 
 If we read these data in as a matrix, then the mean for each variable is just the column means:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 #Create the data matrix using the matrix function.
 dat <- matrix(
   c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 ), # a vector of the values.
@@ -190,27 +456,45 @@ dat <- matrix(
   ncol=3, # the number of columns in the matrix.
   byrow=TRUE #instructions to read by row (vs. by column).
   )
+
 ```
 
+<br>
+
 Note, we could write:  
+
 ```{r,echo=TRUE,eval=FALSE}
+
 mean( dat[,1] )  
 mean( dat[,2] )  
 mean( dat[,3] )
+
 ```
 
+<br>
+
 Or, we could just use the `apply()` function:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 apply( dat,2,mean )
+
 ```
+
 <br>
 
 ## **If/Else Statements**  
-R has a useful function called `which()` that returns T/F statements about objects. The function returns the position of the values meeting some condition. For example:  
+R has a useful function called `which()` that returns T/F statements about objects. The function returns the position of the values meeting some condition. For example:   
+
 ```{r,echo=TRUE,eval=TRUE}
 x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
+
 which( x > 3 ) #which elements of x are greater than 3?
+
 ```
+
+<br>
+
 Shows that elements in the 4th, 5th, 6th, 7th, 14th, and 15th positions are > 3.
 
 Using the same idea, the `if()` function can be used if we want to perform a certain task depending on some condition. The basic structure is:  
@@ -219,7 +503,9 @@ Using the same idea, the `if()` function can be used if we want to perform a cer
 `}`  
 
 For example, say we want to recode some value if it meets some condition. Specifically, lets recode all values in `x` to be 0 of they are greater than 3. To do this, we need to put our if statement in a `for()` loop.  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
 
 for( i in 1:15 ){
@@ -228,22 +514,34 @@ for( i in 1:15 ){
     }
   }
 x
+
 ```  
 
+<br>
+
 There is also the `else` command that lets us perform actions if some condition is not met. For example, recode all values to be 1 if they are not greater than 3 (i.e. going to be changed to 0).  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
+
 for( i in 1:15 ){
   if( x[i] > 3 ){
     x[i] <- 0
     }
   else x[i] <- 1
   }
+
 x
+
 ```  
 
+<br>
+
 Finally, there is also the `else if()` function that lets you combine several possible actions. For example:  
+
 ```{r,echo=TRUE,eval=TRUE}
+
 x <- c( 1,2,3,4,5,5,4,3,2,1,1,2,3,4,5 )
 
 for( i in 1:15 ){
@@ -255,14 +553,22 @@ for( i in 1:15 ){
     }
   else x[i] <- 1 # recode 1 and 2 to 1.
   }
+
 x
+
 ```
-<br>
-
-## **Questions?**  
 
 <br>
+
+## **Questions?**
+  
+____
+
 <br>
-
-
+  
+#### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+  
+<br>
+<br>
+  
 ###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***

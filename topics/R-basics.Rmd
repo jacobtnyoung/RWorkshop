@@ -418,13 +418,15 @@ Go ahead and open RStudio and let's take a look!
 
 <br>
 
+## **Questions?**
+  
 ____
 
 <br>
-
+  
 #### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
-
+  
 <br>
 <br>
-
+  
 ###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***
