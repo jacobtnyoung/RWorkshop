@@ -10,7 +10,6 @@ runtime: shiny
 
 ```{r include = FALSE}
 
-
 x    <- seq( -5, 25, length=1000 ) # sequence from -15 to 30. 
 
 ```

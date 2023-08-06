@@ -19,7 +19,7 @@ Another great feature of RStudio is that you can create dynamic visualizations u
 
 <br>
 
-#### Example
+### Example
 
 Recall earlier how we created the figure below using `plot()` function:
 
@@ -60,15 +60,16 @@ cat("\\newpage")
 
 This figure is great and all, but what it would be a better learning exercise if the individual could manipulate the values.
 
-Like this:
+Take a look at this example to illustrate [Central Tendency and Dispersion](https://jacobtnyoung.shinyapps.io/R-shiny-example/)
 
+<br>
 
+## **Render Functions**
 
+Shiny functions work similar to other `knitr` functions that are used to convert your raw R output into HTML, PDF, Word, etc. documents. 
+The output functions take R code and “render” it as HTML objects that can be used in web browsers in order to display your dashboard. Shiny functions add some javascript features that allow output to be updated in real-time inside a browser.
 
-
-# **Render Functions**
-
-TEXT
+These functions are converting R code into javascript. There are a number of pre-built "[widgets](https://shiny.posit.co/r/gallery/widgets/widget-gallery/)" available in the [Shiny](https://shiny.posit.co/) website. 
 
 <br>
 
