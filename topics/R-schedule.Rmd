@@ -27,7 +27,7 @@ text-align: justify}
 
 #### 11:15-12:00 --- [**Programming: Functions, Loops, If/Else Statements**](topics/R-programming.html)  
 
-#### 12:00-12:45 --- *Long Break*  
+#### 12:00-12:45 --- *Long Break/Lunch*  
 
 <br>
 
