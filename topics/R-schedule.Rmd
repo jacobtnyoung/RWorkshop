@@ -44,3 +44,9 @@ text-align: justify}
 #### 3:00-4:00 --- **Open Session for Q&A**  
 
 <br>
+
+<p align="center">
+[Back to R 2 Phoenix page](https://jacobtnyoung.github.io/R2PhX/)
+</p>
+
+<br>

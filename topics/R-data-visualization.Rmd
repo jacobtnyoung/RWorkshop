@@ -486,6 +486,12 @@ There are also many other options for plots in R. There are entire packages crea
 ____
 
 <br>
+
+<p align="center">
+[Back to R 2 Phoenix page](https://jacobtnyoung.github.io/R2PhX/)
+</p>
+
+<br>
   
 #### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
   

@@ -64,6 +64,10 @@ Take a look at this example to illustrate [Central Tendency and Dispersion](http
 
 <br>
 
+## **Another Example**
+
+Let’s look at the sudoku package (yep, someone wrote a program to create sudoku puzzles in R). To get it we type: `install.packages( "sudoku" )`. To load the package we use the `library()` function: `library( sudoku )`. Let’s take a look at what the package has: `help( package="sudoku" )`.
+
 ## **Render Functions**
 
 Shiny functions work similar to other `knitr` functions that are used to convert your raw R output into HTML, PDF, Word, etc. documents. 
@@ -76,6 +80,12 @@ These functions are converting R code into javascript. There are a number of pre
 ## **Questions?**
   
 ____
+
+<br>
+
+<p align="center">
+[Back to R 2 Phoenix page](https://jacobtnyoung.github.io/R2PhX/)
+</p>
 
 <br>
   

@@ -30,7 +30,7 @@ There is a more general function, `read.table`, that can read different types of
 
 ## **Example Data File**
 
-Let's work through an example. Start by downloading the "R_Workshop_data.csv" file from this [link](r-workshop-data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).
+Let's work through an example. Start by downloading the "R_Workshop_data.csv" file from this [link](https://github.com/jacobtnyoung/RWorkshop/blob/main/r-workshop-data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).
 
 The file contains 52 individuals and 4 variables. The variables are: respondents id ("id"), a binary variable indicating whether the respondent is male or female ("male" where "1" is male), a measure of the respondent's age ("age"), and a measure of risky behaviors engaged in by the respondent ("risky").
 
@@ -217,7 +217,13 @@ load( "dat.RData" ) #load the workspace that was previously saved.
 ____
 
 <br>
-  
+
+<p align="center">
+[Back to R 2 Phoenix page](https://jacobtnyoung.github.io/R2PhX/)
+</p>
+
+<br>
+
 #### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
   
 <br>

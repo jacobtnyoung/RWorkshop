@@ -424,6 +424,13 @@ Go ahead and open RStudio and let's take a look!
 ____
 
 <br>
+
+<p align="center">
+[Back to R 2 Phoenix page](https://jacobtnyoung.github.io/R2PhX/)
+</p>
+
+<br>
+<br>
   
 #### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
   
