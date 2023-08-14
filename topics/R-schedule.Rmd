@@ -45,8 +45,7 @@ text-align: justify}
 
 <br>
 
-<p align="center">
-[Back to R Workshop page](https://jacobtnyoung.github.io/RWorkshop/)
-</p>
+#### [Back to R Workshop page](https://jacobtnyoung.github.io/RWorkshop/)
 
+<br>
 <br>

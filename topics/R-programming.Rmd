@@ -73,7 +73,7 @@ For example, say you want to make chocolate chip cookies:
     1. Preheat the oven to 375 degrees F. 
     2. In a large bowl, mix butter with the sugars until well-combined. 
     3. Stir in vanilla and egg until incorporated. 
-    4. Addflour, baking soda, and salt.  
+    4. Add flour, baking soda, and salt.  
     5. Stir in chocolate chips. 
     6. Bake for 10 minutes. 
 
@@ -567,9 +567,7 @@ ____
 
 <br>
 
-<p align="center">
-[Back to R Workshop page](https://jacobtnyoung.github.io/RWorkshop/)
-</p>
+#### [Back to R Workshop page](https://jacobtnyoung.github.io/RWorkshop/)
 
 <br>
   
