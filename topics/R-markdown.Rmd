@@ -82,7 +82,7 @@ ____
 <br>
 
 <p align="center">
-[Back to R 2 Phoenix page](https://jacobtnyoung.github.io/R2PhX/)
+[Back to R Workshop page](https://jacobtnyoung.github.io/RWorkshop/)
 </p>
 
 <br>
