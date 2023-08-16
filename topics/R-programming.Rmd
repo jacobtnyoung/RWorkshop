@@ -358,7 +358,7 @@ Let’s create a loop that takes each value of an object and squares it. For exa
 x <- seq( 1, 10, 1 ) # create a object of values 1 through 10.
 
 x.squared <- NULL       #create an object that is empty which we will use in the loop.
-    for( i in 1:5 ){	       #for each element for 1 through 5.
+    for( i in 1:10 ){	       #for each element for 1 through 10.
       x.squared[i] <- x[i]^2 #each element of x.squared will be x[i] squared.
     }
   
