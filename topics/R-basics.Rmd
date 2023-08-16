@@ -146,7 +146,7 @@ y[5:8] <- 0
 
 # what is the fourth element in y?
 
-# what are the first through seventh elements in y?
+# what are the fourth through seventh elements in y?
 
 # what are the second and ninth elements in y?
 
@@ -224,7 +224,7 @@ y[ !is.na( y )] # subset meeting a different condition.
 <br>
 
 ## **7. Matrices in R**  
-In addition to vectors, we can create a matrix, which is a 2-dimensional representation of data. A matrix has dimensions *r X c* which means rows by columns. The number of rows and columns a matrix has is referred to as its "order" or "dimensionality". This information is returned by using the `dim()` function. Matrices can be created by combining existing vectors using the `rbind()` and `cbind()` functions. The `rbind()` function means "row bind" and binds together vectors by rows. Think of it as stacking vectors on each other. The `cbind()` function means "column bind" and binds together vectors by rows. Think of it as placing them side by side. Let's take a look:     
+In addition to vectors, we can create a matrix, which is a 2-dimensional representation of data. A matrix has dimensions *r X c* which means rows by columns. The number of rows and columns a matrix has is referred to as its "order" or "dimensionality". This information is returned by using the `dim()` function. Matrices can be created by combining existing vectors using the `rbind()` and `cbind()` functions. The `rbind()` function means "row bind" and binds together vectors by rows. Think of it as stacking vectors on each other. The `cbind()` function means "column bind" and binds together vectors by columns. Think of it as placing them side by side. Let's take a look:     
 ```{r,echo=TRUE,eval=FALSE}
 x  <- c( 6,5,4,3,2 )
 y  <- c( 8,7,5,3,1 )
@@ -352,7 +352,7 @@ But wait, there's more! CRAN is just one repository for R packages. There are al
 
 For example, let's take a look at the `memer` package. The Github repository for the package is: https://github.com/sctyner/memer. Note: this package has some dependencies that are fairly large. 
 
-  + Try to load from CRAN using `install.packages( "member" )`. What happens?  
+  + Try to load from CRAN using `install.packages( "memer" )`. What happens?  
 
 <br>
 

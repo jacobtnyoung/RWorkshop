@@ -3082,7 +3082,7 @@ utility of this will be more obvious later.</p>
 <div id="you-try-it" class="section level3">
 <h3><strong>You try it!</strong></h3>
 <div data-datacamp-exercise data-height="300" data-encoded="true">
-eyJsYW5ndWFnZSI6InIiLCJwcmVfZXhlcmNpc2VfY29kZSI6InkgPC0gYyggMSwyLDMsNCw1LDYsNyw4LDksMTAgKVxueVs0XVxueVs0OjddXG55W2MoIDIsOSApXVxueVs1OjhdIDwtIDAiLCJzYW1wbGUiOiIjIENyZWF0ZSBhIHZlY3RvciBjYWxsZWQgeSwgd2l0aCB0aGUgZWxlbWVudHMgMSB0aHJvdWdoIDEwLlxuXG4jIHdoYXQgaXMgdGhlIGZvdXJ0aCBlbGVtZW50IGluIHk/XG5cbiMgd2hhdCBhcmUgdGhlIGZpcnN0IHRocm91Z2ggc2V2ZW50aCBlbGVtZW50cyBpbiB5P1xuXG4jIHdoYXQgYXJlIHRoZSBzZWNvbmQgYW5kIG5pbnRoIGVsZW1lbnRzIGluIHk/XG5cbiMgY2hhbmdlIHRoZSBmaWZ0aCB0aHJvdWdoIGVpZ2h0aCBlbGVtZW50cyBpbiB5IHRvIDAuIiwic29sdXRpb24iOiIjIENyZWF0ZSBhIHZlY3RvciBjYWxsZWQgeSwgd2l0aCB0aGUgZWxlbWVudHMgMSB0aHJvdWdoIDEwLlxueSA8LSBjKCAxLDIsMyw0LDUsNiw3LDgsOSwxMCApXG5cbiMgd2hhdCBpcyB0aGUgZm91cnRoIGVsZW1lbnQgaW4geT9cbnlbNF1cbiMgd2hhdCBhcmUgdGhlIGZvdXJ0aCB0aHJvdWdoIHNldmVudGggZWxlbWVudHMgaW4geT9cbnlbNDo3XVxuIyB3aGF0IGFyZSB0aGUgc2Vjb25kIGFuZCBuaW50aCBlbGVtZW50cyBpbiB5P1xueVtjKCAyLDkgKV1cbiMgY2hhbmdlIHRoZSBmaWZ0aCB0aHJvdWdoIGVpZ2h0aCBlbGVtZW50cyBpbiB5IHRvIDAuXG55WzU6OF0gPC0gMCJ9
+eyJsYW5ndWFnZSI6InIiLCJwcmVfZXhlcmNpc2VfY29kZSI6InkgPC0gYyggMSwyLDMsNCw1LDYsNyw4LDksMTAgKVxueVs0XVxueVs0OjddXG55W2MoIDIsOSApXVxueVs1OjhdIDwtIDAiLCJzYW1wbGUiOiIjIENyZWF0ZSBhIHZlY3RvciBjYWxsZWQgeSwgd2l0aCB0aGUgZWxlbWVudHMgMSB0aHJvdWdoIDEwLlxuXG4jIHdoYXQgaXMgdGhlIGZvdXJ0aCBlbGVtZW50IGluIHk/XG5cbiMgd2hhdCBhcmUgdGhlIGZvdXJ0aCB0aHJvdWdoIHNldmVudGggZWxlbWVudHMgaW4geT9cblxuIyB3aGF0IGFyZSB0aGUgc2Vjb25kIGFuZCBuaW50aCBlbGVtZW50cyBpbiB5P1xuXG4jIGNoYW5nZSB0aGUgZmlmdGggdGhyb3VnaCBlaWdodGggZWxlbWVudHMgaW4geSB0byAwLiIsInNvbHV0aW9uIjoiIyBDcmVhdGUgYSB2ZWN0b3IgY2FsbGVkIHksIHdpdGggdGhlIGVsZW1lbnRzIDEgdGhyb3VnaCAxMC5cbnkgPC0gYyggMSwyLDMsNCw1LDYsNyw4LDksMTAgKVxuXG4jIHdoYXQgaXMgdGhlIGZvdXJ0aCBlbGVtZW50IGluIHk/XG55WzRdXG4jIHdoYXQgYXJlIHRoZSBmb3VydGggdGhyb3VnaCBzZXZlbnRoIGVsZW1lbnRzIGluIHk/XG55WzQ6N11cbiMgd2hhdCBhcmUgdGhlIHNlY29uZCBhbmQgbmludGggZWxlbWVudHMgaW4geT9cbnlbYyggMiw5ICldXG4jIGNoYW5nZSB0aGUgZmlmdGggdGhyb3VnaCBlaWdodGggZWxlbWVudHMgaW4geSB0byAwLlxueVs1OjhdIDwtIDAifQ==
 </div>
 <p><br></p>
 </div>
@@ -3152,8 +3152,8 @@ Matrices can be created by combining existing vectors using the
 <code>rbind()</code> function means “row bind” and binds together
 vectors by rows. Think of it as stacking vectors on each other. The
 <code>cbind()</code> function means “column bind” and binds together
-vectors by rows. Think of it as placing them side by side. Let’s take a
-look:</p>
+vectors by columns. Think of it as placing them side by side. Let’s take
+a look:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>x  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span> )</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>y  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">1</span> )</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>( x,y ) <span class="co">#bind x and y by row to create a 2 X 5 matrix.</span></span>
@@ -3340,7 +3340,7 @@ Github repository for the package is: <a href="https://github.com/sctyner/memer"
 some dependencies that are fairly large.</p>
 <ul>
 <li>Try to load from CRAN using
-<code>install.packages( &quot;member&quot; )</code>. What happens?</li>
+<code>install.packages( &quot;memer&quot; )</code>. What happens?</li>
 </ul>
 <p><br></p>
 <p>We need to load it from Github.</p>
@@ -3454,8 +3454,8 @@ Workshop page</a></h4>
 the <a href="https://github.com/jacobtnyoung/RWorkshop/issues">Issues</a> page.
 Thanks!</h4>
 <p><br> <br></p>
-<div id="last-updated-14-august-2023" class="section level6">
-<h6><strong><em>Last updated 14 August, 2023</em></strong></h6>
+<div id="last-updated-16-august-2023" class="section level6">
+<h6><strong><em>Last updated 16 August, 2023</em></strong></h6>
 </div>
 </div>
 </div>
