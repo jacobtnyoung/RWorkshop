@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Visualization: R Graphics</title>
+
+<script src="R-data-visualization_files/header-attrs-2.23/header-attrs.js"></script>
+<script src="R-data-visualization_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="R-data-visualization_files/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="R-data-visualization_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="R-data-visualization_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="R-data-visualization_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="R-data-visualization_files/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="R-data-visualization_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="R-data-visualization_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="R-data-visualization_files/navigation-1.1/tabsets.js"></script>
+<script src="R-data-visualization_files/navigation-1.1/codefolding.js"></script>
+<link href="R-data-visualization_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="R-data-visualization_files/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Data Visualization: R Graphics</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="introduction" class="section level1">
+<h1><strong>Introduction</strong></h1>
+<p>One of the best features of R is its graphics capability. As far as
+flexibility and breadth, R graphics is unsurpassed (in my opinion).
+There are MANY functions in R that involve visualizing data. There are
+many examples online, but a nice site that has tons of graphics (and
+syntax!) is: <a
+href="http://www.r-graph-gallery.com">http://www.r-graph-gallery.com/</a>.<br />
+<br></p>
+<div id="the-plot-function" class="section level2">
+<h2><strong>The <code>plot()</code> Function</strong></h2>
+<p>A very useful graphics function is the <code>plot()</code> function.
+This function plots a two-dimensional pane with two arguments giving the
+x and y coordinates.</p>
+<p>Let’s create a simple plot:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>( <span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">1</span> ) <span class="co">#create a vector with 100 elements drawn from a normal distribution.</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>( <span class="dv">1</span>, <span class="dv">10</span>, <span class="at">length.out=</span><span class="fu">length</span>( x ) ) <span class="co"># create a vector 1:10 with same length.</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">plot</span>( x, y ) <span class="co">#plot it.</span></span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>This is a pretty simple plot. As mentioned, one of the nice features
+of R is the flexibility to create your plot. Take a look at the
+different arguments that we pass to <code>plot()</code> to modify it by
+examining the help: <code>?plot</code>.</p>
+<div style="page-break-after: always;"></div>
+<p><br></p>
+<p>Overall, there are <em>many</em> different parameters we can modify
+in <code>plot()</code>. Let’s check out a few:</p>
+<p><br></p>
+<div id="type-of-plot" class="section level3">
+<h3>Type of plot</h3>
+<p>We can change the “type” of plot:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">plot</span>( x, y, <span class="at">type=</span><span class="st">&quot;l&quot;</span> ) <span class="co">#plot a line.</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">plot</span>( x, y, <span class="at">type=</span><span class="st">&quot;p&quot;</span> ) <span class="co">#plot points.</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">plot</span>( x, y, <span class="at">type=</span><span class="st">&quot;b&quot;</span> ) <span class="co">#plot both!</span></span></code></pre></div>
+<p>Often, when plotting multiple objects, we want to first set up the
+plot regions before adding anything. This is a plot of type “none”:
+<code>plot( x,y, type="n" )</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">plot</span>( x, y,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>   <span class="at">type=</span><span class="st">&quot;n&quot;</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>   <span class="at">main=</span><span class="st">&quot;our sample plot&quot;</span>, <span class="co"># plot a title.</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>   <span class="at">xlab=</span><span class="st">&quot;this is the x axis&quot;</span>, <span class="co"># change the x label.</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>   <span class="at">ylab=</span><span class="st">&quot;this is the y axis&quot;</span> <span class="co"># change the y label.</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><br></p>
+</div>
+<div id="characters" class="section level3">
+<h3>Characters</h3>
+<p>We can also change the “characters” of the plot:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">plot</span>( x, y, <span class="at">pch=</span><span class="dv">1</span> ) <span class="co">#plot a point.</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">plot</span>( x, y, <span class="at">pch=</span><span class="dv">2</span> ) <span class="co">#plot a triangle.</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">plot</span>( x, y, <span class="at">pch=</span><span class="dv">3</span> ) <span class="co">#plot a +.</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">plot</span>( x, y, <span class="at">pch=</span><span class="dv">4</span> ) <span class="co">#plot an x.</span></span></code></pre></div>
+<p>The argument <strong>pch</strong> determines the shape of the plot
+points. The numeric values 0 to 25 represent different default shapes.
+We can also use any number, letter, or symbol as a plotting shape.</p>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Note that shapes 0 to 14 are hollow, 15 to 20 are solid, and 21 to 25
+can also plot a background color specified by the <strong>bg=</strong>
+argument.</p>
+<p><br></p>
+</div>
+<div id="points-lines-text-etc." class="section level3">
+<h3>Points, lines, text, etc.</h3>
+<p>Additionally, the <code>points()</code>, <code>lines()</code>,
+<code>segments()</code>, and <code>text()</code> functions are useful
+for adding information to plots.</p>
+<div style="page-break-after: always;"></div>
+<p>Here is an example I use in my data analysis course to illustrate the
+properties of the standard normal distribution.</p>
+<p>First, let’s set up our values:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>y    <span class="ot">&lt;-</span> <span class="fu">seq</span>( <span class="sc">-</span><span class="dv">15</span>, <span class="dv">30</span>, <span class="at">length=</span><span class="dv">1000</span> ) <span class="co"># sequence from -15 to 30. </span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>hx<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">dnorm</span>( y, <span class="dv">0</span>, <span class="dv">1</span> ) <span class="co"># densities for the plots.</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>hx<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">dnorm</span>( y, <span class="dv">0</span>, <span class="dv">2</span> )</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>hx<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">dnorm</span>( y, <span class="dv">0</span>, <span class="dv">3</span> )</span></code></pre></div>
+<p>Next, let’s set up the plot, but we don’t want to add anything yet
+(so we use <code>type="n"</code>):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">plot</span>( y, hx<span class="fl">.1</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="co"># blank out the labels for x and y.</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="co">#do not plot anything.</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">main=</span><span class="st">&quot;Normal Distributions&quot;</span> <span class="co"># a title.</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Now, illustrate the shape of the distributions using the
+<code>lines()</code> function (you can copy and paste one at a time to
+see them get added):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">plot</span>( y, hx<span class="fl">.1</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="co"># blank out the labels for x and y.</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="co">#do not plot anything.</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">main=</span><span class="st">&quot;Normal Distributions&quot;</span> <span class="co"># a title.</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.1</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.3</span>, <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Now, add a line to show the central tendency by using the
+<code>segments()</code> function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">plot</span>( y, hx<span class="fl">.1</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="co"># blank out the labels for x and y.</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="co">#do not plot anything.</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">main=</span><span class="st">&quot;Normal Distributions&quot;</span> <span class="co"># a title.</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.1</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.3</span>, <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="fu">segments</span>( <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Finally, add some text to show the values (note that we will use the
+<code>text()</code> function):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">plot</span>( y, hx<span class="fl">.1</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="co"># blank out the labels for x and y.</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="co">#do not plot anything.</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="at">main=</span><span class="st">&quot;Normal Distributions&quot;</span> <span class="co"># a title.</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.1</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="fu">lines</span>( y, hx<span class="fl">.3</span>, <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="fu">segments</span>( <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="fu">text</span>( <span class="dv">11</span>, <span class="fl">0.35</span>, <span class="st">&quot;Mean = 0, SD = 1&quot;</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">cex=</span><span class="fl">1.5</span> )</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="fu">text</span>( <span class="dv">12</span>, <span class="fl">0.15</span>, <span class="st">&quot;Mean = 0, SD = 2&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">cex=</span><span class="fl">1.5</span> )</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="fu">text</span>( <span class="dv">13</span>, <span class="fl">0.06</span>, <span class="st">&quot;Mean = 0, SD = 3&quot;</span>, <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="at">cex=</span><span class="fl">1.5</span> )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="the-layering-approach" class="section level2">
+<h2><strong>The Layering Approach</strong></h2>
+<p>As we have seen, we can start with a basic plot and add information.
+Creating graphics in this way is referred to as <em>layering</em>
+because we are stacking additional layers of elements on top of each
+other.</p>
+<p>Consider the following plot:</p>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>As you can see, there are a number of elements that have been used to
+create this plot:</p>
+<ul>
+<li>a basic plot layout using <code>plot()</code></li>
+<li>a set of points using <code>points()</code></li>
+<li>several segment lines using <code>segments()</code></li>
+<li>a title and axis labels using the <code>main=</code>,
+<code>xlab=</code>, and <code>ylab=</code> <strong>arguments</strong> in
+the function <code>plot()</code></li>
+<li>and some words using <code>text()</code>.</li>
+</ul>
+<p>Let’s go through and build this plot, layer by layer.</p>
+<p><br></p>
+<p>First, what are these data?</p>
+<p>The data are yearly rates of family deaths recorded by a professor at
+Penn State. That is, the rate at which family deaths are reported to him
+prior to an exam from 1960-1995. Here are what the data look like in a
+table:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Year</th>
+<th>Death Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1960</td>
+<td>0.18</td>
+</tr>
+<tr class="even">
+<td>1965</td>
+<td>0.20</td>
+</tr>
+<tr class="odd">
+<td>1970</td>
+<td>0.24</td>
+</tr>
+<tr class="even">
+<td>1975</td>
+<td>0.30</td>
+</tr>
+<tr class="odd">
+<td>1980</td>
+<td>0.47</td>
+</tr>
+<tr class="even">
+<td>1985</td>
+<td>0.61</td>
+</tr>
+<tr class="odd">
+<td>1990</td>
+<td>0.70</td>
+</tr>
+<tr class="even">
+<td>1995</td>
+<td>0.90</td>
+</tr>
+</tbody>
+</table>
+<p>Now, let’s move the data into objects to work with in R:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1960</span>, <span class="dv">1965</span>, <span class="dv">1970</span>, <span class="dv">1975</span>, <span class="dv">1980</span>, <span class="dv">1985</span>, <span class="dv">1990</span>, <span class="dv">1995</span> )</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="fl">0.18</span>, <span class="fl">0.20</span>, <span class="fl">0.24</span>, <span class="fl">0.30</span>, <span class="fl">0.47</span>, <span class="fl">0.61</span>, <span class="fl">0.70</span>, <span class="fl">0.90</span> )</span></code></pre></div>
+<p>Next, let’s set up the plot and define the limits of the axes using
+<code>xlim=</code> and <code>ylim=</code>, define the title using
+<code>main=</code>, and set the axis labels using <code>xlab=</code> and
+<code>ylab=</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Set up the plot.    </span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">plot</span>(x, y,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>( <span class="fu">min</span>( x ) <span class="sc">-</span> <span class="dv">5</span>, <span class="fu">max</span>( x ) <span class="sc">+</span> <span class="dv">5</span> ), <span class="co"># set x axis limits.</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>( <span class="fu">min</span>( y ) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">max</span>( y ) <span class="sc">+</span> <span class="fl">0.5</span>) , <span class="co"># same for y axis.</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Plot of Average Family Deaths by Year&quot;</span>, <span class="co"># title.</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>, <span class="co"># x axis label.</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Average Family Deaths&quot;</span>, <span class="co"># same for y axis.</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;n&quot;</span> <span class="co"># don&#39;t plot anything inside.</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>     )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Now, we can add the points to the plot using the
+<code>points()</code> function. We can customize the points using the
+<code>pch=</code>, <code>col=</code>, and <code>bg=</code>
+arguments.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot</span>(x, y,</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>( <span class="fu">min</span>( x ) <span class="sc">-</span> <span class="dv">5</span>, <span class="fu">max</span>( x ) <span class="sc">+</span> <span class="dv">5</span> ), <span class="co"># set x axis limits.</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>( <span class="fu">min</span>( y ) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">max</span>( y ) <span class="sc">+</span> <span class="fl">0.5</span>) , <span class="co"># same for y axis.</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Plot of Average Family Deaths by Year&quot;</span>, <span class="co"># title.</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>, <span class="co"># x axis label.</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Average Family Deaths&quot;</span>, <span class="co"># same for y axis.</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;n&quot;</span> <span class="co"># don&#39;t plot anything inside.</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="fu">points</span>( x, y, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">bg =</span> <span class="st">&quot;lightblue&quot;</span> )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>What additional information could we add to this plot that would aid
+in our understanding of the relationship between year and average family
+deaths? What about understanding how regression works?</p>
+<p>Well, we could add the least-squares regression line to the plot
+using the <code>abline()</code> function and the <code>lm()</code>
+function:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">plot</span>(x, y,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>( <span class="fu">min</span>( x ) <span class="sc">-</span> <span class="dv">5</span>, <span class="fu">max</span>( x ) <span class="sc">+</span> <span class="dv">5</span> ), <span class="co"># set x axis limits.</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>( <span class="fu">min</span>( y ) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">max</span>( y ) <span class="sc">+</span> <span class="fl">0.5</span>) , <span class="co"># same for y axis.</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Plot of Average Family Deaths by Year&quot;</span>, <span class="co"># title.</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>, <span class="co"># x axis label.</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Average Family Deaths&quot;</span>, <span class="co"># same for y axis.</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;n&quot;</span> <span class="co"># don&#39;t plot anything inside.</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>)</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="fu">points</span>( x, y, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">bg =</span> <span class="st">&quot;lightblue&quot;</span> )</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>( y <span class="sc">~</span> x ), <span class="at">lty=</span><span class="dv">2</span> )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>Additionally, we can illustrate how OLS estimation works. Recall that
+OLS finds the line that minimizes the sum of squared residuals. We can
+show that using the <code>points()</code>, <code>abline()</code>,
+<code>segments()</code>, and <code>text()</code> functions:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">plot</span>(x, y,</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>( <span class="fu">min</span>( x ) <span class="sc">-</span> <span class="dv">5</span>, <span class="fu">max</span>( x ) <span class="sc">+</span> <span class="dv">5</span> ), <span class="co"># set x axis limits.</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>( <span class="fu">min</span>( y ) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">max</span>( y ) <span class="sc">+</span> <span class="fl">0.5</span>) , <span class="co"># same for y axis.</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Plot of Average Family Deaths by Year&quot;</span>, <span class="co"># title.</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>, <span class="co"># x axis label.</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Average Family Deaths&quot;</span>, <span class="co"># same for y axis.</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;n&quot;</span> <span class="co"># don&#39;t plot anything inside.</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="fu">points</span>( x, y, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">bg =</span> <span class="st">&quot;lightblue&quot;</span> )</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>( y <span class="sc">~</span> x ), <span class="at">lty=</span><span class="dv">2</span> )</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co"># add some points to the plot.</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="fu">points</span>( <span class="fu">mean</span>( x ), <span class="fu">mean</span>( y ), <span class="at">col=</span><span class="st">&quot;black&quot;</span>, <span class="at">pch=</span><span class="dv">3</span>, <span class="at">cex=</span><span class="dv">3</span> )</span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co"># plot the mean of y horizontally.</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">h=</span><span class="fu">mean</span>( y ), <span class="at">lty=</span><span class="dv">3</span> )</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#plot the mean of x vertically.</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">v=</span><span class="fu">mean</span>( x ), <span class="at">lty=</span><span class="dv">3</span> )</span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co"># add segments and text showing the deviations.</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="fu">segments</span>( <span class="dv">1985</span>, <span class="fu">mean</span>( y ), <span class="dv">1985</span>, <span class="fl">0.61</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span> )</span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="fu">text</span>( <span class="fl">1987.2</span>, <span class="fl">0.53</span>, <span class="st">&quot;y-ybar&quot;</span> )</span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="fu">segments</span>( <span class="fu">mean</span>( x ), <span class="fl">0.61</span>, <span class="dv">1985</span>, <span class="fl">0.61</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span> )</span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="fu">text</span>( <span class="dv">1981</span>, <span class="fl">0.65</span>, <span class="st">&quot;x-xbar&quot;</span> )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><br></p>
+</div>
+<div id="plotting-model-results-with-confidence-intervals"
+class="section level2">
+<h2><strong>Plotting Model Results with Confidence
+Intervals</strong></h2>
+<p>One of my biggest peeves about conference presentations (and some
+manuscripts [and especially job talks]) is bombarding an audience with
+tables full of numbers and asterisks. A simple (preferred?) approach is
+to plot point and interval estimates for model results.</p>
+<p>If you prefer a “do-it yourself” approach, this is easy to do in R
+with the <code>plot()</code> function. For example, suppose we have
+estimated a model for the regression of delinquency on age, male, SES,
+delinquent peers, and school attachment. The OLS coefficients (standard
+errors) are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Estimate (Standard Error)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age</td>
+<td>3.50 (1.10)</td>
+</tr>
+<tr class="even">
+<td>Male</td>
+<td>0.80 (0.22)</td>
+</tr>
+<tr class="odd">
+<td>SES</td>
+<td>1.20 (0.81)</td>
+</tr>
+<tr class="even">
+<td>Del. Prs.</td>
+<td>0.70 (0.33)</td>
+</tr>
+<tr class="odd">
+<td>Schl. Attch.</td>
+<td>-0.60 (0.11)</td>
+</tr>
+</tbody>
+</table>
+<p>We could just enter the point estimates and standard errors as
+objects:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>point <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="fl">3.50</span>, <span class="fl">0.80</span>, <span class="fl">1.20</span>, <span class="fl">0.70</span>, <span class="sc">-</span><span class="fl">0.60</span> )</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>se    <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="fl">1.10</span>, <span class="fl">0.22</span>, <span class="fl">0.81</span>, <span class="fl">0.33</span>, <span class="fl">0.11</span> )</span></code></pre></div>
+<p>The upper and lower 95% confidence intervals are the point estimate
++/- 1.96:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>upper.ci <span class="ot">&lt;-</span> point <span class="sc">+</span> ( <span class="fl">1.96</span><span class="sc">*</span>se )</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>lower.ci <span class="ot">&lt;-</span> point <span class="sc">-</span> ( <span class="fl">1.96</span><span class="sc">*</span>se )</span></code></pre></div>
+<div style="page-break-after: always;"></div>
+<p>Now, we can plot the point estimates using <code>points()</code> and
+the intervals using <code>segments()</code>. For example:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>n.coef <span class="ot">=</span> <span class="dv">5</span> <span class="co"># number of coefficients.</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>names <span class="ot">=</span> <span class="fu">c</span>( <span class="st">&quot;age&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;SES&quot;</span>, <span class="st">&quot;Del Peers&quot;</span>, <span class="st">&quot;Sch Attach&quot;</span> ) <span class="co">#coef names.</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>x.ax <span class="ot">=</span> <span class="fu">seq</span>( <span class="dv">1</span>, n.coef, <span class="at">length.out=</span>n.coef ) <span class="co">#dims of the x axis.</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>y.ax <span class="ot">=</span> <span class="fu">seq</span>( <span class="fu">min</span>( lower.ci ), <span class="fu">max</span>( upper.ci ), <span class="at">length.out=</span>n.coef ) <span class="co">#y axis.</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="fu">plot</span>( x.ax,</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>      y.ax,</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>      <span class="at">type=</span><span class="st">&quot;n&quot;</span>,               <span class="co">#do not plot anything yet.</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>      <span class="at">ylab=</span><span class="st">&quot;coefficient w/ 95% CI&quot;</span>, <span class="co">#label for y axis.</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>      <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="co">#label for x axis .</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>      <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span> <span class="co">#toggle x axis labels (for now).</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>)</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="fu">points</span>( x.ax,point ) <span class="co"># plot the point estimates.</span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a><span class="fu">segments</span>( x.ax, upper.ci, x.ax, lower.ci ) <span class="co">#now the intervals.</span></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span> )    <span class="co"># add a line at zero.</span></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, <span class="at">at=</span>x.ax, <span class="at">labels=</span>names ) <span class="co"># add coefficient labels.</span></span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>What does the plot tell us? This is beneficial for interpretation and
+only with 5 coefficients in the model. As the table gets bigger, the
+visualization of what the model is showing becomes more useful.</p>
+<p>You could add more finesse to what we have already done, <em>or</em>
+you could employ the <code>texreg</code> package that plots model
+coefficients. Let’s check it out:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">install.packages</span>( <span class="st">&quot;texreg&quot;</span> ) <span class="co">#install the package.</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">library</span>( texreg ) <span class="co">#call the library to load the package functions.</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="fu">help</span>( <span class="at">package=</span><span class="st">&quot;texreg&quot;</span> ) <span class="co">#check out what the package can do.</span></span></code></pre></div>
+<div style="page-break-after: always;"></div>
+<p><br></p>
+</div>
+<div id="working-with-multiple-frames" class="section level2">
+<h2><strong>Working with Multiple Frames</strong></h2>
+<p>When a graphic function is called, such as <code>plot()</code>, a new
+window opens up. The default is to have one plot per window. This
+window, however, can be “partitioned” into multiple panes to include
+multiple plots with the <code>par(mfrow=c(,))</code> function. Within
+the <code>mfrow=c(,)</code> portion we choose how many rows and columns
+of pictures you want in the pane. Here are some examples:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>    <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">1</span> ) ) <span class="co"># the default.</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>    <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>( <span class="dv">2</span>,<span class="dv">2</span> ) ) <span class="co"># 2 rows, 2 columns, so 4 pictures.</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>( <span class="dv">2</span>,<span class="dv">1</span> ) ) <span class="co"># 2 rows, 1 column, so 2 pictures, top/bottom.</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>( <span class="dv">1</span>,<span class="dv">2</span> ) ) <span class="co"># 1 row, 2 columns, so 2 pictures, left/right.</span></span></code></pre></div>
+<p>Let’s plot our two histograms together and then individual for each
+one.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>    men   <span class="ot">&lt;-</span> <span class="fu">rnorm</span>( <span class="dv">40</span>, <span class="dv">175</span>, <span class="dv">10</span> )</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>    women <span class="ot">&lt;-</span> <span class="fu">rnorm</span>( <span class="dv">40</span>, <span class="dv">145</span>, <span class="dv">12</span> )</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>    data  <span class="ot">&lt;-</span> <span class="fu">c</span>( men, women )</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>    <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>( <span class="dv">2</span>, <span class="dv">2</span> ) )</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>    </span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>    <span class="fu">hist</span>( men, <span class="at">col=</span><span class="dv">2</span>, <span class="at">xlim=</span><span class="fu">c</span>( <span class="fu">min</span>( data )<span class="sc">-</span><span class="dv">5</span>, <span class="fu">max</span>( data )<span class="sc">+</span><span class="dv">5</span> ), <span class="at">xlab=</span><span class="st">&quot;Weight&quot;</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>         <span class="at">main=</span><span class="st">&quot;Histograms for Men and Women&quot;</span> )</span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>    <span class="fu">hist</span>( women, <span class="at">col=</span><span class="dv">3</span>, <span class="at">add=</span><span class="cn">TRUE</span> )</span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>    <span class="fu">hist</span>( men, <span class="at">col=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">&quot;Weight&quot;</span>, <span class="at">main=</span><span class="st">&quot;Histogram for Men&quot;</span> )</span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a>    <span class="fu">hist</span>( women, <span class="at">col=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">&quot;Weight&quot;</span>, <span class="at">main=</span><span class="st">&quot;Histogram for Women&quot;</span> )</span></code></pre></div>
+<p><img src="R-data-visualization_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><br></p>
+</div>
+<div id="exporting-graphics" class="section level2">
+<h2><strong>Exporting Graphics</strong></h2>
+<p>R allows you to export your graphic to a .pdf file. This is nice if
+you write a script for many plots and what a single .pdf file that has
+all the plots.</p>
+<p>The structure of the function is:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">pdf</span>( <span class="st">&quot;name.pdf&quot;</span> ) <span class="co">#where you name the file and add the file path if necessary.  </span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">plot</span>() <span class="co">#the syntax to make the plots.</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="fu">dev.off</span>() <span class="co">#turn off the plotting device.</span></span></code></pre></div>
+<p>For example, let’s make a few plots and then export them to a .pdf
+file.</p>
+<p><br></p>
+</div>
+<div id="this-is-just-the-beginning" class="section level2">
+<h2><strong>This is just the beginning!!!</strong></h2>
+<p>There is MUCH more you can do with just the <code>plot()</code>
+function. See <code>help( par )</code> for a list of all the arguments
+and options for plotting.</p>
+<p>There are also many other options for plots in R. There are entire
+packages created for plotting. One in particular is the
+<code>ggplot2</code>. Check out <a
+href="https://jacobtnyoung.github.io/R2PhX/projects/PHXcrime_homicide.html">these</a>
+visualizations for examples of working with <code>ggplot2</code>.</p>
+<p><br></p>
+</div>
+<div id="questions" class="section level2">
+<h2><strong>Questions?</strong></h2>
+<p><br> <br></p>
+<div id="last-updated-01-august-2023" class="section level6">
+<h6><strong><em>Last updated 01 August, 2023</em></strong></h6>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
