@@ -71,7 +71,7 @@ You will see a `.Rmd` file for all of the sections we covered today. Let's look 
 
 <br>
 
-Here is another example. Take a look through the [R2PhX](https://jacobtnyoung.github.io/R2PhX/) pages. In particular, take a look at this page examining [crime in Phoenix](https://jacobtnyoung.github.io/R2PhX/projects/PHXcrime_trends.html). This page is a .html file that is created using an RMarkdown file. That file can be found [here](https://github.com/jacobtnyoung/R2PhX/blob/master/projects/PHXcrime_trends.Rmd).
+Here is another example. Take a look through the [Open Criminology Phoenix](https://jacobtnyoung.github.io/OpenCrimPhx/) pages. In particular, take a look at this page examining [crime in Phoenix by types](https://jacobtnyoung.github.io/OpenCrimPhx/crime-types.html). This page is a .html file that is created using [this](https://github.com/jacobtnyoung/OpenCrimPhx/blob/main/crime-types.Rmd) RMarkdown file.
 
 <br>
 

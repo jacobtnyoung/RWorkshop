@@ -46,6 +46,8 @@ A visualization would help. How could we better represent this information?
 
 Take a look at [this visualization](../images/custody-flow-plot.html).
 
+This is a ["sanky" plot](https://r-graph-gallery.com/sankey-diagram.html). It is for showing flows where entities (nodes) are represented by rectangles or text. Arrows or arcs are used to show flows between them. It is created using the `networkD3` package.
+
 ```{r sanky, echo=FALSE, eval=FALSE, message=FALSE, warning=FALSE}
 
 # ----

@@ -60,7 +60,7 @@ cat("\\newpage")
 
 This figure is great and all, but what it would be a better learning exercise if the individual could manipulate the values.
 
-Take a look at this example to illustrate [Central Tendency and Dispersion](https://jacobtnyoung.shinyapps.io/R-shiny-example/)
+Take a look at this example to illustrate [Central Tendency and Dispersion](https://jacobtnyoung.shinyapps.io/R-shiny-example/).
 
 <br>
 

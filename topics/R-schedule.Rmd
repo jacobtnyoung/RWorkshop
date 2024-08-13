@@ -39,7 +39,7 @@ text-align: justify}
 
 #### 245-3:15 --- *Short Break*  
 
-#### 3:15-3:30 --- [**Using Artificial Intelligence with R: Coding Assistant**](topics/R-AI.html)
+#### 3:15-3:30 --- [**Using Artificial Intelligence with R: Coding Assistant**](R-AI.html)
 
 #### 3:30-4:00 --- **Open Session for Q&A**  
 
