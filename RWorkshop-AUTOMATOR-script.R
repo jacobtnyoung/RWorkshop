@@ -14,6 +14,3 @@ render( here( "topics/R-markdown.Rmd" )          , "html_document" )
 render( here( "topics/R-shiny.Rmd" )             , "html_document" )
 render( here( "topics/R-AI.Rmd" )                , "html_document" )
 render( here( "topics/R-schedule.Rmd" )          , "html_document" )
-
-# Close this script.
-quit( save = "no" )

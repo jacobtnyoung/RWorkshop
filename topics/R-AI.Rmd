@@ -1,5 +1,5 @@
 ---
-title: "Using Artificial Intelligence with R: Coding Assistant"
+title: "Using AI for Coding Assistance"
 date: "R Workshop"
 output: 
   html_document:
