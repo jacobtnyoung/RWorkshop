@@ -39,11 +39,11 @@ ____
 
 [Data Visualization: R Graphics](topics/R-data-visualization.html)
 
-[Example: Importing, Analyzing, and Plotting Data](topics/R-data-example.html)
-
 [Data-Driven Documents: RMarkdown](topics/R-markdown.html)
 
 [Dynamic Visualization: RShiny](topics/R-shiny.html)
+
+[Using Artificial Intelligence with R: Coding Assistant](topics/R-AI.html)
 
 <br>
 
@@ -51,7 +51,7 @@ ____
 
 <br>
 
-#### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+##### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
 
 <br>
 <br>

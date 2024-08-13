@@ -1,5 +1,5 @@
 ---
-title: "R Workshop Schedule (2023)"
+title: "R Workshop Schedule (2024)"
 output: 
   html_document:
     df_print: paged
@@ -33,15 +33,15 @@ text-align: justify}
 
 ### Part Two  
 
-#### 1:00-1:30 --- [**Data Visualization: R Graphics**](R-data-visualization.html)  
+#### 1:00-2:00 --- [**Data Visualization: R Graphics**](R-data-visualization.html)  
 
-#### 1:30-2:00 --- [**Example: Importing, Analyzing, and Plotting Data**](R-data-example.html)  
+#### 2:00-2:45 --- [**Data-Driven Documents: RMarkdown**](R-markdown.html) & [**Dynamic Visualization: RShiny**](R-shiny.html)   
 
-#### 2:00-2:15 --- *Short Break*  
+#### 245-3:15 --- *Short Break*  
 
-#### 2:15-3:00 --- [**Data-Driven Documents: RMarkdown**](R-markdown.html) & [**Dynamic Visualization: RShiny**](R-shiny.html)   
+#### 3:15-3:30 --- [**Using Artificial Intelligence with R: Coding Assistant**](topics/R-AI.html)
 
-#### 3:00-4:00 --- **Open Session for Q&A**  
+#### 3:30-4:00 --- **Open Session for Q&A**  
 
 <br>
 

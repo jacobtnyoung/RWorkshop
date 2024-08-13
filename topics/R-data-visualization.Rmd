@@ -16,7 +16,188 @@ output:
 
 # **Introduction**
 
-One of the best features of R is its graphics capability. As far as flexibility and breadth, R graphics is unsurpassed (in my opinion). There are MANY functions in R that involve visualizing data. There are many examples online, but a nice site that has tons of graphics (and syntax!) is: [http://www.r-graph-gallery.com/](http://www.r-graph-gallery.com).\
+One of the best features of R is its graphics capability. As far as flexibility and breadth, R graphics is unsurpassed (in my opinion). There are MANY functions in R that involve visualizing data. There are many examples online, but a nice site that has tons of graphics (and syntax!) is: [http://www.r-graph-gallery.com/](http://www.r-graph-gallery.com).
+
+<br>
+
+## **Why Visualization matters...**
+
+Pictures are cool, no doubt. But, visualization of information is an ESSENTIAL part of your toolkit as a researcher, analyst, and/or rad R user. Visualizing information helps you tell the story and make the point to those who are "visual" learners. 
+
+For example, in a paper entitled ["Solitary Confinement and the Well-Being of People in Prison"](https://www.sciencedirect.com/science/article/pii/S0277953623005816), Wright et. al. examined the effects of solitary confinement on mental well-being at three time points over a 12-month period (called "baseline", "6-Month", and "12-Month"). A key feature of the study was tracking movement of individuals through custody levels.
+
+<br>
+
+Take a look at the table below which shows a cross-tabulation for custody levels for individuals. That is, the cells represent the count of individuals who were at a particular custody level at baseline (the row) and their custody level at 6 months (the column):
+
+*Custody Levels*    | Minimum (BL) | Medium | Close | Maximum | Attrite |
+|:-----------------:|:------------:|:------:|:-----:|:-------:|:-------:|
+|   **Medium (6M)** |       6      |   81   |   3   |    3    |   17    |
+|   **Close**       |       0      |    9   |  60   |   13    |   12    |
+|   **Maximum**     |       0      |    0   |  14   |   99    |    9    |
+
+*What does this table tell you?* In other words, what can you infer from the table?
+
+<br>
+
+It is a bit hard to follow. Now, what if we added the two other tables: 6-month to 12-month and baseline to 12-month. That would be a lot of information to digest and tough to get a sense of what was occurring.
+
+A visualization would help. How could we better represent this information?
+
+Take a look at [this visualization](../images/custody-flow-plot.html).
+
+```{r sanky, echo=FALSE, eval=FALSE, message=FALSE, warning=FALSE}
+
+# ----
+library( networkD3 )
+library( dplyr )
+library( here )
+
+# ----
+RH.dat <- read.csv( here( "custody-flow.csv" ), as.is = TRUE, header = TRUE )
+
+# ----
+# A connection data frame is a list of flows with intensity for each flow
+links <- data.frame(
+  source=c( 
+    # Baseline senders.
+    "Max Baseline"   , "Max Baseline"   , "Max Baseline"   , "Max Baseline"   , "Max Baseline"   ,
+    "Close Baseline" , "Close Baseline" , "Close Baseline" , "Close Baseline" , "Close Baseline" ,
+    "Medium Baseline", "Medium Baseline", "Medium Baseline", "Medium Baseline", "Medium Baseline",
+    # 6 Month senders.
+    "Max 6 Month"   , "Max 6 Month"   , "Max 6 Month"   , "Max 6 Month"   , "Max 6 Month"   ,
+    "Close 6 Month" , "Close 6 Month" , "Close 6 Month" , "Close 6 Month" , "Close 6 Month" ,
+    "Medium 6 Month", "Medium 6 Month", "Medium 6 Month", "Medium 6 Month", "Medium 6 Month",
+    "Min 6 Month"   , "Min 6 Month"   , "Min 6 Month"   , "Min 6 Month"   , "Min 6 Month"
+            ), 
+  target=c( 
+    # 6 Month receivers, from baseline senders.
+    "Max 6 Month", "Close 6 Month", "Medium 6 Month", "Min 6 Month", "Not In 6 Month",
+    "Max 6 Month", "Close 6 Month", "Medium 6 Month", "Min 6 Month", "Not In 6 Month",
+    "Max 6 Month", "Close 6 Month", "Medium 6 Month", "Min 6 Month", "Not In 6 Month",
+    # 12 Month receivers, from 6 Month senders.
+    "Max 12 Month", "Close 12 Month", "Medium 12 Month", "Min 12 Month", "Not In 12 Month",
+    "Max 12 Month", "Close 12 Month", "Medium 12 Month", "Min 12 Month", "Not In 12 Month",
+    "Max 12 Month", "Close 12 Month", "Medium 12 Month", "Min 12 Month", "Not In 12 Month",
+    "Max 12 Month", "Close 12 Month", "Medium 12 Month", "Min 12 Month", "Not In 12 Month"
+            ), 
+  value=c( 
+    #
+    sum( RH.dat$Max_6[ RH.dat$Max == 1 ] ), # max to max
+    sum( RH.dat$Close_6[ RH.dat$Max == 1 ] ), # max to close
+    sum( RH.dat$Med_6[ RH.dat$Max == 1 ] ), # max to med
+    sum( RH.dat$Min_6[ RH.dat$Max == 1 ] ), # max to min
+    sum( RH.dat$Max[ RH.dat$in_6mfollowup != 1 ] ), # max to out of sample.
+    #
+    sum( RH.dat$Max_6[ RH.dat$Close == 1 ] ), # max to close
+    sum( RH.dat$Close_6[ RH.dat$Close == 1 ] ), # close to close
+    sum( RH.dat$Med_6[ RH.dat$Close == 1 ] ), # close to med
+    sum( RH.dat$Min_6[ RH.dat$Close == 1 ] ), # close to min
+    sum( RH.dat$Close[ RH.dat$in_6mfollowup != 1 ] ), # close to out of sample.
+    #
+    sum( RH.dat$Max_6[ RH.dat$Med == 1 ] ), # med to close
+    sum( RH.dat$Close_6[ RH.dat$Med == 1 ] ), # med to close
+    sum( RH.dat$Med_6[ RH.dat$Med == 1 ] ), # med to med
+    sum( RH.dat$Min_6[ RH.dat$Med == 1 ] ), # med to min
+    sum( RH.dat$Med[ RH.dat$in_6mfollowup != 1 ] ), # med to out of sample.
+   ##
+    #
+    sum( RH.dat$Max_12[ RH.dat$Max_6 == 1 ] ), # max to max
+    sum( RH.dat$Close_12[ RH.dat$Max_6 == 1 ] ), # max to close
+    sum( RH.dat$Med_12[ RH.dat$Max_6 == 1 ] ), # max to med
+    sum( RH.dat$Min_12[ RH.dat$Max_6 == 1 ] ), # max to min
+    sum( RH.dat$Max_6[ RH.dat$in_12mfollowup != 1 ] ), # max to out of sample.
+    #
+    sum( RH.dat$Max_12[ RH.dat$Close_6 == 1 ] ), # max to close
+    sum( RH.dat$Close_12[ RH.dat$Close_6 == 1 ] ), # close to close
+    sum( RH.dat$Med_12[ RH.dat$Close_6 == 1 ] ), # close to med
+    sum( RH.dat$Min_12[ RH.dat$Close_6 == 1 ] ), # close to min
+    sum( RH.dat$Close_6[ RH.dat$in_12mfollowup != 1 ] ), # close to out of sample.
+    #
+    sum( RH.dat$Max_12[ RH.dat$Med_6 == 1 ] ), # med to close
+    sum( RH.dat$Close_12[ RH.dat$Med_6 == 1 ] ), # med to close
+    sum( RH.dat$Med_12[ RH.dat$Med_6 == 1 ] ), # med to med
+    sum( RH.dat$Min_12[ RH.dat$Med_6 == 1 ] ), # med to min
+    sum( RH.dat$Med_12[ RH.dat$in_12mfollowup != 1 ] ), # med to out of sample.
+    #
+    sum( RH.dat$Max_12[ RH.dat$Min_6 == 1 ] ), # min to close
+    sum( RH.dat$Close_12[ RH.dat$Min_6 == 1 ] ), # min to close
+    sum( RH.dat$Med_12[ RH.dat$Min_6 == 1 ] ), # min to med
+    sum( RH.dat$Min_12[ RH.dat$Min_6 == 1 ] ), # min to min
+    sum( RH.dat$Min_6[ RH.dat$in_12mfollowup != 1 ] ) # min to out of sample.
+  )
+)
+
+# ----
+# From these flows we need to create a node data frame: it lists every entities involved in the flow
+nodes <- data.frame(
+  name=c( as.character( links$source ), 
+         as.character( links$target ) ) %>% unique()
+)
+
+# ----
+# With networkD3, connection must be provided using id, not using real name like in the links dataframe. So we need to reformat it.
+links$IDsource <- match( links$source, nodes$name )-1 
+links$IDtarget <- match( links$target, nodes$name )-1
+
+
+# ----
+# Add a group that shows movement through custody levels.
+links$custody.moves <- as.factor( c( 
+  "same",  "down",  "down",  "down",  "out",
+  "up",  "same",  "down",  "down",  "out",
+  "up",  "up",  "same",  "down",  "out",
+  "same",  "down",  "down",  "down",  "out",
+  "up",  "same",  "down",  "down",  "out",
+  "up",  "up",  "same",  "down",  "out",
+  "up",  "up",  "up",  "same",  "out"
+ )
+)
+
+# ----
+# Add a group that shows how people in specific custody levels move:
+links$custody.init <- as.factor( c( 
+  "Max","Max","Max","Max","Max",
+  "Close","Close","Close","Close","Close",
+  "Medium","Medium","Medium","Medium","Medium",
+  "Max","Max","Max","Max","Max",
+  "Close","Close","Close","Close","Close",
+  "Medium","Medium","Medium","Medium","Medium",
+  "Min","Min","Min","Min","Min"
+ )
+)
+
+
+# Remove the flows with zero transfers.
+links <- links[links$value != 0,]
+
+# Add a 'group' column to each node. Here I decide to put all of them in the same group to make them grey
+nodes$custody.moves <- as.factor(c("custody.moves"))
+nodes$custody.init <- as.factor(c("custody.init"))
+
+# Give a color for each group:
+color.moves <- 'd3.scaleOrdinal() .domain(["same", "up", "down", "out", "custody.moves"]) .range(["#b6ceed", "#da6763", "#5ddaab", "#e0c380", "grey"])'
+color.init <- 'd3.scaleOrdinal() .domain(["Max", "Close", "Medium", "Min", "custody.init"]) .range(["#942823", "#cb8630", "#24759a", "#a627a2", "grey"])'
+
+# ----
+# Make the network.
+p <- sankeyNetwork( Links = links, Nodes = nodes,
+                    Source = "IDsource", Target = "IDtarget",
+                    Value = "value", NodeID = "name", 
+                    sinksRight=FALSE, fontSize = 12,
+                    colourScale=color.moves, LinkGroup="custody.moves", NodeGroup="custody.moves"
+                    )
+p
+
+#library( htmlwidgets )
+#saveWidget(p, paste0( path, "/custody-flow-plot.html" ) )
+
+```
+
+### The Point
+
+Visualization is a great medium for conveying information. There are a LOT of tools in R for visualizing information. So, to get a sense of how it all works, let's start with a basic function `plot()`.
+
 <br>
 
 ## **The `plot()` Function**
@@ -24,20 +205,27 @@ One of the best features of R is its graphics capability. As far as flexibility 
 A very useful graphics function is the `plot()` function. This function plots a two-dimensional pane with two arguments giving the x and y coordinates.
 
 Let's create a simple plot:
+
 ```{r,echo=FALSE,eval=TRUE}
+
 set.seed( 12345 )
+
 ```
 
 ```{r,echo=TRUE,eval=TRUE}
+
 x <- rnorm( 100, 0, 1 ) #create a vector with 100 elements drawn from a normal distribution.
 y <- seq( 1, 10, length.out=length( x ) ) # create a vector 1:10 with same length.
 plot( x, y ) #plot it.
+
 ```
 
 This is a pretty simple plot. As mentioned, one of the nice features of R is the flexibility to create your plot. Take a look at the different arguments that we pass to `plot()` to modify it by examining the help: `?plot`.
 
 ```{r, results='asis', echo=FALSE}
+
 cat( "\\newpage" )
+
 ```
 
 <br>
@@ -52,20 +240,24 @@ Overall, there are *many* different parameters we can modify in `plot()`. Let's 
 We can change the "type" of plot:
 
 ```{r,echo=TRUE,eval=FALSE}
+
 plot( x, y, type="l" ) #plot a line.
 plot( x, y, type="p" ) #plot points.
 plot( x, y, type="b" ) #plot both!
+
 ```
 
 Often, when plotting multiple objects, we want to first set up the plot regions before adding anything. This is a plot of type "none": `plot( x,y, type="n" )`.
 
 ```{r,echo=TRUE,eval=TRUE}
+
 plot( x, y,
    type="n",
    main="our sample plot", # plot a title.
    xlab="this is the x axis", # change the x label.
    ylab="this is the y axis" # change the y label.
   )
+
 ```
 
 <br>
@@ -75,16 +267,19 @@ plot( x, y,
 We can also change the "characters" of the plot:
 
 ```{r,echo=TRUE,eval=FALSE}
+
 plot( x, y, pch=1 ) #plot a point.
 plot( x, y, pch=2 ) #plot a triangle.
 plot( x, y, pch=3 ) #plot a +.
 plot( x, y, pch=4 ) #plot an x.
+
 ```
 
 
 The argument **pch** determines the shape of the plot points. The numeric values 0 to 25 represent different default shapes. We can also use any number, letter, or symbol as a plotting shape.
 
-```{r, echo=F}
+```{r, echo=FALSE}
+
 pchShow <-
   function(extras = c("*",".", "o","O","0","+","-","|","%","#"),
            cex = 3, ## good for both .Device=="postscript" and "x11"
@@ -125,7 +320,9 @@ Note that shapes 0 to 14 are hollow, 15 to 20 are solid, and 21 to 25 can also p
 Additionally, the `points()`, `lines()`, `segments()`, and `text()` functions are useful for adding information to plots.
 
 ```{r, results='asis', echo=FALSE}
+
 cat("\\newpage")
+
 ```
 
 Here is an example I use in my data analysis course to illustrate the properties of the standard normal distribution.
@@ -133,25 +330,30 @@ Here is an example I use in my data analysis course to illustrate the properties
 First, let's set up our values:
 
 ```{r,echo=TRUE,eval=TRUE}
+
 y    <- seq( -15, 30, length=1000 ) # sequence from -15 to 30. 
 hx.1 <- dnorm( y, 0, 1 ) # densities for the plots.
 hx.2 <- dnorm( y, 0, 2 )
 hx.3 <- dnorm( y, 0, 3 )
+
 ```
 
 Next, let's set up the plot, but we don't want to add anything yet (so we use `type="n"`):
 
 ```{r,echo=TRUE,eval=TRUE}
+
 plot( y, hx.1,
   xlab="", ylab="", # blank out the labels for x and y.
   type="n", #do not plot anything.
   main="Normal Distributions" # a title.
 )
+
 ```
 
 Now, illustrate the shape of the distributions using the `lines()` function (you can copy and paste one at a time to see them get added):
 
 ```{r,echo=TRUE,eval=TRUE}
+
 plot( y, hx.1,
   xlab="", ylab="", # blank out the labels for x and y.
   type="n", #do not plot anything.
@@ -161,11 +363,13 @@ plot( y, hx.1,
 lines( y, hx.1, col="blue", type="l", lwd=2 )
 lines( y, hx.2, col="red", type="l", lwd=2 )
 lines( y, hx.3, col="darkgreen", type="l", lwd=2 )
+
 ```
   
 Now, add a line to show the central tendency by using the `segments()` function:
 
 ```{r,echo=TRUE,eval=TRUE}
+
 plot( y, hx.1,
   xlab="", ylab="", # blank out the labels for x and y.
   type="n", #do not plot anything.
@@ -177,9 +381,11 @@ lines( y, hx.2, col="red", type="l", lwd=2 )
 lines( y, hx.3, col="darkgreen", type="l", lwd=2 )
 
 segments( 0, 0, 0, 0.5, col="black", lwd=2 )
+
 ```
 
 Finally, add some text to show the values (note that we will use the `text()` function):
+
 ```{r,echo=TRUE,eval=TRUE}
 plot( y, hx.1,
   xlab="", ylab="", # blank out the labels for x and y.
@@ -199,7 +405,9 @@ text( 13, 0.06, "Mean = 0, SD = 3", col="darkgreen", cex=1.5 )
 ```
 
 ```{r, results='asis', echo=FALSE}
+
 cat("\\newpage")
+
 ```
 
 
@@ -251,10 +459,12 @@ Let's go through and build this plot, layer by layer.
 
 First, what are these data? 
 
-The data are yearly rates of family deaths recorded by a professor at Penn State. That is, the rate at which family deaths are reported to him prior to an exam from 1960-1995. Here are what the data look like in a table:
+The data are yearly rates of family deaths recorded by a professor at Penn State. That is, the rate at which family deaths are reported to him prior to an exam from 1960-1995. 
+
+Here are what the data look like in a table:
 
 | Year | Death Rate |
-|------|------------|
+|:----:|:----------:|
 | 1960 | 0.18       |
 | 1965 | 0.20       |
 | 1970 | 0.24       |
@@ -263,6 +473,8 @@ The data are yearly rates of family deaths recorded by a professor at Penn State
 | 1985 | 0.61       |
 | 1990 | 0.70       |
 | 1995 | 0.90       |
+
+<br>
 
 Now, let's move the data into objects to work with in R:
 
@@ -353,130 +565,11 @@ text( 1981, 0.65, "x-xbar" )
 
 <br>
 
-## **Plotting Model Results with Confidence Intervals**
-
-One of my biggest peeves about conference presentations (and some manuscripts [and especially job talks]) is bombarding an audience with tables full of numbers and asterisks. A simple (preferred?) approach is to plot point and interval estimates for model results.
-
-If you prefer a "do-it yourself" approach, this is easy to do in R with the `plot()` function. For example, suppose we have estimated a model for the regression of delinquency on age, male, SES, delinquent peers, and school attachment. The OLS coefficients (standard errors) are:
-
-| Variable     | Estimate (Standard Error) |
-|--------------|---------------------------|
-| Age          | 3.50 (1.10)               |
-| Male         | 0.80 (0.22)               |
-| SES          | 1.20 (0.81)               |
-| Del. Prs.    | 0.70 (0.33)               |
-| Schl. Attch. | -0.60 (0.11)              |
-
-We could just enter the point estimates and standard errors as objects:
-
-```{r,echo=TRUE,eval=TRUE}
-point <- c( 3.50, 0.80, 1.20, 0.70, -0.60 )
-se    <- c( 1.10, 0.22, 0.81, 0.33, 0.11 )
-```
-
-The upper and lower 95% confidence intervals are the point estimate +/- 1.96:
-
-```{r,echo=TRUE,eval=TRUE}
-upper.ci <- point + ( 1.96*se )
-lower.ci <- point - ( 1.96*se )
-```
-
-```{r, results='asis', echo=FALSE}
-cat("\\newpage")
-```
-
-Now, we can plot the point estimates using `points()` and the intervals using `segments()`. For example:
-
-```{r,echo=TRUE,eval=TRUE}
-n.coef = 5 # number of coefficients.
-names = c( "age", "male", "SES", "Del Peers", "Sch Attach" ) #coef names.
-
-x.ax = seq( 1, n.coef, length.out=n.coef ) #dims of the x axis.
-y.ax = seq( min( lower.ci ), max( upper.ci ), length.out=n.coef ) #y axis.
-
-plot( x.ax,
-      y.ax,
-      type="n",               #do not plot anything yet.
-      ylab="coefficient w/ 95% CI", #label for y axis.
-      xlab="", #label for x axis .
-      xaxt="n" #toggle x axis labels (for now).
-)
-
-points( x.ax,point ) # plot the point estimates.
-segments( x.ax, upper.ci, x.ax, lower.ci ) #now the intervals.
-
-abline( h=0, lty=2 )	# add a line at zero.
-
-axis( side=1, at=x.ax, labels=names ) # add coefficient labels.
-```
-
-What does the plot tell us? This is beneficial for interpretation and only with 5 coefficients in the model. As the table gets bigger, the visualization of what the model is showing becomes more useful.
-
-You could add more finesse to what we have already done, *or* you could employ the `texreg` package that plots model coefficients. Let's check it out:
-
-```{r,echo=TRUE,eval=FALSE}
-install.packages( "texreg" ) #install the package.
-library( texreg ) #call the library to load the package functions.
-help( package="texreg" ) #check out what the package can do.
-```
-
-```{r, results='asis', echo=FALSE}
-cat("\\newpage")
-```
-
-<br>
-
-## **Working with Multiple Frames**
-
-When a graphic function is called, such as `plot()`, a new window opens up. The default is to have one plot per window. This window, however, can be "partitioned" into multiple panes to include multiple plots with the `par(mfrow=c(,))` function. Within the `mfrow=c(,)` portion we choose how many rows and columns of pictures you want in the pane. Here are some examples:
-
-```{r,echo=TRUE,eval=TRUE}
-	par( mfrow=c( 1,1 ) ) # the default.
-	par( mfrow=c( 2,2 ) ) # 2 rows, 2 columns, so 4 pictures.
-	par( mfrow=c( 2,1 ) ) # 2 rows, 1 column, so 2 pictures, top/bottom.
-	par( mfrow=c( 1,2 ) ) # 1 row, 2 columns, so 2 pictures, left/right.
-```
-
-Let's plot our two histograms together and then individual for each one.
-
-```{r,echo=TRUE,eval=TRUE}
-	men   <- rnorm( 40, 175, 10 )
-	women <- rnorm( 40, 145, 12 )
-	data  <- c( men, women )
-
-	par( mfrow=c( 2, 2 ) )
-	
-	hist( men, col=2, xlim=c( min( data )-5, max( data )+5 ), xlab="Weight",
-	     main="Histograms for Men and Women" )
-	hist( women, col=3, add=TRUE )
-
-	hist( men, col=2, xlab="Weight", main="Histogram for Men" )
-	hist( women, col=2, xlab="Weight", main="Histogram for Women" )
-```
-
-<br>
-
-## **Exporting Graphics**
-
-R allows you to export your graphic to a .pdf file. This is nice if you write a script for many plots and what a single .pdf file that has all the plots.
-
-The structure of the function is:
-
-```{r,echo=TRUE,eval=FALSE}
-pdf( "name.pdf" ) #where you name the file and add the file path if necessary.  
-plot() #the syntax to make the plots.
-dev.off() #turn off the plotting device.
-```
-
-For example, let's make a few plots and then export them to a .pdf file.
-
-<br>
-
 ## **This is just the beginning!!!**  
 
 There is MUCH more you can do with just the `plot()` function. See `help( par )` for a list of all the arguments and options for plotting.
 
-There are also many other options for plots in R. There are entire packages created for plotting. One in particular is the `ggplot2`. Check out [these](https://jacobtnyoung.github.io/R2PhX/projects/PHXcrime_homicide.html) visualizations for examples of working with `ggplot2`.
+There are also many other options for plots in R. There are entire packages created for plotting. One in particular is the `ggplot2`. Check out this page showing [crime in Phoenix](https://jacobtnyoung.github.io/OpenCrimPhx/crime-trends.html).
 
 
 <br>
@@ -493,7 +586,7 @@ ____
 
 <br>
   
-#### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+##### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
   
 <br>
 <br>

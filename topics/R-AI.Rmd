@@ -1,0 +1,191 @@
+---
+title: "Using Artificial Intelligence with R: Coding Assistant"
+date: "R Workshop"
+output: 
+  html_document:
+    df_print: paged
+    theme: cosmo
+    highlight: haddock
+    toc: yes
+    toc_float: yes
+    code_fold: show
+    self-countained: false
+---
+
+<br>
+
+# **Introduction**  
+
+We have written out a lot of code. Why do the hard work when AI can do it for you? Great question! generative AI chatbots like [chatGPT](https://chatgpt.com) are a great resource for helping you:
+
+  * Write code in a programming language from pseudocode
+  
+  * Identify errors in code
+  
+  * Comment existing code
+  
+  * Locate packages, functions, etc. for performing tasks
+  
+  * Identity alternative approaches to solving problems
+
+<br>
+
+# **Prompt Strategy**
+
+The key to a good assistant is giving the assistant good instructions. A good equation is:
+
+$$Context + Specifics+Intent+ Response \ Format$$
+For example:
+
+> I need to build something that processes a series of numbers and finds an average value.
+
+<br>
+
+I typed this in to chatGPT and it said: "Got it! If you have any specific requirements or need further help with building this, just let me know!"
+
+<br>
+
+Now, compare the prompt above to:
+
+> I would like to create a function. The function should take a vector of integers and calculate the mean. I want the function written in R.
+
+<br>
+
+Note the difference in terms of specifying the parameters we identified.
+
+<br>
+
+# **Creating Code**
+
+## *Writing a Simple Function*
+
+If we insert the prompt above, we get something like this:
+
+```{r, echo=TRUE, eval=TRUE}
+
+calculate_mean <- function(int_vector) {
+  # Check if the input is a numeric vector
+  if (!is.numeric(int_vector)) {
+    stop("Input must be a numeric vector.")
+  }
+  
+  # Calculate and return the mean
+  mean_value <- mean(int_vector)
+  return(mean_value)
+}
+
+```
+
+<br>
+
+Note what it has done:  
+
+  * Provided code in R
+  * Added a check to see if the input is numeric
+  * Provided comments
+
+<br>
+
+## *Writing RMardown Files*
+
+<br>
+
+We can also use ChatGPT to create RMarkdown files. Again, we would follow the same formula and tell it what we want:
+
+> I am creating workshop to illustrate how ChatGPT can write RMarkdown files. I would like you to create an RMarkdown file for me. The file should have a text paragraph explaining how ChatGPT is taking the jobs of coders. The file should have a code chunk that creates a plot showing the decline in coding jobs as the number of months ChatGPT has been available to the public. The data for the plot should be fictitious. The output should be RMarkdown code that I can copy and paste. 
+
+```markdown
+
+---
+title: "Impact of ChatGPT on Coding Jobs"
+output: html_document
+---
+
+## The Impact of ChatGPT on Coding Jobs
+
+With the rise of advanced AI models like ChatGPT, there has been increasing discussion about their potential impact on various professions, including coding. ChatGPT and similar technologies are capable of generating code, automating repetitive tasks, and assisting in debugging, which can influence the demand for human coders. While these tools offer tremendous efficiency and convenience, there are concerns that they might reduce the number of coding jobs available. This workshop explores how such tools might affect job markets over time.
+
+```
+
+Then, the code in the code block would look like:
+
+```markdown
+
+# Load necessary library
+library(ggplot2)
+
+# Create fictitious data
+months <- 1:12
+coding_jobs <- c(1000, 950, 900, 850, 800, 750, 700, 650, 600, 550, 500, 450)
+
+# Combine into a data frame
+data <- data.frame(Months = months, Coding_Jobs = coding_jobs)
+
+# Plot the decline in coding jobs
+ggplot(data, aes(x = Months, y = Coding_Jobs)) +
+  geom_line(color = "blue") +
+  geom_point() +
+  labs(title = "Decline in Coding Jobs Over Time",
+       x = "Months Since ChatGPT Release",
+       y = "Number of Coding Jobs") +
+  theme_minimal()
+
+```
+
+Note that we would have to copy and paste this into a .Rmd file. We can ask for it to create the file for us by updating the prompt:
+
+> can you make the code above into a file I can download?
+
+<br>
+
+## **Writing RShiny apps**
+
+We can also create RShiny apps:
+
+> I would like to create a shiny application in R. The application should show a plot for two variables. The variables should be height and weight.  The plot should show weight on the x-axis and height on the y-axis. Each variable should should have a slider that I can adjust.
+
+Give it a shot by:
+
+  1. Entering the prompt  
+  2. Copying the output  
+  3. Opening a Shiny app file
+  4. Pasting the output
+  5. Clicking the "Run App" button
+
+<br>
+
+## **A Warning**
+
+As you use generative AI to assist with code, keep in mind that it is like having an intern: it will give you something (since it is designed to please you), but it might give you something wrong. Always check your code and results to make sure it a) works and b) is correct.
+
+<br>
+
+# **An Important Question**
+
+<br>
+
+*If ChatGPT can generate code for me, then why do I need to learn any of this?*
+
+Well, consider a calculator. Do you need to understand mathematics to use a calculator? You don't have to, but you do if you want to know whether the answer is correct.
+
+Consider a car. Do you know how an engine works? You don't have to, but if your car doesn't start, you should have an understanding of where to begin with diagnosing the problem.
+
+<br>
+
+
+## **Questions?**
+  
+____
+
+<br>
+
+#### [Back to R Workshop page](https://jacobtnyoung.github.io/RWorkshop/)
+
+<br>
+  
+##### ***Please*** report any needed corrections to the [Issues](https://github.com/jacobtnyoung/RWorkshop/issues) page. Thanks!
+  
+<br>
+<br>
+  
+###### ***Last updated `r format(Sys.time(), '%d %B, %Y')`***
