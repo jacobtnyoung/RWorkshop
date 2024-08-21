@@ -201,7 +201,8 @@ is.female <- sex == "female"
 Note that numbers **do not** require `" "` around them but characters **do** require  `" "` around them. Also, that the object `is.female` is created by stating a condition.  
   
   
-Each object has a class, which defines the "type" of an object. We can figure out the type of an object by using the `is.`type functions. :  
+Each object has a class, which defines the "type" of an object. We can figure out the type of an object by using the `is.`type functions:  
+
 ```{r,echo=TRUE,eval=FALSE}
 name.list <- c( "Hugo","Desmond","Largo" )
 is.character( name.list )
