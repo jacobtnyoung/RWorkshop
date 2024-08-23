@@ -30,7 +30,7 @@ There is a more general function, `read.table`, that can read different types of
 
 ## **Example Data File**
 
-Let's work through an example. Start by downloading the "R_Workshop_data.csv" file from this [link](https://github.com/jacobtnyoung/RWorkshop/blob/main/r-workshop-data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).
+Let's work through an example. Start by downloading the "r-workshop-data.csv" file from this [link](https://github.com/jacobtnyoung/RWorkshop/blob/main/r-workshop-data.csv) on the [RWorkshop website](https://jacobtnyoung.github.io/RWorkshop/).
 
 The file contains 52 individuals and 4 variables. The variables are: respondents id ("id"), a binary variable indicating whether the respondent is male or female ("male" where "1" is male), a measure of the respondent's age ("age"), and a measure of risky behaviors engaged in by the respondent ("risky").
 
@@ -117,7 +117,7 @@ We can also refer to the variables (i.e. columns) by their names enclosed in `""
 ```{r,echo=TRUE,eval=FALSE}
 
 dat[,"id"] # returns the entire column named "id".
-dat$id # returns the column called "id" within the object "data".
+dat$id # returns the column called "id" within the object "dat".
 
 ```
 
@@ -141,7 +141,7 @@ Let's read into the data, but exclude the header to see how to assign names:
 ```{r,echo=TRUE,eval=FALSE}
 
 #toggle the header argument by setting it to FALSE.
-dat <- read.csv( "r_workshop_data.csv" , header = FALSE, as.is = TRUE)
+dat <- read.csv( "r-workshop-data.csv" , header = FALSE, as.is = TRUE)
 
 dat     # look at the object, note the first row.
 dat[1,] # R has created the variable names for us.
@@ -189,7 +189,7 @@ First, set the directory where the file will go by using `setwd("/…")`. Then:
 
 ```{r,echo=TRUE,eval=FALSE}
 
-write.csv( dat,"New_R_Workshop_data.csv" ) #file path can be added also.
+write.csv( dat,"new-r-workshop-data.csv" ) #file path can be added also.
 
 ```
 

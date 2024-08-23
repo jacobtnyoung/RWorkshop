@@ -2865,7 +2865,7 @@ write a .csv file using: the <code>outsheet</code> function in Stata
 <div id="example-data-file" class="section level2">
 <h2><strong>Example Data File</strong></h2>
 <p>Let’s work through an example. Start by downloading the
-“R_Workshop_data.csv” file from this <a href="https://github.com/jacobtnyoung/RWorkshop/blob/main/r-workshop-data.csv">link</a>
+“r-workshop-data.csv” file from this <a href="https://github.com/jacobtnyoung/RWorkshop/blob/main/r-workshop-data.csv">link</a>
 on the <a href="https://jacobtnyoung.github.io/RWorkshop/">RWorkshop
 website</a>.</p>
 <p>The file contains 52 individuals and 4 variables. The variables are:
@@ -2929,7 +2929,7 @@ dimensions:</p>
 <p>We can also refer to the variables (i.e. columns) by their names
 enclosed in <code>&quot;&quot;</code> or by using the <code>$</code> key.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>dat[,<span class="st">&quot;id&quot;</span>] <span class="co"># returns the entire column named &quot;id&quot;.</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>dat<span class="sc">$</span>id <span class="co"># returns the column called &quot;id&quot; within the object &quot;data&quot;.</span></span></code></pre></div>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>dat<span class="sc">$</span>id <span class="co"># returns the column called &quot;id&quot; within the object &quot;dat&quot;.</span></span></code></pre></div>
 <p><br></p>
 <p>Referencing parts of an object in this way makes it easy to execute
 functions. For example, the function <code>summary()</code> provides the
@@ -2942,7 +2942,7 @@ range, mean, median, and info about missing values:</p>
 <p>Let’s read into the data, but exclude the header to see how to assign
 names:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#toggle the header argument by setting it to FALSE.</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;r_workshop_data.csv&quot;</span> , <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">as.is =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;r-workshop-data.csv&quot;</span> , <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">as.is =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>dat     <span class="co"># look at the object, note the first row.</span></span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>dat[<span class="dv">1</span>,] <span class="co"># R has created the variable names for us.</span></span>
@@ -2989,7 +2989,7 @@ reading files, there is a more general function,
 what object we want to write out to a file and the file name:</p>
 <p>First, set the directory where the file will go by using
 <code>setwd(&quot;/…&quot;)</code>. Then:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">write.csv</span>( dat,<span class="st">&quot;New_R_Workshop_data.csv&quot;</span> ) <span class="co">#file path can be added also.</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">write.csv</span>( dat,<span class="st">&quot;new-r-workshop-data.csv&quot;</span> ) <span class="co">#file path can be added also.</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div id="saving-data-files" class="section level2">
@@ -3020,8 +3020,8 @@ Workshop page</a></h4>
 the <a href="https://github.com/jacobtnyoung/RWorkshop/issues">Issues</a> page.
 Thanks!</h5>
 <p><br> <br></p>
-<div id="last-updated-13-august-2024" class="section level6">
-<h6><strong><em>Last updated 13 August, 2024</em></strong></h6>
+<div id="last-updated-21-august-2024" class="section level6">
+<h6><strong><em>Last updated 21 August, 2024</em></strong></h6>
 </div>
 </div>
 </div>
